@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Dialog, DialogPanel } from "@headlessui/react";
+import {
+  Dialog,
+  DialogPanel,
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+} from "@headlessui/react";
 import {
   Bars3Icon,
   XMarkIcon,
@@ -12,20 +18,39 @@ const navigation = [
   { name: "שאלות תשובות", href: "#" },
 ];
 
+const products = [
+  {
+    id: 1,
+    name: "Throwback Hip Bag",
+    href: "#",
+    color: "Salmon",
+    imageSrc:
+      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
+    imageAlt:
+      "Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
+  },
+  {
+    id: 2,
+    name: "Medium Stuff Satchel",
+    href: "#",
+    color: "Blue",
+    imageSrc:
+      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
+    imageAlt:
+      "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
+  },
+  // More products...
+];
+
 function NavBar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [count, setCount] = useState(5); // State for cart count
-
-  // Example function to update the count (could be triggered by user actions)
-  const addToCart = () => {
-    setCount(count + 1);
-  };
+  const [cartCount, setCartCount] = useState(0); // Cart item count
 
   return (
     <header className="bg-white">
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between gap-x-6 p-6 lg:px-8 fixed w-full z-50 bg-white"
+        className="mx-auto flex items-center justify-between gap-x-6 p-6 lg:px-8 fixed w-full z-50 bg-white"
       >
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 p-1.5">
@@ -48,32 +73,71 @@ function NavBar() {
             </a>
           ))}
         </div>
-        {/* shop cart */}
         <div className="flex flex-1 items-center justify-end gap-x-6">
-          <a
-            href="#"
-            className="relative rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            <ShoppingBagIcon
-              aria-hidden="true"
-              className="h-6 w-6 flex-shrink-0 text-white"
-            />
-            {count > 0 && (
-              <span className="absolute top-0 right-0 block h-4 w-4 text-xs font-medium text-white bg-red-600 rounded-full flex items-center justify-center">
-                {count}
+          <Popover className="ml-4 flow-root text-sm lg:relative lg:ml-8">
+            <PopoverButton className="group -m-2 flex items-center p-2">
+              <ShoppingBagIcon
+                aria-hidden="true"
+                className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+              />
+              <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                {cartCount}
               </span>
-            )}
-          </a>
-        </div>
-        <div className="flex lg:hidden">
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(true)}
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-          >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="h-6 w-6" />
-          </button>
+              <span className="sr-only">items in cart, view bag</span>
+            </PopoverButton>
+            <PopoverPanel
+              transition
+              className="absolute inset-x-0 top-16 mt-px bg-white pb-6 shadow-lg transition data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in sm:px-2 lg:left-auto lg:right-0 lg:top-full lg:-mr-1.5 lg:mt-3 lg:w-80 lg:rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5"
+            >
+              <h2 className="sr-only">Shopping Cart</h2>
+
+              <form className="mx-auto max-w-2xl px-4">
+                <ul role="list" className="divide-y divide-gray-200">
+                  {products.map((product) => (
+                    <li key={product.id} className="flex items-center py-6">
+                      <img
+                        alt={product.imageAlt}
+                        src={product.imageSrc}
+                        className="h-16 w-16 flex-none rounded-md border border-gray-200"
+                      />
+                      <div className="ml-4 flex-auto">
+                        <h3 className="font-medium text-gray-900">
+                          <a href={product.href}>{product.name}</a>
+                        </h3>
+                        <p className="text-gray-500">{product.color}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  type="submit"
+                  className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                >
+                  Checkout
+                </button>
+
+                <p className="mt-6 text-center">
+                  <a
+                    href="/cart"
+                    className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                  >
+                    View Shopping Bag
+                  </a>
+                </p>
+              </form>
+            </PopoverPanel>
+          </Popover>
+          <div className="flex lg:hidden">
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            >
+              <span className="sr-only">Open main menu</span>
+              <Bars3Icon aria-hidden="true" className="h-6 w-6" />
+            </button>
+          </div>
         </div>
       </nav>
       <Dialog
@@ -91,20 +155,6 @@ function NavBar() {
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                 className="h-8 w-auto"
               />
-            </a>
-            <a
-              href="#"
-              className="ml-auto relative rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              <ShoppingBagIcon
-                aria-hidden="true"
-                className="h-6 w-6 flex-shrink-0 text-white"
-              />
-              {count > 0 && (
-                <span className="absolute top-0 right-0 block h-4 w-4 text-xs font-medium text-white bg-red-600 rounded-full flex items-center justify-center">
-                  {count}
-                </span>
-              )}
             </a>
             <button
               type="button"

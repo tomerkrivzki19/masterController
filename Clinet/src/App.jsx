@@ -7,6 +7,8 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import Shop from "./componentes/Shop";
 import ProductItem from "./componentes/ProductItem";
+import ShopingCart from "./componentes/ShopingCart";
+import SuccessPage from "./componentes/SuccessPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -20,6 +22,10 @@ function App() {
           <Route path="/shop" element={<Shop />} />
           {/* testing product pages */}
           <Route path="/item" element={<ProductItem />} />
+          {/* testing shoping cart */}
+          <Route path="/cart" element={<ShopingCart />} />
+          {/* testing success page */}
+          <Route path="/success" element={<SuccessPage />} />
         </Routes>
       </Router>
     </>
