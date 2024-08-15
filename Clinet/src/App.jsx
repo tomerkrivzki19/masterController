@@ -9,6 +9,7 @@ import Shop from "./componentes/Shop";
 import ProductItem from "./componentes/ProductItem";
 import ShopingCart from "./componentes/ShopingCart";
 import SuccessPage from "./componentes/SuccessPage";
+import FAQ from "./componentes/FAQ";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -24,8 +25,10 @@ function App() {
           <Route path="/item" element={<ProductItem />} />
           {/* testing shoping cart */}
           <Route path="/cart" element={<ShopingCart />} />
-          {/* testing success page */}
+          {/* testing success page test */}
           <Route path="/success" element={<SuccessPage />} />
+          {/* faq page test */}
+          <Route path="/faq" element={<FAQ />} />
         </Routes>
       </Router>
     </>

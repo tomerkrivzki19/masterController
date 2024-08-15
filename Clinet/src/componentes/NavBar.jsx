@@ -15,7 +15,7 @@ import {
 const navigation = [
   { name: "חנות", href: "/shop" },
   { name: "הסיפור שלנו", href: "#" },
-  { name: "שאלות תשובות", href: "#" },
+  { name: "שאלות תשובות", href: "/faq" },
 ];
 
 const products = [
