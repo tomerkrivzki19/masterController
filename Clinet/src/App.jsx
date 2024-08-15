@@ -5,6 +5,7 @@ import MainPage from "./componentes/MainPage";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import Shop from "./componentes/Shop";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -15,6 +16,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<MainPage />} />
+          <Route path="/shop" element={<Shop />} />
         </Routes>
       </Router>
     </>
