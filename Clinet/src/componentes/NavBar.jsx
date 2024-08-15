@@ -1,32 +1,40 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  XMarkIcon,
+  ShoppingBagIcon,
+} from "@heroicons/react/24/outline";
 
 const navigation = [
-  { name: "Product", href: "#" },
-  { name: "Features", href: "#" },
-  { name: "Marketplace", href: "#" },
-  { name: "Company", href: "#" },
+  { name: "חנות", href: "/shop" },
+  { name: "הסיפור שלנו", href: "#" },
+  { name: "שאלות תשובות", href: "#" },
 ];
 
 function NavBar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [count, setCount] = useState(5); // State for cart count
+
+  // Example function to update the count (could be triggered by user actions)
+  const addToCart = () => {
+    setCount(count + 1);
+  };
 
   return (
     <header className="bg-white">
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between gap-x-6 p-6 lg:px-8 fixed w-full z-50  bg-white"
+        className="mx-auto flex max-w-7xl items-center justify-between gap-x-6 p-6 lg:px-8 fixed w-full z-50 bg-white"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <img
+          <a href="/" className="-m-1.5 p-1.5">
+            <span>Master Controller</span>
+            {/* <img
               alt=""
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
               className="h-8 w-auto"
-            />
+            /> */}
           </a>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
@@ -40,18 +48,21 @@ function NavBar() {
             </a>
           ))}
         </div>
+        {/* shop cart */}
         <div className="flex flex-1 items-center justify-end gap-x-6">
           <a
             href="#"
-            className="hidden lg:block lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900"
+            className="relative rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Log in
-          </a>
-          <a
-            href="#"
-            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Sign up
+            <ShoppingBagIcon
+              aria-hidden="true"
+              className="h-6 w-6 flex-shrink-0 text-white"
+            />
+            {count > 0 && (
+              <span className="absolute top-0 right-0 block h-4 w-4 text-xs font-medium text-white bg-red-600 rounded-full flex items-center justify-center">
+                {count}
+              </span>
+            )}
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -83,9 +94,17 @@ function NavBar() {
             </a>
             <a
               href="#"
-              className="ml-auto rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="ml-auto relative rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Sign up
+              <ShoppingBagIcon
+                aria-hidden="true"
+                className="h-6 w-6 flex-shrink-0 text-white"
+              />
+              {count > 0 && (
+                <span className="absolute top-0 right-0 block h-4 w-4 text-xs font-medium text-white bg-red-600 rounded-full flex items-center justify-center">
+                  {count}
+                </span>
+              )}
             </a>
             <button
               type="button"
@@ -108,14 +127,6 @@ function NavBar() {
                     {item.name}
                   </a>
                 ))}
-              </div>
-              <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </a>
               </div>
             </div>
           </div>

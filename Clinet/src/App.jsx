@@ -6,6 +6,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import Shop from "./componentes/Shop";
+import ProductItem from "./componentes/ProductItem";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -17,6 +18,8 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/shop" element={<Shop />} />
+          {/* testing product pages */}
+          <Route path="/item" element={<ProductItem />} />
         </Routes>
       </Router>
     </>
