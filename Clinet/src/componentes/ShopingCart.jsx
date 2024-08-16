@@ -1,7 +1,5 @@
 import React from "react";
 import { CheckIcon, ClockIcon } from "@heroicons/react/20/solid";
-import NavBar from "./NavBar";
-import Footer from "./Footer";
 
 const products = [
   {
@@ -34,7 +32,6 @@ const products = [
 function ShopingCart() {
   return (
     <>
-      <NavBar />
       <div className="cart-body">
         <div className="bg-white">
           <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:px-0">
@@ -168,7 +165,6 @@ function ShopingCart() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

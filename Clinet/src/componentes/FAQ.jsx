@@ -1,6 +1,5 @@
 import React from "react";
-import NavBar from "./NavBar";
-import Footer from "./Footer";
+
 const faqs = [
   {
     id: 1,
@@ -43,7 +42,6 @@ const faqs = [
 function FAQ() {
   return (
     <>
-      <NavBar />
       <div className="faq-container">
         <div className="bg-white">
           <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
@@ -80,7 +78,6 @@ function FAQ() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

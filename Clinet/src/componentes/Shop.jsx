@@ -121,52 +121,19 @@ const sortOptions = [
   { name: "מחיר: מהגובהה לנמוך", href: "#" },
   { name: "מחיר: מהנמוך לגובהה", href: "#" },
 ];
+
 const filters = [
   {
-    id: "category",
-    name: "Category",
-    options: [
-      { value: "tees", label: "Tees" },
-      { value: "crewnecks", label: "Crewnecks" },
-      { value: "hats", label: "Hats" },
-      { value: "bundles", label: "Bundles" },
-      { value: "carry", label: "Carry" },
-      { value: "objects", label: "Objects" },
-    ],
+    id: "ALL",
+    name: "הצג הכל",
   },
   {
     id: "brand",
-    name: "Brand",
-    options: [
-      { value: "clothing-company", label: "Clothing Company" },
-      { value: "fashion-inc", label: "Fashion Inc." },
-      { value: "shoes-n-more", label: "Shoes 'n More" },
-      { value: "supplies-n-stuff", label: "Supplies 'n Stuff" },
-    ],
+    name: "פופולארי",
   },
   {
-    id: "color",
-    name: "Color",
-    options: [
-      { value: "white", label: "White" },
-      { value: "black", label: "Black" },
-      { value: "grey", label: "Grey" },
-      { value: "blue", label: "Blue" },
-      { value: "olive", label: "Olive" },
-      { value: "tan", label: "Tan" },
-    ],
-  },
-  {
-    id: "sizes",
-    name: "Sizes",
-    options: [
-      { value: "xs", label: "XS" },
-      { value: "s", label: "S" },
-      { value: "m", label: "M" },
-      { value: "l", label: "L" },
-      { value: "xl", label: "XL" },
-      { value: "2xl", label: "2XL" },
-    ],
+    id: "NEW",
+    name: "חדש",
   },
 ];
 
@@ -262,7 +229,6 @@ function Shop() {
 
   return (
     <div>
-      <NavBar />
       <div className="body-container">
         {/* sorting */}
         <div className="bg-gray-50">
@@ -296,7 +262,7 @@ function Shop() {
 
                 {/* Filters */}
                 <form className="mt-4">
-                  {/* {filters.map((section) => (
+                  {filters.map((section) => (
                     <Disclosure
                       key={section.name}
                       as="div"
@@ -307,40 +273,10 @@ function Shop() {
                           <span className="font-medium text-gray-900">
                             {section.name}
                           </span>
-                          <span className="ml-6 flex items-center">
-                            <ChevronDownIcon
-                              aria-hidden="true"
-                              className="h-5 w-5 rotate-0 transform group-data-[open]:-rotate-180"
-                            />
-                          </span>
                         </DisclosureButton>
                       </h3>
-                      <DisclosurePanel className="pt-6">
-                        <div className="space-y-6">
-                          {section.options.map((option, optionIdx) => (
-                            <div
-                              key={option.value}
-                              className="flex items-center"
-                            >
-                              <input
-                                defaultValue={option.value}
-                                id={`filter-mobile-${section.id}-${optionIdx}`}
-                                name={`${section.id}[]`}
-                                type="checkbox"
-                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                              />
-                              <label
-                                htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                className="ml-3 text-sm text-gray-500"
-                              >
-                                {option.label}
-                              </label>
-                            </div>
-                          ))}
-                        </div>
-                      </DisclosurePanel>
                     </Disclosure>
-                  ))} */}
+                  ))}
                 </form>
               </DialogPanel>
             </div>
@@ -468,7 +404,6 @@ function Shop() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

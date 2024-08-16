@@ -10,6 +10,10 @@ import ProductItem from "./componentes/ProductItem";
 import ShopingCart from "./componentes/ShopingCart";
 import SuccessPage from "./componentes/SuccessPage";
 import FAQ from "./componentes/FAQ";
+import ErroePage from "./componentes/ErroePage";
+import NavBar from "./componentes/NavBar";
+import Footer from "./componentes/Footer";
+import AboutUs from "./componentes/AboutUs";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -18,7 +22,10 @@ function App() {
   return (
     <>
       <Router>
+        <NavBar />
         <Routes>
+          <Route path="*" element={<ErroePage />} />
+
           <Route path="/" element={<MainPage />} />
           <Route path="/shop" element={<Shop />} />
           {/* testing product pages */}
@@ -29,7 +36,10 @@ function App() {
           <Route path="/success" element={<SuccessPage />} />
           {/* faq page test */}
           <Route path="/faq" element={<FAQ />} />
+          {/* Bbout us */}
+          <Route path="/about" element={<AboutUs />} />
         </Routes>
+        <Footer />
       </Router>
     </>
   );
