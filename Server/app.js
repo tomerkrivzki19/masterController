@@ -7,7 +7,9 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const compresion = require("compresion");
 
-//tessting
+const AppError = require("./utils/appError");
+const globalErrorHandler = require("./cotrollers/errorController"); //TODO: fix the controller to our owen use depending on the routs we will use /api or other
+
 const app = express();
 
 app.use(
@@ -31,7 +33,7 @@ const limiter = rateLimit({
   message: "Too many request from this IP, please try again in an hour!",
 });
 
-app.use("/api", limiter);
+// app.use("/api", limiter);//TODO:
 
 //Body parser, reading data from the body into req.body
 app.use(express.json({ limit: "50mb" })); //here we set the limit for parsering files to max of 10 kb , what will happeend id there are a file more then 10 kb , simpily he will not be accepted
@@ -62,7 +64,7 @@ app.use((req, res, next) => {
   next();
 });
 
-//ROUTES
+//ROUTES TODO: -connect to shopidy routes
 // a shorter way to make the code look more arragend
 // app.use("/", viewRouter);
 // app.use("/api/v1/tours", tourRouter);
@@ -71,24 +73,10 @@ app.use((req, res, next) => {
 // app.use("/api/v1/bookings", bookingRouter);
 
 app.all("*", (req, res, next) => {
-  //handle all the urls for untyped correctly urls -- err handaling for mispale paths in node.js
-  res.status(404).json({
-    status: "fail",
-    message: `can't find  ${req.originalUrl} on this server`, //originalUrl--> as the names says this will bring us the url that was reqested
-  });
-  //WE BASICLY BUILD A CONSTRUCTOR TO DEAL WITH ALL OF THIS FUNCTION BY BUILDING A NEW ERR WILL CLASS AND CONSTRUCTOR
-  // in a way that we want to defind our own err
-  // const err = new Error(`can't find  ${req.originalUrl} on this server`); //Error - abuild in err constractur , that inside him we defind an err string that will be displayed inside of the err message
-  // err.status = 'fail';
-  // err.statusCode = 404;
-  //we creating an err and then we defind the status  and the statusCode proparties on it so that our err handaling middaleware can use them on the next step
-  //  next(err); //if the next function reciving an argument not metter what will happen the express wil read it as an err -> so what it will do is to skip all the pther middlewers and send an err that we paseed in to the global err handaling middleware that will executed
-
-  //THE USE OF A CONSTRUCTOR TODO:
-  //   next(new AppError(`can't find  ${req.originalUrl} on this server`, 404));
+  //THE USE OF A CONSTRUCTOR
+  next(new AppError(`can't find  ${req.originalUrl} on this server`, 404));
 });
 
 //err handaling middleware
-// app.use(globalErrorHandler);TODO:
-
-module.exports = app;
+app.use(globalErrorHandler);
+TODO: module.exports = app;

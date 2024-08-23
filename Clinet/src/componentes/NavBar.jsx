@@ -43,7 +43,7 @@ const products = [
 ];
 
 function NavBar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false); //TODO: fix the close menue btn
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0); // Cart item count
 
   return (
@@ -54,7 +54,7 @@ function NavBar() {
       >
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 p-1.5">
-            <span>Master Controller</span>
+            <span>גן המשחקים</span>
             {/* <img
               alt=""
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
