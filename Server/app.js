@@ -1,3 +1,4 @@
+require("@shopify/shopify-api/adapters/node");
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
@@ -5,10 +6,12 @@ const rateLimit = require("express-rate-limit");
 const cookieParer = require("cookie-parser");
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
+
 const compresion = require("compresion");
 
 const AppError = require("./utils/appError");
-const globalErrorHandler = require("./cotrollers/errorController"); //TODO: fix the controller to our owen use depending on the routs we will use /api or other
+const globalErrorHandler = require("./controllers/errorController"); //TODO: fix the controller to our owen use depending on the routs we will use /api or other
+const productsRouter = require("./Router/productRouter");
 
 const app = express();
 
@@ -33,7 +36,7 @@ const limiter = rateLimit({
   message: "Too many request from this IP, please try again in an hour!",
 });
 
-// app.use("/api", limiter);//TODO:
+app.use("/api", limiter);
 
 //Body parser, reading data from the body into req.body
 app.use(express.json({ limit: "50mb" })); //here we set the limit for parsering files to max of 10 kb , what will happeend id there are a file more then 10 kb , simpily he will not be accepted
@@ -65,12 +68,12 @@ app.use((req, res, next) => {
 });
 
 //ROUTES TODO: -connect to shopidy routes
-// a shorter way to make the code look more arragend
-// app.use("/", viewRouter);
-// app.use("/api/v1/tours", tourRouter);
-// app.use("/api/v1/users", userRouter);
-// app.use("/api/v1/reviews", reviewRouter);
-// app.use("/api/v1/bookings", bookingRouter);
+// Use Shopify authentication routes
+// app.use("/shopify", shopifyAuthRoutes);
+// // Apply the Shopify authentication middleware to routes that need Shopify access
+// app.use("/api/v1", shopifyAuthMiddleware);
+
+app.use("/api/v1/products", productsRouter);
 
 app.all("*", (req, res, next) => {
   //THE USE OF A CONSTRUCTOR
