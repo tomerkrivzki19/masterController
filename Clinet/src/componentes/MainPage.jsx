@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import DeilveryProtocols from "./subcompnents/deilveryProtocols";
-import { fetchProducts, fetchTopSellingProducts } from "../services/shopify";
+import {
+  fetchProducts,
+  fetchTopSellingProducts,
+  addToCart,
+} from "../services/shopify";
+import { CartContext } from "../contexts/cartContext";
 
 function mainPage() {
   const [products, setProducts] = useState([]);
@@ -18,7 +23,16 @@ function mainPage() {
 
     loadProducts();
   }, []);
+  // console.log(products[0].variants[0].id);
+  const { addToCart, addProductCartLoading } = useContext(CartContext);
+  const [loadingIndex, setLoadingIndex] = useState(null); // Manage which button is loading
 
+  //to avoid all btn loader
+  const handleAddCart = async (variantId, quantity, indexP) => {
+    setLoadingIndex(indexP);
+    await addToCart(variantId, quantity);
+    setLoadingIndex(null);
+  };
   return (
     <>
       <div className="main-header-container">
@@ -85,42 +99,59 @@ function mainPage() {
             </h2>
 
             <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-              {products.map((product) => (
-                <div key={product.id} className="group relative">
-                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                    <img
-                      alt={product.images[0]?.altText || "Product image"}
-                      src={product.images[0]?.src || "/placeholder.jpg"}
-                      className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                    />
-                  </div>
-                  <div className="mt-4 flex justify-between">
-                    <div>
-                      <h3 className="text-sm text-gray-700">
-                        <a href={product.onlineStoreUrl || "#"}>
-                          <span
-                            aria-hidden="true"
-                            className="absolute inset-0"
-                          />
-                          {product.title}
-                        </a>
-                      </h3>
-                      <p className="mt-1 text-sm text-gray-500">
-                        {/* Assuming product.options contain color information */}
-                        {product.options.find(
-                          (option) => option.name.toLowerCase() === "color"
-                        )?.values[0] || "Color not available"}
-                      </p>
+              {products.map((product, index) => {
+                return (
+                  <div className="flex flex-col items-center  space-y-4">
+                    <div key={product.id} className="group relative">
+                      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                        <img
+                          alt={product.images[0]?.altText || "Product image"}
+                          src={product.images[0]?.src || "/placeholder.jpg"}
+                          className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                        />
+                      </div>
+                      <div className="mt-4 flex justify-between">
+                        <div>
+                          <h3 className="text-sm text-gray-700">
+                            <a href={product.onlineStoreUrl || "#"}>
+                              <span
+                                aria-hidden="true"
+                                className="absolute inset-0"
+                              />
+                              {product.title}
+                            </a>
+                          </h3>
+                          {/* <p className="mt-1 text-sm text-gray-500">
+            {product.options.find(
+              (option) => option.name.toLowerCase() === "color"
+            )?.values[0] || "Color not available"}
+          </p> */}
+                        </div>
+                        <p className="text-sm font-medium text-gray-900">
+                          {/* Check if variants exist and get the price of the first variant */}
+                          {product.variants[0]?.price
+                            ? `${product.variants[0].price.amount} ${product.variants[0].price.currencyCode}`
+                            : "Price not available"}
+                        </p>
+                      </div>
                     </div>
-                    <p className="text-sm font-medium text-gray-900">
-                      {/* Check if variants exist and get the price of the first variant */}
-                      {product.variants[0]?.price
-                        ? `${product.variants[0].price.amount} ${product.variants[0].price.currencyCode}`
-                        : "Price not available"}
-                    </p>
+                    <button
+                      // onClick={() => addToCart(product.variants[0].id, 1)}
+                      onClick={() =>
+                        handleAddCart(product.variants[0].id, 1, index)
+                      }
+                      className="py-2 px-5 bg-violet-500 text-white font-semibold rounded-full shadow-md hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-400 focus:ring-opacity-75"
+                      disabled={loadingIndex === index || addProductCartLoading}
+                    >
+                      {loadingIndex === index ? (
+                        <div className="w-5 h-5 border-4 border-white border-t-transparent border-solid rounded-full animate-spin"></div>
+                      ) : (
+                        "הוסף לסל"
+                      )}
+                    </button>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

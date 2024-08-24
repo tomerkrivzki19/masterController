@@ -14,11 +14,9 @@ import ErroePage from "./componentes/ErroePage";
 import NavBar from "./componentes/NavBar";
 import Footer from "./componentes/Footer";
 import AboutUs from "./componentes/AboutUs";
-import { fetchProducts } from "./services/shopify";
+import { CartProvider } from "./contexts/cartContext";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
       <Router>

@@ -7,6 +7,50 @@ const client = Client.buildClient({
   storefrontAccessToken: import.meta.env.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN,
 });
 
+// Helper function to get the cart token from cookies
+const getCartTokenFromCookie = () => {
+  const name = "shopifyCartToken=";
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const cookieArray = decodedCookie.split(";");
+  for (let i = 0; i < cookieArray.length; i++) {
+    let cookie = cookieArray[i].trim();
+    if (cookie.indexOf(name) === 0) {
+      return cookie.substring(name.length, cookie.length);
+    }
+  }
+  return "";
+};
+
+// Helper function to store the cart token in cookies
+const storeCartTokenInCookie = (token) => {
+  const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toUTCString();
+  document.cookie = `shopifyCartToken=${token}; path=/; expires=${expires}`;
+};
+
+// Create or retrieve a checkout session
+const getCheckout = async () => {
+  let cartToken = getCartTokenFromCookie();
+  let checkout;
+
+  if (cartToken) {
+    try {
+      // Fetch the existing checkout if a cart token exists
+      checkout = await client.checkout.fetch(cartToken);
+    } catch (error) {
+      console.error("Error fetching checkout:", error);
+      checkout = null;
+    }
+  }
+
+  if (!checkout || checkout.completedAt) {
+    // If no valid checkout exists, create a new one
+    checkout = await client.checkout.create();
+    storeCartTokenInCookie(checkout.id);
+  }
+
+  return checkout.id;
+};
+
 //get all products
 export const fetchProducts = async () => {
   try {
@@ -41,13 +85,12 @@ export const fetchTopSellingProducts = async () => {
   }
 };
 
-//add to cart
+//add to cart via shopify + cookies
+// Add item to cart
 export const addToCart = async (variantId, quantity) => {
   try {
-    // Fetch the current cart or create a new one
-    let checkout = await client.checkout.create();
+    const checkoutId = await getCheckout();
 
-    // Add item to cart
     const lineItems = [
       {
         variantId,
@@ -55,12 +98,37 @@ export const addToCart = async (variantId, quantity) => {
       },
     ];
 
-    checkout = await client.checkout.addLineItems(checkout.id, lineItems);
+    // Ensure `checkoutId` is valid before proceeding
+    if (!checkoutId) {
+      throw new Error("Invalid checkout ID");
+    }
 
-    // Return the updated checkout (cart) information
-    return checkout;
+    const updatedCheckout = await client.checkout.addLineItems(
+      checkoutId,
+      lineItems
+    );
+
+    return updatedCheckout;
   } catch (error) {
     console.error("Error adding item to cart", error);
     throw error;
   }
+};
+
+// Retrieve cart data
+export const getCartData = async () => {
+  try {
+    const checkoutId = await getCheckout();
+    const checkout = await client.checkout.fetch(checkoutId);
+    return checkout.lineItems || [];
+  } catch (error) {
+    console.error("Error fetching cart data", error);
+    throw error;
+  }
+};
+
+// Clear the cart token from cookies
+export const clearCartTokenCookie = () => {
+  document.cookie =
+    "shopifyCartToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 };
