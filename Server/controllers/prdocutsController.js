@@ -18,12 +18,12 @@ const getSessionFromStorage = async (req) => {
   };
 };
 
-//all clients for now
+//all PRODUCTS for now
 exports.getProductsTest = async (req, res) => {
   try {
     // Create a new REST client instance
     const session = await getSessionFromStorage(req); // Implement this function based on your session storage logic
-
+    // console.log(LATEST_API_VERSION); 2024-07
     const client = new shopify.clients.Rest({
       session,
       apiVersion: LATEST_API_VERSION,

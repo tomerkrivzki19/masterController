@@ -1,76 +1,24 @@
 import React from "react";
-import { useState } from "react";
-
-import NavBar from "./NavBar";
-import Footer from "./Footer";
+import { useState, useEffect } from "react";
 import DeilveryProtocols from "./subcompnents/deilveryProtocols";
-//exmaples of produvts
-const products = [
-  // More products...
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-];
-const incentives = [
-  {
-    name: "Free Shipping",
-    description:
-      "It's not actually free we just price it into the products. Someone's paying for it, and it's not us.",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce/icons/icon-delivery-light.svg",
-  },
-  {
-    name: "24/7 Customer Support",
-    description:
-      "Our AI chat widget is powered by a naive series of if/else statements. Guaranteed to irritate.",
-    imageSrc: "https://tailwindui.com/img/ecommerce/icons/icon-chat-light.svg",
-  },
-  {
-    name: "Fast Shopping Cart",
-    description:
-      "Look how fast that cart is going. What does this mean for the actual experience? I don't know.",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce/icons/icon-fast-checkout-light.svg",
-  },
-];
+import { fetchProducts, fetchTopSellingProducts } from "../services/shopify";
+
 function mainPage() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const fetchedProducts = await fetchTopSellingProducts();
+        setProducts(fetchedProducts);
+      } catch (error) {
+        console.error("Error loading products", error);
+      }
+    };
+
+    loadProducts();
+  }, []);
+
   return (
     <>
       <div className="main-header-container">
@@ -141,28 +89,34 @@ function mainPage() {
                 <div key={product.id} className="group relative">
                   <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                     <img
-                      alt={product.imageAlt}
-                      src={product.imageSrc}
+                      alt={product.images[0]?.altText || "Product image"}
+                      src={product.images[0]?.src || "/placeholder.jpg"}
                       className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                     />
                   </div>
                   <div className="mt-4 flex justify-between">
                     <div>
                       <h3 className="text-sm text-gray-700">
-                        <a href={product.href}>
+                        <a href={product.onlineStoreUrl || "#"}>
                           <span
                             aria-hidden="true"
                             className="absolute inset-0"
                           />
-                          {product.name}
+                          {product.title}
                         </a>
                       </h3>
                       <p className="mt-1 text-sm text-gray-500">
-                        {product.color}
+                        {/* Assuming product.options contain color information */}
+                        {product.options.find(
+                          (option) => option.name.toLowerCase() === "color"
+                        )?.values[0] || "Color not available"}
                       </p>
                     </div>
                     <p className="text-sm font-medium text-gray-900">
-                      {product.price}
+                      {/* Check if variants exist and get the price of the first variant */}
+                      {product.variants[0]?.price
+                        ? `${product.variants[0].price.amount} ${product.variants[0].price.currencyCode}`
+                        : "Price not available"}
                     </p>
                   </div>
                 </div>

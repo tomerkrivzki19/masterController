@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import MainPage from "./componentes/MainPage";
 
@@ -14,10 +14,10 @@ import ErroePage from "./componentes/ErroePage";
 import NavBar from "./componentes/NavBar";
 import Footer from "./componentes/Footer";
 import AboutUs from "./componentes/AboutUs";
+import { fetchProducts } from "./services/shopify";
 
 function App() {
   const [count, setCount] = useState(0);
-  console.log(1111);
 
   return (
     <>

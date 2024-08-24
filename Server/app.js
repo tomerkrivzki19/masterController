@@ -68,11 +68,6 @@ app.use((req, res, next) => {
 });
 
 //ROUTES TODO: -connect to shopidy routes
-// Use Shopify authentication routes
-// app.use("/shopify", shopifyAuthRoutes);
-// // Apply the Shopify authentication middleware to routes that need Shopify access
-// app.use("/api/v1", shopifyAuthMiddleware);
-
 app.use("/api/v1/products", productsRouter);
 
 app.all("*", (req, res, next) => {
