@@ -1,6 +1,7 @@
 import axios from "axios";
 import Client from "shopify-buy";
 
+//SERVER INTEGRATION FOR SOPIFY
 // Initialize Shopify client
 const client = Client.buildClient({
   domain: import.meta.env.VITE_SHOPIFY_STORE_DOMAIN,
@@ -95,6 +96,7 @@ export const fetchProductById = async (id) => {
     throw error;
   }
 };
+
 //add to cart via shopify + cookies
 // Add item to cart
 export const addToCart = async (variantId, quantity) => {
@@ -134,6 +136,47 @@ export const getCartData = async () => {
   } catch (error) {
     console.error("Error fetching cart data", error);
     throw error;
+  }
+};
+
+// Update item quantity in the cart (increase or decrease)
+const updateCartItemQuantity = async (lineItemId, quantity) => {
+  try {
+    const checkoutId = await getCheckout();
+
+    if (!checkoutId) {
+      throw new Error("Invalid checkout ID");
+    }
+
+    if (quantity < 1) {
+      throw new Error("Quantity cannot be less than 1");
+    }
+
+    const updatedCheckout = await client.checkout.updateLineItems(checkoutId, [
+      {
+        id: lineItemId,
+        quantity: parseInt(quantity, 10),
+      },
+    ]);
+
+    return updatedCheckout;
+  } catch (error) {
+    console.error("Error updating item quantity in cart", error);
+    throw error;
+  }
+};
+
+// Increase item quantity
+export const increaseItemQuantity = async (lineItemId, currentQuantity) => {
+  return updateCartItemQuantity(lineItemId, currentQuantity + 1);
+};
+
+// Decrease item quantity
+export const decreaseItemQuantity = async (lineItemId, currentQuantity) => {
+  if (currentQuantity > 1) {
+    return updateCartItemQuantity(lineItemId, currentQuantity - 1);
+  } else {
+    throw new Error("Quantity cannot be less than 1");
   }
 };
 

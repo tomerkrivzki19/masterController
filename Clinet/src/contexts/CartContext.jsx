@@ -1,5 +1,10 @@
 import React, { createContext, useState, useEffect } from "react";
-import { getCartData, addToCart } from "../services/shopify"; // Adjust the import path as necessary
+import {
+  getCartData,
+  addToCart,
+  increaseItemQuantity,
+  decreaseItemQuantity,
+} from "../services/shopify"; // Adjust the import path as necessary
 
 export const CartContext = createContext();
 
@@ -37,6 +42,24 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // Function to increase item quantity and refresh cart data
+  const handleIncrease = async (lineItemId, currentQuantity) => {
+    try {
+      await increaseItemQuantity(lineItemId, currentQuantity);
+      await fetchCart(); // Refresh cart data after the update
+    } catch (error) {
+      console.error("Error updating cart item quantity:", error);
+    }
+  };
+  const handleDecrease = async (lineItemId, currentQuantity) => {
+    try {
+      await decreaseItemQuantity(lineItemId, currentQuantity);
+      await fetchCart(); // Refresh cart data after the update
+    } catch (error) {
+      console.error("Error decreasing item quantity", error);
+    }
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -44,6 +67,8 @@ export const CartProvider = ({ children }) => {
         addToCart: addToCartHandler,
         addProductCartLoading,
         loading,
+        handleIncrease,
+        handleDecrease,
       }}
     >
       {children}

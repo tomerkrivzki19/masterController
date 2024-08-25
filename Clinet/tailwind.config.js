@@ -6,6 +6,9 @@ export default {
       height: {
         "full-screen": "100vh",
       },
+      colors: {
+        Cherry: "#CC252C",
+      },
     },
   },
   plugins: [],

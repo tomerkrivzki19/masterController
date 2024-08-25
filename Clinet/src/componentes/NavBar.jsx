@@ -11,7 +11,11 @@ import {
   XMarkIcon,
   ShoppingBagIcon,
 } from "@heroicons/react/24/outline";
-import { getCartData } from "../services/shopify";
+import {
+  decreaseItemQuantity,
+  getCartData,
+  increaseItemQuantity,
+} from "../services/shopify";
 import { CartContext } from "../contexts/cartContext";
 
 const navigation = [
@@ -22,26 +26,25 @@ const navigation = [
 
 function NavBar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  // const { cart } = useContext(CartContext);
-  const { cart, loading } = useContext(CartContext);
+  const { cart, loading, handleIncrease, handleDecrease } =
+    useContext(CartContext);
 
-  // const [cart, setCart] = useState([]);
-  // const [loading, setLoading] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  //scroll efect
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
 
-  // useLayoutEffect(() => {
-  //   const loadCart = async () => {
-  //     try {
-  //       const fetchedCartProducts = await getCartData();
-  //       setCart(fetchedCartProducts || []);
-  //       setLoading(true);
-  //     } catch (error) {
-  //       console.error("Error loading products", error);
-  //     }
-  //   };
-  //   loadCart();
-  // }, []);
+    window.addEventListener("scroll", handleScroll);
 
-  // console.log(cart);
+    // Clean up the event listener on component unmount
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // cart quantity
   const totalQuantity = cart.reduce((acc, item) => acc + item.quantity, 0);
@@ -50,7 +53,10 @@ function NavBar() {
     <header className="bg-white">
       <nav
         aria-label="Global"
-        className="mx-auto flex items-center justify-between gap-x-6 p-6 lg:px-8 fixed w-full z-50 bg-white"
+        // className="mx-auto flex items-center justify-between gap-x-6 p-6 lg:px-8 fixed w-full z-50 bg-[#aa60cb]  "
+        className={`mx-auto flex items-center justify-between gap-x-6 p-6 lg:px-8 fixed w-full z-50 duration-300 ease-in-out ${
+          scrolled ? "bg-[#aa60cb]" : "bg-white shadow-md"
+        }`}
       >
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 p-1.5">
@@ -82,23 +88,32 @@ function NavBar() {
                   {totalQuantity}
                 </span>
               )}
-              <span className="sr-only">items in cart, view bag</span>
+              {/* items in cart, view bag */}
             </PopoverButton>
             <PopoverPanel className="absolute inset-x-0 top-16 mt-px bg-white pb-6 shadow-lg transition data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in sm:px-2 lg:left-auto lg:right-0 lg:top-full lg:-mr-1.5 lg:mt-3 lg:w-80 lg:rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5">
               <h2 className="sr-only">Shopping Cart</h2>
               <ul role="list" className="divide-y divide-gray-200">
                 {cart.length === 0 ? (
-                  <p>Your cart is empty.</p>
+                  <p>הסל ריק 🛒</p>
                 ) : (
                   <div>
                     {/* TODO: need to style the topic abit  */}
                     <div className="flex items-center space-x-4 size-full">
-                      <h1>My Bag</h1>
-                      <p> {totalQuantity} items</p>
+                      <h1 className="text-3xl ltr:ml-3 rtl:mr-3" dir="rtl">
+                        {/* FIXME: FIX THE DIRACTION */}
+                        הסל שלי 🛒
+                      </h1>
+                      <p className="text-base underline decoration-4">
+                        {" "}
+                        {totalQuantity} מוצרים
+                      </p>
                     </div>
-                    <ul>
+                    <ul className="items-center	">
                       {cart.map((item) => (
-                        <li key={item.id} className="flex items-center py-6">
+                        <li
+                          key={item.id}
+                          className="flex items-center  py-6 pl-5"
+                        >
                           {/* Adjust the src and alt attributes based on your data structure */}
                           <img
                             alt={item.variant.imageAlt || "Product image"}
@@ -106,7 +121,7 @@ function NavBar() {
                               item.variant.image.src ||
                               "https://via.placeholder.com/150"
                             } // Fallback image
-                            className="h-16 w-16 flex-none rounded-md border border-gray-200"
+                            className="h-16 w-24 flex-none rounded-md border border-gray-200"
                           />
                           <div className="ml-4 flex-auto">
                             <h3 className="font-medium text-gray-900">
@@ -119,9 +134,41 @@ function NavBar() {
                               {item.variant.color || "No color specified"}
                             </p>{" "}
                             {/* Use `color` if available */}
-                            <p className="text-gray-500">
-                              Qty: {item.quantity}
-                            </p>
+                            <div className="flex">
+                              <button
+                                onClick={() =>
+                                  handleDecrease(item.id, item.quantity)
+                                }
+                                className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
+                              >
+                                -
+                              </button>
+                              <svg
+                                class="w-3 h-3 text-gray-900 dark:text-white"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 18 2"
+                              ></svg>
+                              <p className="bg-gray-50 border-x-0 border-gray-300 h-11 w-1/3 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block  py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                {item.quantity}
+                              </p>
+                              <svg
+                                class="w-3 h-3 text-gray-900 dark:text-white"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 18 2"
+                              ></svg>
+                              <button
+                                onClick={() =>
+                                  handleIncrease(item.id, item.quantity)
+                                }
+                                className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
+                              >
+                                +
+                              </button>
+                            </div>
                           </div>
                         </li>
                       ))}

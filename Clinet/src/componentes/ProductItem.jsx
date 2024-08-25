@@ -13,7 +13,7 @@ import {
 } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchProductById, fetchTopSellingProducts } from "../services/shopify";
 
 // Utility function for conditional class names
@@ -36,6 +36,7 @@ function classNames(...classes) {
 // ];
 
 function ProductItem() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [products, setProducts] = useState([]);
@@ -45,6 +46,10 @@ function ProductItem() {
       try {
         const decodedId = decodeURIComponent(id);
         const productData = await fetchProductById(decodedId);
+
+        if (productData === null) {
+          navigate("*");
+        }
         const productsData = await fetchTopSellingProducts();
         setProduct(productData);
         setProducts(productsData);
