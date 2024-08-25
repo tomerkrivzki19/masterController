@@ -26,8 +26,8 @@ function App() {
 
           <Route path="/" element={<MainPage />} />
           <Route path="/shop" element={<Shop />} />
-          {/* testing product pages */}
-          <Route path="/item" element={<ProductItem />} />
+
+          <Route path="/product/:id" element={<ProductItem />} />
           {/* testing shoping cart */}
           <Route path="/cart" element={<ShopingCart />} />
           {/* testing success page test */}

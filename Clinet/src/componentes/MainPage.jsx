@@ -113,7 +113,11 @@ function mainPage() {
                       <div className="mt-4 flex justify-between">
                         <div>
                           <h3 className="text-sm text-gray-700">
-                            <a href={product.onlineStoreUrl || "#"}>
+                            <a
+                              href={`/product/${encodeURIComponent(
+                                product.id
+                              )}`}
+                            >
                               <span
                                 aria-hidden="true"
                                 className="absolute inset-0"
@@ -121,11 +125,6 @@ function mainPage() {
                               {product.title}
                             </a>
                           </h3>
-                          {/* <p className="mt-1 text-sm text-gray-500">
-            {product.options.find(
-              (option) => option.name.toLowerCase() === "color"
-            )?.values[0] || "Color not available"}
-          </p> */}
                         </div>
                         <p className="text-sm font-medium text-gray-900">
                           {/* Check if variants exist and get the price of the first variant */}

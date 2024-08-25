@@ -70,7 +70,7 @@ export const fetchTopSellingProducts = async () => {
 
     // Sort products by a sales-related property if available (example: total sales)
     // You would need to adapt this if you have sales data available
-    // For demo purposes, sorting by `title` here (not actual sales data)
+    // For demo purposes, sorting by `title` here (not actual sales data)TODO:
     const sortedProducts = products.sort((a, b) =>
       b.title.localeCompare(a.title)
     );
@@ -85,6 +85,16 @@ export const fetchTopSellingProducts = async () => {
   }
 };
 
+// fetch product by ID
+export const fetchProductById = async (id) => {
+  try {
+    const product = await client.product.fetch(id);
+    return product;
+  } catch (error) {
+    console.error("Error fetching product by ID", error);
+    throw error;
+  }
+};
 //add to cart via shopify + cookies
 // Add item to cart
 export const addToCart = async (variantId, quantity) => {

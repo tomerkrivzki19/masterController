@@ -41,7 +41,7 @@ function NavBar() {
   //   loadCart();
   // }, []);
 
-  console.log(cart);
+  // console.log(cart);
 
   // cart quantity
   const totalQuantity = cart.reduce((acc, item) => acc + item.quantity, 0);
@@ -76,7 +76,7 @@ function NavBar() {
                 className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
               />
               {loading ? (
-                <div class="w-5 h-5 rounded-full animate-spin border border-solid border-sky-500 border-t-transparent"></div>
+                <div className="w-5 h-5 rounded-full animate-spin border border-solid border-sky-500 border-t-transparent"></div>
               ) : (
                 <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
                   {totalQuantity}
@@ -87,12 +87,15 @@ function NavBar() {
             <PopoverPanel className="absolute inset-x-0 top-16 mt-px bg-white pb-6 shadow-lg transition data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in sm:px-2 lg:left-auto lg:right-0 lg:top-full lg:-mr-1.5 lg:mt-3 lg:w-80 lg:rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5">
               <h2 className="sr-only">Shopping Cart</h2>
               <ul role="list" className="divide-y divide-gray-200">
-                {/* TODO: */}
                 {cart.length === 0 ? (
                   <p>Your cart is empty.</p>
                 ) : (
                   <div>
-                    <p>Total Quantity: {totalQuantity}</p>
+                    {/* TODO: need to style the topic abit  */}
+                    <div className="flex items-center space-x-4 size-full">
+                      <h1>My Bag</h1>
+                      <p> {totalQuantity} items</p>
+                    </div>
                     <ul>
                       {cart.map((item) => (
                         <li key={item.id} className="flex items-center py-6">
