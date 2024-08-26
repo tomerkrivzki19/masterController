@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Disclosure,
   DisclosureButton,
@@ -15,31 +15,20 @@ import { StarIcon } from "@heroicons/react/20/solid";
 import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchProductById, fetchTopSellingProducts } from "../services/shopify";
-
-// Utility function for conditional class names
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
-// const products = [
-//   {
-//     id: 1,
-//     name: "Basic Tee",
-//     href: "#",
-//     imageSrc:
-//       "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-//     imageAlt: "Front of men's Basic Tee in black.",
-//     price: "$35",
-//     color: "Black",
-//   },
-//   // More products...
-// ];
+import { CartContext } from "../contexts/cartContext";
 
 function ProductItem() {
+  const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [products, setProducts] = useState([]);
+  const [loadingIndex, setLoadingIndex] = useState(true); // Manage which button is loading
+
+  // Utility function for conditional class names
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   useEffect(() => {
     async function fetchProduct() {
@@ -61,6 +50,15 @@ function ProductItem() {
     fetchProduct();
   }, [id]);
 
+  const handleAddCart = async (variantId, quantity) => {
+    setLoadingIndex(false);
+    try {
+      await addToCart(variantId, quantity);
+      setLoadingIndex(true);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
   return (
     <div className="product-body-container bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -171,10 +169,15 @@ function ProductItem() {
 
                 <div className="mt-10 flex">
                   <button
-                    type="submit"
+                    onClick={() => handleAddCart(product.variants[0].id, 1)}
+                    type="button"
                     className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
                   >
-                    Add to bag
+                    {!loadingIndex ? (
+                      <div className="w-5 h-5 border-4 border-white border-t-transparent border-solid rounded-full animate-spin"></div>
+                    ) : (
+                      "הוסף לסל"
+                    )}
                   </button>
 
                   <button
