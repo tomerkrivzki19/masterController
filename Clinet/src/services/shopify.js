@@ -139,8 +139,8 @@ export const getCartData = async () => {
   }
 };
 
-// Update item quantity in the cart (increase or decrease)
-const updateCartItemQuantity = async (lineItemId, quantity) => {
+// remove a product from the cart
+export const removeProductFromCart = async (lineItemId) => {
   try {
     const checkoutId = await getCheckout();
 
@@ -148,38 +148,18 @@ const updateCartItemQuantity = async (lineItemId, quantity) => {
       throw new Error("Invalid checkout ID");
     }
 
-    if (quantity < 1) {
-      throw new Error("Quantity cannot be less than 1");
-    }
-
-    const updatedCheckout = await client.checkout.updateLineItems(checkoutId, [
-      {
-        id: lineItemId,
-        quantity: parseInt(quantity, 10),
-      },
+    // Remove the product by its line item ID
+    const updatedCheckout = await client.checkout.removeLineItems(checkoutId, [
+      lineItemId,
     ]);
 
+    console.log("Product removed:", lineItemId);
     return updatedCheckout;
   } catch (error) {
-    console.error("Error updating item quantity in cart", error);
+    console.error("Error removing product from cart:", error);
     throw error;
   }
 };
-
-// Increase item quantity
-export const increaseItemQuantity = async (lineItemId, currentQuantity) => {
-  return updateCartItemQuantity(lineItemId, currentQuantity + 1);
-};
-
-// Decrease item quantity
-export const decreaseItemQuantity = async (lineItemId, currentQuantity) => {
-  if (currentQuantity > 1) {
-    return updateCartItemQuantity(lineItemId, currentQuantity - 1);
-  } else {
-    throw new Error("Quantity cannot be less than 1");
-  }
-};
-
 // Clear the cart token from cookies
 export const clearCartTokenCookie = () => {
   document.cookie =

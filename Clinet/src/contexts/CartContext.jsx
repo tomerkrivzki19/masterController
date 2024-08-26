@@ -1,9 +1,13 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useLayoutEffect,
+} from "react";
 import {
   getCartData,
   addToCart,
-  increaseItemQuantity,
-  decreaseItemQuantity,
+  removeProductFromCart,
 } from "../services/shopify"; // Adjust the import path as necessary
 
 export const CartContext = createContext();
@@ -25,9 +29,14 @@ export const CartProvider = ({ children }) => {
   };
 
   // Fetch cart data on mount
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetchCart();
   }, []);
+
+  const subTotal = cart.reduce(
+    (acc, item) => acc + item.variant.price.amount * item.quantity,
+    0
+  );
 
   // Function to add item to cart and update state
   const addToCartHandler = async (variantId, quantity) => {
@@ -41,25 +50,19 @@ export const CartProvider = ({ children }) => {
       setAddProductCartLoading(false); // End loading
     }
   };
+  const handleRemoveItem = async (lineItemId) => {
+    // Optimistically remove the item from the state
+    const updatedCartItems = cart.filter((item) => item.id !== lineItemId);
+    setCart(updatedCartItems);
 
-  // Function to increase item quantity and refresh cart data
-  const handleIncrease = async (lineItemId, currentQuantity) => {
     try {
-      await increaseItemQuantity(lineItemId, currentQuantity);
-      await fetchCart(); // Refresh cart data after the update
+      await removeProductFromCart(lineItemId);
+      const updatedCart = await getCartData(); // Fetch updated cart data
+      setCart(updatedCart); // Update state to re-render component
     } catch (error) {
-      console.error("Error updating cart item quantity:", error);
+      console.error("Failed to remove item:", error);
     }
   };
-  const handleDecrease = async (lineItemId, currentQuantity) => {
-    try {
-      await decreaseItemQuantity(lineItemId, currentQuantity);
-      await fetchCart(); // Refresh cart data after the update
-    } catch (error) {
-      console.error("Error decreasing item quantity", error);
-    }
-  };
-
   return (
     <CartContext.Provider
       value={{
@@ -67,8 +70,8 @@ export const CartProvider = ({ children }) => {
         addToCart: addToCartHandler,
         addProductCartLoading,
         loading,
-        handleIncrease,
-        handleDecrease,
+        subTotal,
+        handleRemoveItem,
       }}
     >
       {children}
