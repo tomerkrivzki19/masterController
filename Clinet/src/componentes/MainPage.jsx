@@ -23,7 +23,7 @@ function mainPage() {
 
     loadProducts();
   }, []);
-  // console.log(products[0].variants[0].id);
+
   const { addToCart, addProductCartLoading } = useContext(CartContext);
   const [loadingIndex, setLoadingIndex] = useState(null); // Manage which button is loading
 
