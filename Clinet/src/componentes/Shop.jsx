@@ -43,7 +43,7 @@ const filters = [
 function Shop() {
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState([]);
-  const [sortOption, setSortOption] = useState("old");
+  const [sortOption, setSortOption] = useState("NEW");
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -61,6 +61,9 @@ function Shop() {
 
     loadProducts();
   }, [sortOption]);
+
+  // FIXME: on the small sizes the page renders and becouse of that the err acoord
+  // console.log(open);
 
   return (
     <div>
@@ -106,10 +109,12 @@ function Shop() {
                       <h3 className="-mx-2 -my-3 flow-root">
                         <DisclosureButton
                           onClick={() => setSortOption(section.id)}
-                          className="group flex w-full items-center justify-between bg-white px-2 py-3 text-sm text-gray-400"
+                          className={`group flex w-full items-center justify-between bg-white px-2 py-3 text-sm text-gray-400 ${
+                            sortOption === section.id ? "bg-red-100" : ""
+                          }`}
                         >
                           <span
-                            onClick={() => setOpen(!open)}
+                            onClick={() => setOpen(false)}
                             className="font-medium text-gray-900"
                           >
                             {section.name}
@@ -163,7 +168,9 @@ function Shop() {
                           <button
                             // href={option.href}
                             onClick={() => setSortOption(option.value)}
-                            className="block px-4 py-2 text-sm font-medium text-gray-900 data-[focus]:bg-gray-100"
+                            className={`block px-4 py-2 text-sm font-medium text-gray-900 data-[focus]:bg-gray-100 ${
+                              sortOption === option.value ? "bg-red-100" : ""
+                            }`}
                           >
                             {option.name}
                           </button>
@@ -175,7 +182,7 @@ function Shop() {
 
                 <button
                   type="button"
-                  onClick={() => setOpen(true)}
+                  onClick={() => setOpen(true)} //FIXME:
                   className="inline-block text-sm font-medium text-gray-700 hover:text-gray-900 sm:hidden"
                 >
                   פילטרים
@@ -189,6 +196,9 @@ function Shop() {
                           setSortOption(item.id);
                         }}
                         key={item.id}
+                        className={`p-2 ${
+                          sortOption === item.id ? "bg-red-100" : ""
+                        }`}
                       >
                         {item.name}
                       </button>
