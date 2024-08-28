@@ -15,15 +15,16 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { fetchProducts } from "../services/shopify";
+import { sortDataOptions } from "../utils/SortOptions";
 
 const sortOptions = [
   // //   { name: "Most Popular", href: "#" },
   // //   { name: "Best Rating", href: "#" },
   //   { name: "Newest", href: "#" },
-  { name: "מחיר: מהגובהה לנמוך", href: "#" },
-  { name: "מחיר: מהנמוך לגובהה", href: "#" },
+  { id: "1", name: "מחיר: מהגובהה לנמוך", /*href: "#"*/ value: "highToLow" },
+  { id: "2", name: "מחיר: מהנמוך לגובהה" /*href: "#"*/, value: "lowToHigh" },
 ];
-
+//currrect the name TODO:
 const filters = [
   {
     id: "ALL",
@@ -42,19 +43,24 @@ const filters = [
 function Shop() {
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState([]);
+  const [sortOption, setSortOption] = useState("old");
 
   useEffect(() => {
     const loadProducts = async () => {
       try {
         const fetchedProducts = await fetchProducts();
-        setProducts(fetchedProducts);
+        console.log(sortOption);
+
+        const sortedProducts = sortDataOptions(sortOption, fetchedProducts);
+
+        setProducts(sortedProducts);
       } catch (error) {
         console.error("Error loading products", error);
       }
     };
 
     loadProducts();
-  }, []);
+  }, [sortOption]);
 
   return (
     <div>
@@ -98,8 +104,14 @@ function Shop() {
                       className="border-t border-gray-200 px-4 py-6"
                     >
                       <h3 className="-mx-2 -my-3 flow-root">
-                        <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-sm text-gray-400">
-                          <span className="font-medium text-gray-900">
+                        <DisclosureButton
+                          onClick={() => setSortOption(section.id)}
+                          className="group flex w-full items-center justify-between bg-white px-2 py-3 text-sm text-gray-400"
+                        >
+                          <span
+                            onClick={() => setOpen(!open)}
+                            className="font-medium text-gray-900"
+                          >
                             {section.name}
                           </span>
                         </DisclosureButton>
@@ -147,13 +159,14 @@ function Shop() {
                   >
                     <div className="py-1">
                       {sortOptions.map((option) => (
-                        <MenuItem key={option}>
-                          <a
-                            href={option.href}
+                        <MenuItem key={option.id}>
+                          <button
+                            // href={option.href}
+                            onClick={() => setSortOption(option.value)}
                             className="block px-4 py-2 text-sm font-medium text-gray-900 data-[focus]:bg-gray-100"
                           >
                             {option.name}
-                          </a>
+                          </button>
                         </MenuItem>
                       ))}
                     </div>
@@ -165,13 +178,25 @@ function Shop() {
                   onClick={() => setOpen(true)}
                   className="inline-block text-sm font-medium text-gray-700 hover:text-gray-900 sm:hidden"
                 >
-                  Filters
+                  פילטרים
                 </button>
 
                 <PopoverGroup className="hidden sm:flex sm:items-baseline sm:space-x-8">
-                  <button>הצג הכל</button>
+                  {filters.map((item) => {
+                    return (
+                      <button
+                        onClick={() => {
+                          setSortOption(item.id);
+                        }}
+                        key={item.id}
+                      >
+                        {item.name}
+                      </button>
+                    );
+                  })}
+                  {/* <button>הצג הכל</button>
                   <button>פופולארי</button>
-                  <button>חדש</button>
+                  <button>חדש</button> */}
                 </PopoverGroup>
               </div>
             </section>
