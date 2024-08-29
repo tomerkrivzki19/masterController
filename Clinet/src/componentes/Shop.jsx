@@ -247,11 +247,21 @@ function Shop() {
         {/* section */}
         <div className="relative bg-gray-800 px-6 py-32 sm:px-12 sm:py-40 lg:px-16">
           <div className="absolute inset-0 overflow-hidden">
-            <img
+            {/* <img
               alt=""
               src="https://cdn.vox-cdn.com/thumbor/03pr6mrG8uDchXWtTM77sKkuvPM=/0x0:893x539/1400x1050/filters:focal(447x270:448x271)/cdn.vox-cdn.com/uploads/chorus_asset/file/21902907/xbox_lab_design.jpg"
               className="h-full w-full object-cover object-center"
-            />
+            /> */}
+            <img
+              // sizes="(min-width: 768px) 100vw, (max-width: 797px) min(100%, 757px), (max-height: 756px) min(100%, 757px), (min-aspect-ratio: 2957/2266) calc((calc(100vh - 175px)) * 1.30494), calc(100vw - 40px)"
+              // srcset="https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&amp;w=757&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D 757w, https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&amp;w=1057&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D 1057w, https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&amp;w=1357&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D 1357w, https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&amp;w=1514&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D 1514w, https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&amp;w=1657&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D 1657w, https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&amp;w=1957&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D 1957w, https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&amp;w=2114&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D 2114w, https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&amp;w=2257&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D 2257w, https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&amp;w=2557&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D 2557w, https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&amp;w=2714&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D 2714w, https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&amp;w=2857&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D 2857w, https://images.unsplash.com/photo-1593305841991-05c297ba4575?q=80&amp;w=2957&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D 2957w"
+              src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?fm=jpg&amp;q=60&amp;w=3000&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              alt="a computer screen with a video game on it"
+              className="h-full w-full object-cover object-center"
+
+              // class="I7OuT DVW3V L1BOa"
+              // style="aspect-ratio: 2957 / 2266;"
+            ></img>
           </div>
           <div
             aria-hidden="true"
