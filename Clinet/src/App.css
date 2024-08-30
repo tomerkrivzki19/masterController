@@ -1,3 +1,18 @@
+@keyframes count-up {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.count-up {
+  animation: count-up 1s ease-out;
+}
+
 #root {
   /* max-width: 1280px;
   margin: 0 auto;
@@ -6,6 +21,7 @@
   /* margin: 0 auto; */
   /* direction: rtl; TODO: */
 }
+
 /* 
 .logo {
   height: 6em;
