@@ -15,6 +15,7 @@ import NavBar from "./componentes/NavBar";
 import Footer from "./componentes/Footer";
 import AboutUs from "./componentes/AboutUs";
 import { CartProvider } from "./contexts/cartContext";
+import Takanon from "./componentes/Takanon";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/faq" element={<FAQ />} />
           {/* Bbout us */}
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/site-policy" element={<Takanon />} />
         </Routes>
         <Footer />
       </Router>

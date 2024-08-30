@@ -16,9 +16,10 @@ import { removeProductFromCart } from "../services/shopify";
 import mainLogo from "../assets/horizontal-logo.png";
 
 const navigation = [
-  { name: "חנות", href: "/shop" },
-  { name: "הסיפור שלנו", href: "/about" },
+  { name: "תקנון האתר", href: "/site-policy" },
   { name: "שאלות תשובות", href: "/faq" },
+  { name: "הסיפור שלנו", href: "/about" },
+  { name: `חנות`, href: "/shop" },
 ];
 
 function NavBar() {
