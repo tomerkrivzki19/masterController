@@ -29,13 +29,9 @@ function App() {
           <Route path="/shop" element={<Shop />} />
 
           <Route path="/product/:id" element={<ProductItem />} />
-          {/* testing shoping cart */}
           <Route path="/cart" element={<ShopingCart />} />
-          {/* testing success page test */}
           <Route path="/success" element={<SuccessPage />} />
-          {/* faq page test */}
           <Route path="/faq" element={<FAQ />} />
-          {/* Bbout us */}
           <Route path="/about" element={<AboutUs />} />
           <Route path="/site-policy" element={<Takanon />} />
         </Routes>

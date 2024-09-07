@@ -11,7 +11,7 @@ const compresion = require("compresion");
 
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController"); //TODO: fix the controller to our owen use depending on the routs we will use /api or other
-const productsRouter = require("./Router/productRouter");
+const clientRouter = require("./Router/clientRouter");
 
 const app = express();
 
@@ -50,10 +50,8 @@ app.use(
 
 // cookie-parser
 app.use(cookieParer());
-
 //ATTACKS BLOCK:
 app.use(mongoSanitize()); // this is a function that we call that them will return us a middleware function that then we can use, what the middleware function does is to loook at the req body, req queryString and also req.params and filter out all the dollars sign and dots, y removing them this apparators will no longer work
-
 //Data sanitization against XSS
 app.use(xss());
 //compresion
@@ -67,14 +65,14 @@ app.use((req, res, next) => {
   next();
 });
 
-//ROUTES TODO: -connect to shopidy routes
-app.use("/api/v1/products", productsRouter);
+//ROUTES
+app.use("/api/v1", clientRouter);
 
 app.all("*", (req, res, next) => {
-  //THE USE OF A CONSTRUCTOR
   next(new AppError(`can't find  ${req.originalUrl} on this server`, 404));
 });
 
 //err handaling middleware
 app.use(globalErrorHandler);
-TODO: module.exports = app;
+
+module.exports = app;

@@ -9,6 +9,7 @@ import {
 import { CartContext } from "../contexts/cartContext";
 import logoItem from "../assets/mobile-logo.png";
 import logoItemTwo from "../assets/wordmark-logo.png";
+import axios from "axios";
 function mainPage() {
   const [products, setProducts] = useState([]);
 
@@ -27,12 +28,40 @@ function mainPage() {
 
   const { addToCart, addProductCartLoading } = useContext(CartContext);
   const [loadingIndex, setLoadingIndex] = useState(null); // Manage which button is loading
+  const [email, setEmail] = useState("");
 
   //to avoid all btn loader
   const handleAddCart = async (variantId, quantity, indexP) => {
     setLoadingIndex(indexP);
     await addToCart(variantId, quantity);
     setLoadingIndex(null);
+  };
+
+  const getOnChange = (setFunc) => {
+    const handleOnChange = (e) => {
+      setFunc(e.target.value);
+    };
+
+    return handleOnChange;
+  };
+  const sendInfo = async () => {
+    try {
+      const res = await axios.post(
+        "http://127.0.0.1:8000/api/v1/create-customer",
+        {
+          email,
+        }
+      );
+
+      if (res.status === 201) {
+        //need to add showAlert some kind of calls ot libaryTODO:
+        setEmail("");
+        alert("sucess, the emails was send prefectly");
+      }
+    } catch (error) {
+      setEmail("");
+      alert("הפרטים שלך מעודכנים במערכת 🙂 ");
+    }
   };
   return (
     <>
@@ -168,7 +197,7 @@ function mainPage() {
               <a href="/shop" className="pt-9 ">
                 <button
                   type="button"
-                  class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-48"
+                  className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-48"
                 >
                   המשך בקנייה
                 </button>
@@ -180,8 +209,7 @@ function mainPage() {
       <DeilveryProtocols />
 
       <div className="promo-section-continaer">
-        {/* {" "}TODO: THIS IS BACKEND -SERVER SIDE SECTION FOR CONTROLL EMAILS AND STUFF */}
-        <div className="bg-white py-16 sm:py-24">
+        <div className="bg-purple-500	 py-16 sm:py-24">
           <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div
               className="relative isolate overflow-hidden bg-gray-900 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32"
@@ -199,6 +227,8 @@ function mainPage() {
                   כתובת דוא"ל
                 </label>
                 <input
+                  onChange={getOnChange(setEmail)}
+                  value={email}
                   id="email-address"
                   name="email"
                   type="email"
@@ -208,7 +238,8 @@ function mainPage() {
                   className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6"
                 />
                 <button
-                  type="submit"
+                  onClick={sendInfo}
+                  type="button"
                   className="flex-none rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   שמרו אותי מעודכן

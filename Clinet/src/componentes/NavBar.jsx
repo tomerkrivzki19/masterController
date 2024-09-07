@@ -12,7 +12,7 @@ import {
   ShoppingBagIcon,
 } from "@heroicons/react/24/outline";
 import { CartContext } from "../contexts/cartContext";
-import { removeProductFromCart } from "../services/shopify";
+import { redirectToCheckout, removeProductFromCart } from "../services/shopify";
 import mainLogo from "../assets/horizontal-logo.png";
 
 const navigation = [
@@ -177,6 +177,7 @@ function NavBar() {
                 sub-total {subTotal.toLocaleString()}
               </p>
               <button
+                onClick={redirectToCheckout}
                 type="submit"
                 className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
               >

@@ -165,3 +165,25 @@ export const clearCartTokenCookie = () => {
   document.cookie =
     "shopifyCartToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 };
+
+// Redirect user to Shopify checkout FIXME: when deployed we will use the PAY+ api
+export const redirectToCheckout = async () => {
+  try {
+    // Retrieve or create a checkout session
+    const checkoutId = await getCheckout();
+
+    // Fetch the checkout data
+    const checkout = await client.checkout.fetch(checkoutId);
+    console.log("checkout", checkout);
+
+    // Redirect the user to the checkout URL
+    if (checkout && checkout.webUrl) {
+      window.location.href = checkout.webUrl;
+    } else {
+      throw new Error("Checkout URL not found");
+    }
+  } catch (error) {
+    console.error("Error redirecting to checkout", error);
+    throw error;
+  }
+};

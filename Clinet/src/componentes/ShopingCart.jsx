@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { CheckIcon, ClockIcon } from "@heroicons/react/20/solid";
 import { CartContext } from "../contexts/cartContext";
+import { redirectToCheckout } from "../services/shopify";
 
 function ShoppingCart() {
   const { cart, handleRemoveItem, subTotal, loading } = useContext(CartContext);
-  console.log(cart[0]);
 
   return (
     <>
@@ -122,7 +122,8 @@ function ShoppingCart() {
                   </div>
                   <div className="mt-10">
                     <button
-                      type="submit"
+                      onClick={redirectToCheckout}
+                      type="button"
                       className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                     >
                       Checkout
