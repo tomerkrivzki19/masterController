@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import {
   Dialog,
@@ -16,6 +16,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { fetchProducts } from "../services/shopify";
 import { sortDataOptions } from "../utils/SortOptions";
+import { CartContext } from "../contexts/cartContext";
 
 const sortOptions = [
   // //   { name: "Most Popular", href: "#" },
@@ -41,6 +42,7 @@ const filters = [
 ];
 
 function Shop() {
+  const { addToCart } = useContext(CartContext);
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [sortOption, setSortOption] = useState("NEW");
@@ -219,42 +221,86 @@ function Shop() {
           <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
             <h2 className="sr-only">Products</h2>
 
-            <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
               {products.map((product) => (
                 <a
                   key={product.id}
                   href={`/product/${encodeURIComponent(product.id)}`}
-                  className="group"
+                  className="group relative block overflow-hidden"
                 >
+                  {/* Wishlist Button */}
+                  <button className="absolute end-4 top-4 z-10 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75">
+                    <span className="sr-only">Wishlist</span>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="size-4"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                      />
+                    </svg>
+                  </button>
+
+                  {/* Product Image */}
                   <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                     <img
                       alt={product.images[0]?.altText || "Product image"}
                       src={product.images[0]?.src || "/placeholder.jpg"}
-                      className="h-full w-full object-cover object-center group-hover:opacity-75"
+                      className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-105"
                     />
                   </div>
-                  <h3 className="mt-4 text-sm text-gray-700">
-                    {product.title}
-                  </h3>
-                  <div className="flex place-content-between">
-                    <p className="mt-1 text-lg font-medium text-gray-900">
-                      {product.variants[0]?.price.amount
-                        ? `${product.variants[0].price.amount} ${product.variants[0].price.currencyCode}`
-                        : "Price not available"}
-                    </p>
-                    <p className="mt-1 text-lg font-medium text-gray-900  line-through">
-                      {product.variants[0]?.compareAtPrice
-                        ? `${product.variants[0].compareAtPrice.amount} 
-                      
-                        ${product.variants[0].compareAtPrice.currencyCode}`
-                        : "  "}
-                    </p>
+
+                  {/* Product Info */}
+                  <div className="relative border border-gray-100 bg-white p-6">
+                    <span className="whitespace-nowrap bg-yellow-400 px-3 py-1.5 text-xs font-medium">
+                      New
+                    </span>
+
+                    <h3 className="mt-4 text-lg font-medium text-gray-900 md:text-base sm:text-sm">
+                      {product.title}
+                    </h3>
+
+                    <div className="flex justify-between">
+                      {/* Product Price */}
+                      <p className="mt-1 text-lg font-medium text-gray-600 md:text-base sm:text-xs">
+                        {product.variants[0]?.price.amount
+                          ? `${product.variants[0].price.amount} ₪`
+                          : "Price not available"}
+                      </p>
+
+                      {/* Compare at Price (for sale items) */}
+                      {product.variants[0]?.compareAtPrice && (
+                        <p className="mt-1 text-lg font-medium text-gray-600 line-through md:text-base sm:text-xs">
+                          {`${product.variants[0].compareAtPrice.amount} ₪`}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Add to Cart Button */}
+                    <form className="mt-4" onSubmit={(e) => e.preventDefault()}>
+                      <button
+                        className="block w-full rounded bg-yellow-400 p-4 text-sm font-medium transition hover:scale-105"
+                        // data={product.variants[0].id}
+                        // type="button"
+                        onClick={() => addToCart(product.variants[0].id, 1)}
+                      >
+                        הוסף לעגלה
+                      </button>
+                    </form>
                   </div>
                 </a>
               ))}
             </div>
           </div>
         </div>
+
         {/* section */}
         <div className="relative bg-gray-800 px-6 py-32 sm:px-12 sm:py-40 lg:px-16">
           <div className="absolute inset-0 overflow-hidden">

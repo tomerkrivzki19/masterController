@@ -16,6 +16,8 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
   const [addProductCartLoading, setAddProductCartLoading] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
   // Fetch cart data and set state
   const fetchCart = async () => {
     try {
@@ -47,6 +49,7 @@ export const CartProvider = ({ children }) => {
     } catch (error) {
       console.error("Error adding to cart", error);
     } finally {
+      setIsCartOpen(true); //open the cart when adding item
       setAddProductCartLoading(false); // End loading
     }
   };
@@ -72,6 +75,8 @@ export const CartProvider = ({ children }) => {
         loading,
         subTotal,
         handleRemoveItem,
+        isCartOpen,
+        setIsCartOpen,
       }}
     >
       {children}
