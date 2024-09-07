@@ -93,14 +93,8 @@ function NavBar() {
               <ul role="list" className="divide-y divide-gray-200">
                 {cart.length === 0 ? (
                   <>
-                    <div className="flex space-between space-x-4 size-full">
-                      <div className="bg-yellow-200 flex space-x-4 p-1">
-                        <span className="text-base	pt-2 font-mono">מוצרים</span>
-                        <p className="text-base	 pt-2 font-mono">
-                          {totalQuantity}
-                        </p>
-                      </div>
-                      <h1 className="text-3xl ">🛒 הסל שלי </h1>
+                    <div className="flex justify-center space-x-4 w-full">
+                      <h1 className="text-3xl">🛒 הסל שלי</h1>
                     </div>
                     <ul className="items-center	w-full h-48 max-h-full hover:max-h-screen text-center pt-10 text-lg ">
                       <li>הסל ריק 🛒</li>
@@ -108,14 +102,8 @@ function NavBar() {
                   </>
                 ) : (
                   <div>
-                    <div className="flex space-between space-x-4 size-full">
-                      <div className="bg-yellow-200 flex space-x-4 p-1">
-                        <span className="text-base	pt-2 font-mono">מוצרים</span>
-                        <p className="text-base	 pt-2 font-mono">
-                          {totalQuantity}
-                        </p>
-                      </div>
-                      <h1 className="text-3xl ">🛒 הסל שלי </h1>
+                    <div className="flex justify-center space-x-4 w-full">
+                      <h1 className="text-3xl">🛒 הסל שלי</h1>
                     </div>
                     <ul className="items-center	">
                       {cart.map((item) => (
@@ -135,16 +123,16 @@ function NavBar() {
                           <div className="ml-4 flex-auto">
                             <h3 className="font-medium text-gray-900">
                               <a href={item.variant.image.href || "#"}>
-                                {/* {item.title} */}
-                                {item.variant.price.amount}{" "}
-                                {item.variant.price.currencyCode}
+                                {/* {item.title} */}₪{" "}
+                                {item.variant.price.amount}
+                                {/* {item.variant.price.currencyCode} */}
                               </a>{" "}
                               {/* Use `item.title` for product name */}
                             </h3>
                             <p className="text-gray-500">{item.title}</p>{" "}
                             {/* Use `color` if available */}
                             <p className="text-gray-500">
-                              Qty: {item.quantity}
+                              כמות: {item.quantity}
                             </p>
                           </div>
                           <button
@@ -174,21 +162,21 @@ function NavBar() {
                 )}
               </ul>
               <p className="mt-6 text-center font-mono">
-                sub-total {subTotal.toLocaleString()}
+                סכום ביניים : ₪{subTotal.toLocaleString()}
               </p>
               <button
                 onClick={redirectToCheckout}
                 type="submit"
-                className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 mt-2"
               >
-                Checkout
+                לקופה
               </button>
               <p className="mt-6 text-center">
                 <a
                   href="/cart"
                   className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
                 >
-                  View Shopping Bag
+                  צפה בסל קניות{" "}
                 </a>
               </p>
             </PopoverPanel>

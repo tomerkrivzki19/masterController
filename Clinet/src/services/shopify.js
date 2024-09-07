@@ -77,7 +77,7 @@ export const fetchTopSellingProducts = async () => {
     );
 
     // Limit to top 5 products
-    const topSellingProducts = sortedProducts.slice(0, 4);
+    const topSellingProducts = sortedProducts.slice(0, 3);
 
     return topSellingProducts;
   } catch (error) {

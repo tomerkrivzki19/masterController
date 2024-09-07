@@ -133,77 +133,103 @@ function mainPage() {
       </div>
       <div className="top-sellers-container">
         <div className="bg-white">
-          <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-            <h2
-              className="text-2xl font-bold tracking-tight text-gray-900 "
-              dir="rtl"
-            >
-              לקוחות קונים 🛍️:
-            </h2>
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+            <div className="sm:flex sm:items-baseline sm:justify-between">
+              <a
+                href="/shop"
+                className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block  "
+              >
+                עיין בכל המוצרים
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+              <h2 className="text-2xl font-bold tracking-tight text-gray-900 text-right">
+                המועדפים שלנו
+              </h2>
+            </div>
 
-            <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-              {products.map((product, index) => {
-                return (
-                  <div className="flex flex-col items-center  space-y-4">
-                    <div key={product.id} className="group relative">
-                      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                        <img
-                          alt={product.images[0]?.altText || "Product image"}
-                          src={product.images[0]?.src || "/placeholder.jpg"}
-                          className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                        />
-                      </div>
-                      <div className="mt-4 flex justify-between">
-                        <div>
-                          <h3 className="text-sm text-gray-700">
-                            <a
-                              href={`/product/${encodeURIComponent(
-                                product.id
-                              )}`}
-                            >
-                              <span
-                                aria-hidden="true"
-                                className="absolute inset-0"
-                              />
-                              {product.title}
-                            </a>
-                          </h3>
-                        </div>
-                        <p className="text-sm font-medium text-gray-900">
-                          {/* Check if variants exist and get the price of the first variant */}
-                          {product.variants[0]?.price
-                            ? `${product.variants[0].price.amount} ${product.variants[0].price.currencyCode}`
-                            : "Price not available"}
-                        </p>
-                      </div>
-                    </div>
-                    <button
-                      // onClick={() => addToCart(product.variants[0].id, 1)}
-                      onClick={() =>
-                        handleAddCart(product.variants[0].id, 1, index)
-                      }
-                      className="py-2 px-5 bg-violet-500 text-white font-semibold rounded-full shadow-md hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-400 focus:ring-opacity-75"
-                      disabled={loadingIndex === index || addProductCartLoading}
-                    >
-                      {loadingIndex === index ? (
-                        <div className="w-5 h-5 border-4 border-white border-t-transparent border-solid rounded-full animate-spin"></div>
-                      ) : (
-                        "הוסף לסל"
-                      )}
-                    </button>
+            <div className="mt-6 grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 lg:gap-x-8">
+              {products.map((product, index) => (
+                <div key={product.id} className="group relative">
+                  <div className="h-96 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2 group-hover:opacity-75 sm:h-auto">
+                    <img
+                      alt={product.images[0]?.altText || "Product image"}
+                      src={product.images[0]?.src || "/placeholder.jpg"}
+                      className="h-full w-full object-cover object-center"
+                    />
                   </div>
-                );
-              })}
-              <a href="/shop" className="pt-9 ">
-                <button
-                  type="button"
-                  className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-48"
-                >
-                  המשך בקנייה
-                </button>
+                  <h3 className="mt-4 text-base font-semibold text-gray-900">
+                    <a href={`/product/${encodeURIComponent(product.id)}`}>
+                      <span className="absolute inset-0" />
+                      {product.title}
+                    </a>
+                  </h3>
+                  <p className="mt-1 text-sm text-gray-500">
+                    {product.variants[0]?.price
+                      ? `${product.variants[0].price.amount} ₪`
+                      : "Price not available"}
+                  </p>
+
+                  {/* Add to Cart Button */}
+                  {/* <button
+                    onClick={() =>
+                      handleAddCart(product.variants[0].id, 1, index)
+                    }
+                    className="py-2 px-5 bg-violet-500 text-white font-semibold rounded-full shadow-md hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-400 focus:ring-opacity-75 mt-4"
+                    disabled={loadingIndex === index || addProductCartLoading}
+                  >
+                    {loadingIndex === index ? (
+                      <div className="w-5 h-5 border-4 border-white border-t-transparent border-solid rounded-full animate-spin"></div>
+                    ) : (
+                      "הוסף לסל"
+                    )}
+                  </button> */}
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 sm:hidden text-right">
+              <a
+                href="/shop"
+                className="block text-sm font-semibold text-indigo-600 hover:text-indigo-500"
+              >
+                עיין בכל המוצרים
+                <span aria-hidden="true">&rarr;</span>
               </a>
             </div>
           </div>
+        </div>
+      </div>
+      {/* section */}
+      <div className="relative bg-gray-800 px-6 py-32 sm:px-12 sm:py-40 lg:px-16">
+        <div className="absolute inset-0 overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?fm=jpg&amp;q=60&amp;w=3000&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="a computer screen with a video game on it"
+            className="h-full w-full object-cover object-center"
+          ></img>
+        </div>
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gray-900 bg-opacity-50"
+        />
+        <div
+          className="relative mx-auto flex max-w-3xl flex-col items-center text-center"
+          dir="rtl"
+        >
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            קנו את הבקר המעוצב הראשון שלכם
+          </h2>
+          <p className="mt-3 text-xl text-white">
+            אצלנו, כל בקר מעוצב בקפידה ומיוצר ברמה הגבוהה ביותר. אנו מחויבים
+            לאיכות, עיצוב אישי ועמידה בתקנים האתיים המחמירים ביותר. כל רכישה
+            תומכת ביצירת חוויות גיימינג בלתי נשכחות.
+          </p>
+          <a
+            href="/shop"
+            className="mt-8 block w-full rounded-md border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto"
+          >
+            גלו את הקולקציה שלנו
+          </a>
         </div>
       </div>
       <DeilveryProtocols />
