@@ -331,8 +331,6 @@ function Shop() {
         {/* FIXME: FOR NOW WE WILL ADD WHEN THERE WILL BE AN PLATSTATION CONTROLELR */}
         {productsType === "playstation" ? (
           // PlayStation SECTION
-          <div></div>
-        ) : (
           <section className=" relative">
             <div className="w-full max-w-7xl px-4 md:px-5 lg:px-5 mx-auto">
               <div className="w-full md:px-16 px-10 md:pt-16 pt-10 pb-10 bg-gray-900 rounded-2xl flex-col justify-end items-center lg:gap-28 md:gap-16 gap-10 inline-flex">
@@ -364,6 +362,8 @@ function Shop() {
               </div>
             </div>
           </section>
+        ) : (
+          <div></div>
         )}
       </div>
     </div>
