@@ -1,11 +1,5 @@
-import React, { useEffect, useLayoutEffect, useState, useContext } from "react";
-import {
-  Dialog,
-  DialogPanel,
-  Popover,
-  PopoverButton,
-  PopoverPanel,
-} from "@headlessui/react";
+import React, { useEffect, useState, useContext } from "react";
+import { Dialog, DialogPanel } from "@headlessui/react";
 import {
   Bars3Icon,
   XMarkIcon,
@@ -35,7 +29,7 @@ function NavBar() {
 
   const [scrolled, setScrolled] = useState(false);
 
-  //scroll efect
+  // Scroll effect
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -51,21 +45,20 @@ function NavBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // cart quantity
+  // Cart quantity
   const totalQuantity = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <header className="bg-white">
       <nav
         aria-label="Global"
-        // className="mx-auto flex items-center justify-between gap-x-6 p-6 lg:px-8 fixed w-full z-50 bg-[#aa60cb]  "
         className={`mx-auto flex items-center justify-between h-24 p-5 gap-x-6 lg:px-8 fixed w-full z-50 duration-300 ease-in-out ${
           scrolled ? "bg-[#aa60cb]" : "bg-white shadow-md"
         }`}
       >
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 p-1.5">
-            <img src={mainLogo} alt="לוגו" className="h-40  w-full " />
+            <img src={mainLogo} alt="לוגו" className="h-40 w-full" />
           </a>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
@@ -79,11 +72,12 @@ function NavBar() {
             </a>
           ))}
         </div>
+
         <div className="flex flex-1 items-center justify-end gap-x-6">
           {/* Regular button to open/close the cart */}
           <button
             className="group -m-2 flex items-center p-2"
-            onClick={() => setIsCartOpen((prev) => !prev)} // Toggle cart on click
+            onClick={() => setIsCartOpen((prev) => !prev)}
           >
             <ShoppingBagIcon
               aria-hidden="true"
@@ -187,29 +181,48 @@ function NavBar() {
             </div>
           )}
         </div>
+        <div className=" lg:hidden flex items-center justify-center  ">
+          <button
+            type="button"
+            className=" text-gray-700"
+            onClick={() => setMobileMenuOpen(true)}
+          >
+            <Bars3Icon className="h-6 " />
+          </button>
+        </div>
       </nav>
       <Dialog
         open={mobileMenuOpen}
-        onClick={() => setMobileMenuOpen(false)}
-        onClose={setMobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
         className="lg:hidden"
       >
-        <div className="fixed inset-0 z-10" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-40 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 mt-12">
-          <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-gray-500/10" dir="rtl">
-              <div className="space-y-2 py-6">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </div>
+        <div
+          className="fixed inset-0 z-10 bg-black/30 rtl"
+          aria-hidden="true"
+        />
+        <DialogPanel className="fixed inset-y-0 right-0 z-40 w-full max-w-sm bg-white px-6 py-6  text-right ">
+          {/* <div className="flex items-center justify-between "> */}
+          {/* <a href="/" className="-m-1.5 p-1.5">
+              <img src={mainLogo} alt="לוגו" className="h-40 w-full" />
+            </a> */}
+          <button
+            type="button"
+            className="p-2 mt-20 text-gray-700 "
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <XMarkIcon className="h-6 w-6" />
+          </button>
+          {/* </div> */}
+          <div className="mt- space-y-2">
+            {navigation.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-50"
+              >
+                {item.name}
+              </a>
+            ))}
           </div>
         </DialogPanel>
       </Dialog>

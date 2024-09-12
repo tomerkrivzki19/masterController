@@ -53,16 +53,35 @@ const getCheckout = async () => {
 };
 
 //get all products
-export const fetchProducts = async () => {
+export const fetchProducts = async (filterType = "all") => {
   try {
     const products = await client.product.fetchAll();
-    return products;
+
+    // Filter products based on filterType
+    let filteredProducts;
+    switch (filterType.toLowerCase()) {
+      case "xbox":
+        filteredProducts = products.filter(
+          (product) => product.productType.toLowerCase() === "xbox"
+        );
+        break;
+      case "playstation":
+        filteredProducts = products.filter(
+          (product) => product.productType.toLowerCase() === "playstation"
+        );
+        break;
+      case "all":
+      default:
+        filteredProducts = products;
+        break;
+    }
+
+    return filteredProducts;
   } catch (error) {
     console.error("Error fetching products", error);
     throw error;
   }
 };
-
 //get top -5 products TODO:
 export const fetchTopSellingProducts = async (slice) => {
   try {
