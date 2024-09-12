@@ -30,6 +30,10 @@
   display: none;
 }
 
+.rtl {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
 #root {
   /* max-width: 1280px;
   margin: 0 auto;

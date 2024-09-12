@@ -69,12 +69,12 @@ export default function Example() {
                   <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:text-right">
                     אנחנו משנים את הדרך בה אנשים מתחברים
                   </h1>
-                  <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none lg:text-right">
-                    אנחנו מציעים עיצובים מותאמים אישית לבקרי Xbox, המאפשרים לך
-                    להוסיף נגיעה אישית לחוויית המשחק שלך. בין אם אתה מחפש עיצוב
-                    ייחודי או פשוט רוצה לשדרג את הבקר שלך, יש לנו את הפתרון
-                    המתאים לך. כל בקר מותאם אישית שנעשה כאן מקבל טיפול אישי
-                    ויסודי, כדי להבטיח את איכות הביצוע והעמידות הגבוהה ביותר.
+                  <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none lg:text-right rtl ">
+                    אנחנו מציעים עיצובים מותאמים לבקרי xobX , המאפשרים לך הוסף
+                    נגיעה אישית לחוויית המשחק שלך. בין אם אתה מחפש עיצוב ייחודי
+                    או פשוט רוצה לשדרג את הבקר שלך, יש לנו את הפתרון המתאים לך.
+                    כל בקר מותאם אישית שנעשה כאן מקבל טיפול אישי ויסודי, כדי
+                    להשיג איכות הביצוע והעמידות הגבוהה ביותר.
                   </p>
                 </div>
                 <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">

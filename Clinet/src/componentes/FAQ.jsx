@@ -43,11 +43,11 @@ function FAQ() {
   return (
     <div className="faq-container bg-gray-50">
       <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 text-right">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="mx-auto max-w-2xl text-center ">
           <h2 className="text-2xl font-bold leading-10 tracking-tight text-gray-900">
             שאלות נפוצות
           </h2>
-          <p className="mt-6 text-base leading-7 text-gray-600">
+          <p className="mt-6 text-base leading-7 text-gray-600 rtl">
             יש לכם שאלה אחרת ולא מצאתם תשובה? פנו לצוות התמיכה שלנו{" "}
             <a
               href="mailto:support@yourcontrollersite.com"
@@ -62,10 +62,10 @@ function FAQ() {
           <dl className="space-y-16 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-16 sm:space-y-0 lg:gap-x-10">
             {faqs.map((faq) => (
               <div key={faq.id}>
-                <dt className="text-base font-semibold leading-7 text-gray-900">
+                <dt className="text-base font-semibold leading-7 text-gray-900 rtl">
                   {faq.question}
                 </dt>
-                <dd className="mt-2 text-base leading-7 text-gray-600">
+                <dd className="mt-2 text-base leading-7 text-gray-600 rtl">
                   {faq.answer}
                 </dd>
               </div>

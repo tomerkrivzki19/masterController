@@ -16,7 +16,7 @@ function mainPage() {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const fetchedProducts = await fetchTopSellingProducts();
+        const fetchedProducts = await fetchTopSellingProducts(3);
         setProducts(fetchedProducts);
       } catch (error) {
         console.error("Error loading products", error);

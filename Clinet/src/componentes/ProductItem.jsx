@@ -39,7 +39,7 @@ function ProductItem() {
         if (productData === null) {
           navigate("*");
         }
-        const productsData = await fetchTopSellingProducts();
+        const productsData = await fetchTopSellingProducts(4);
         setProduct(productData);
         setProducts(productsData);
       } catch (error) {
@@ -60,14 +60,14 @@ function ProductItem() {
     }
   };
   return (
-    <div className="product-body-container bg-white">
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+    <div className="bg-white pt-10 sm:pt-4">
+      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 ">
         {!product ? (
           <div className=" h-96 flex justify-center items-center	">
             <div className="w-10 h-10 rounded-full animate-spin border border-solid border-sky-500 border-t-transparent "></div>
           </div>
         ) : (
-          <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
+          <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8 ">
             {/* Image gallery */}
             <TabGroup className="flex flex-col-reverse">
               {/* Image selector */}
@@ -212,8 +212,8 @@ function ProductItem() {
       {/* products container */}
       <div className="bg-white">
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-            Customers also purchased
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900 text-right">
+            :לקוחות גם רכשו{" "}
           </h2>
           {products.length === 0 ? (
             <div className=" h-96 flex justify-center items-center	">

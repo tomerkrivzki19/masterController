@@ -64,7 +64,7 @@ export const fetchProducts = async () => {
 };
 
 //get top -5 products TODO:
-export const fetchTopSellingProducts = async () => {
+export const fetchTopSellingProducts = async (slice) => {
   try {
     // Fetch all products
     const products = await client.product.fetchAll();
@@ -77,7 +77,7 @@ export const fetchTopSellingProducts = async () => {
     );
 
     // Limit to top 5 products
-    const topSellingProducts = sortedProducts.slice(0, 3);
+    const topSellingProducts = sortedProducts.slice(0, slice);
 
     return topSellingProducts;
   } catch (error) {
