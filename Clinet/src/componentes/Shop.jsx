@@ -62,7 +62,7 @@ function Shop() {
   const [sortOption, setSortOption] = useState("NEW");
   const [productsType, setProductsType] = useState("all");
 
-  console.log(productsType);
+  // console.log(products);
 
   useEffect(() => {
     const loadProducts = async () => {
