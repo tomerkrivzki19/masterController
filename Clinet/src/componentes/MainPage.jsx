@@ -1,17 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useState, useEffect } from "react";
 import DeilveryProtocols from "./subcompnents/deilveryProtocols";
-import {
-  fetchProducts,
-  fetchTopSellingProducts,
-  addToCart,
-} from "../services/shopify";
-import { CartContext } from "../contexts/cartContext";
+import { fetchTopSellingProducts } from "../services/shopify";
 import logoItem from "../assets/mobile-logo.png";
 import logoItemTwo from "../assets/wordmark-logo.png";
 import axios from "axios";
+
 function mainPage() {
   const [products, setProducts] = useState([]);
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -25,17 +22,6 @@ function mainPage() {
 
     loadProducts();
   }, []);
-
-  const { addToCart, addProductCartLoading } = useContext(CartContext);
-  const [loadingIndex, setLoadingIndex] = useState(null); // Manage which button is loading
-  const [email, setEmail] = useState("");
-
-  //to avoid all btn loader
-  const handleAddCart = async (variantId, quantity, indexP) => {
-    setLoadingIndex(indexP);
-    await addToCart(variantId, quantity);
-    setLoadingIndex(null);
-  };
 
   const getOnChange = (setFunc) => {
     const handleOnChange = (e) => {
@@ -168,21 +154,6 @@ function mainPage() {
                       ? `${product.variants[0].price.amount} ₪`
                       : "Price not available"}
                   </p>
-
-                  {/* Add to Cart Button */}
-                  {/* <button
-                    onClick={() =>
-                      handleAddCart(product.variants[0].id, 1, index)
-                    }
-                    className="py-2 px-5 bg-violet-500 text-white font-semibold rounded-full shadow-md hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-400 focus:ring-opacity-75 mt-4"
-                    disabled={loadingIndex === index || addProductCartLoading}
-                  >
-                    {loadingIndex === index ? (
-                      <div className="w-5 h-5 border-4 border-white border-t-transparent border-solid rounded-full animate-spin"></div>
-                    ) : (
-                      "הוסף לסל"
-                    )}
-                  </button> */}
                 </div>
               ))}
             </div>

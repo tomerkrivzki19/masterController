@@ -1,18 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Radio,
-  RadioGroup,
-  Tab,
-  TabGroup,
-  TabList,
-  TabPanel,
-  TabPanels,
-} from "@headlessui/react";
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { HeartIcon } from "@heroicons/react/24/outline";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchProductById, fetchTopSellingProducts } from "../services/shopify";
 import { CartContext } from "../contexts/cartContext";
@@ -158,7 +147,7 @@ function ProductItem() {
               </div>
 
               <form className="mt-6">
-                {/* Colors */}
+                {/* Colors TODO:*/}
                 <div>
                   <h3 className="text-sm font-medium text-gray-600">Color</h3>
                   {/* Placeholder for color options */}
@@ -199,7 +188,7 @@ function ProductItem() {
                 </h2>
 
                 <div className="divide-y divide-gray-200 border-t">
-                  {/* Details Section */}
+                  {/* Details Section  FIXME:*/}
                   {/* Placeholder for additional details */}
                   {/* If product.details becomes available, render them here */}
                 </div>

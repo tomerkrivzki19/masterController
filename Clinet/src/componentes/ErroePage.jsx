@@ -3,13 +3,6 @@ import React from "react";
 function ErrorPage() {
   return (
     <>
-      {/*
-      Ensure that your global CSS includes:
-      html, body {
-        height: 100%;
-        margin: 0;
-      }
-      */}
       <main className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <img
           alt="Background"

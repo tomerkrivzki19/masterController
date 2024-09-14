@@ -1,8 +1,3 @@
-"use client";
-
-import { useEffect, useState, useRef } from "react";
-import { Dialog, DialogPanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import DeilveryProtocols from "./subcompnents/deilveryProtocols";
 import NumberCounter from "./subcompnents/NumberCouter";
 

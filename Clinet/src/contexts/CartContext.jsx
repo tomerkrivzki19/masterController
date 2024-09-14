@@ -1,14 +1,9 @@
-import React, {
-  createContext,
-  useState,
-  useEffect,
-  useLayoutEffect,
-} from "react";
+import React, { createContext, useState, useLayoutEffect } from "react";
 import {
   getCartData,
   addToCart,
   removeProductFromCart,
-} from "../services/shopify"; // Adjust the import path as necessary
+} from "../services/shopify";
 
 export const CartContext = createContext();
 

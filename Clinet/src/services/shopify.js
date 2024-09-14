@@ -1,4 +1,3 @@
-import axios from "axios";
 import Client from "shopify-buy";
 
 //SERVER INTEGRATION FOR SOPIFY

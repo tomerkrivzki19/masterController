@@ -22,7 +22,6 @@ const sortOptions = [
   { id: "1", name: "מחיר: מהגובהה לנמוך", /*href: "#"*/ value: "highToLow" },
   { id: "2", name: "מחיר: מהנמוך לגובהה" /*href: "#"*/, value: "lowToHigh" },
 ];
-//currrect the name TODO:
 const filters = [
   {
     id: "brand",
@@ -32,10 +31,6 @@ const filters = [
     id: "NEW",
     name: "חדש",
   },
-  // {
-  //   id: "ALL",
-  //   name: "הצג הכל",
-  // },
 ];
 
 const productType = [
@@ -62,8 +57,6 @@ function Shop() {
   const [sortOption, setSortOption] = useState("NEW");
   const [productsType, setProductsType] = useState("all");
 
-  // console.log(products);
-
   useEffect(() => {
     const loadProducts = async () => {
       try {
@@ -80,10 +73,6 @@ function Shop() {
 
     loadProducts();
   }, [sortOption, productsType]);
-
-  // FIXME: on the small sizes the page renders and becouse of that the err acoord
-  // console.log(open);
-  // console.log(products);
 
   return (
     <div>
@@ -285,7 +274,7 @@ function Shop() {
                     />
                   </div>
 
-                  {/* Product Info */}
+                  {/* Product Info TODO: add some quey if new or not*/}
                   <div className="relative border border-gray-100 bg-white p-6">
                     <span className="whitespace-nowrap bg-yellow-400 px-3 py-1.5 text-xs font-medium">
                       New
@@ -315,8 +304,6 @@ function Shop() {
                     <form className="mt-4" onSubmit={(e) => e.preventDefault()}>
                       <button
                         className="block w-full rounded bg-yellow-400 p-4 text-sm font-medium transition hover:scale-105"
-                        // data={product.variants[0].id}
-                        // type="button"
                         onClick={() => addToCart(product.variants[0].id, 1)}
                       >
                         הוסף לעגלה

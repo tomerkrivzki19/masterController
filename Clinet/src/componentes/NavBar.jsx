@@ -6,7 +6,7 @@ import {
   ShoppingBagIcon,
 } from "@heroicons/react/24/outline";
 import { CartContext } from "../contexts/cartContext";
-import { redirectToCheckout, removeProductFromCart } from "../services/shopify";
+import { redirectToCheckout } from "../services/shopify";
 import mainLogo from "../assets/horizontal-logo.png";
 
 const navigation = [
@@ -201,10 +201,6 @@ function NavBar() {
           aria-hidden="true"
         />
         <DialogPanel className="fixed inset-y-0 right-0 z-40 w-full max-w-sm bg-white px-6 py-6  text-right ">
-          {/* <div className="flex items-center justify-between "> */}
-          {/* <a href="/" className="-m-1.5 p-1.5">
-              <img src={mainLogo} alt="לוגו" className="h-40 w-full" />
-            </a> */}
           <button
             type="button"
             className="p-2 mt-20 text-gray-700 "
@@ -212,7 +208,6 @@ function NavBar() {
           >
             <XMarkIcon className="h-6 w-6" />
           </button>
-          {/* </div> */}
           <div className="mt- space-y-2">
             {navigation.map((item) => (
               <a
