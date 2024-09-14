@@ -1,6 +1,7 @@
 // Add to favorites and send event to Google Analytics
 export const addToFavorites = (productId, productName) => {
   let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  console.log("add to favorites", productId, productName);
 
   // Check if the product is already in favorites
   if (!favorites.includes(productId)) {

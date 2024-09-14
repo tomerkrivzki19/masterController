@@ -1,10 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import { StarIcon } from "@heroicons/react/20/solid";
+import {
+  StarIcon,
+  HeartIcon as SolidHeartIcon,
+} from "@heroicons/react/20/solid";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchProductById, fetchTopSellingProducts } from "../services/shopify";
 import { cartContext } from "../contexts/CartContext";
+//google analytics
+import { addToFavorites, removeFromFavorites } from "../utils/googleAnalytics";
 
 function ProductItem() {
   const { addToCart } = useContext(cartContext);
@@ -14,10 +19,15 @@ function ProductItem() {
   const [products, setProducts] = useState([]);
   const [loadingIndex, setLoadingIndex] = useState(true); // Manage which button is loading
 
+  // The statement useState(new Set()) initializes the favoritesSet state with an empty Set. A Set is a data structure in JavaScript that allows for fast lookups and ensures that all elements are unique.
+  const [favoritesSet, setFavoritesSet] = useState(new Set());
+  const [isFavorite, setIsFavorite] = useState(false);
+
   // Utility function for conditional class names
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
+  console.log(product);
 
   useEffect(() => {
     async function fetchProduct() {
@@ -31,13 +41,28 @@ function ProductItem() {
         const productsData = await fetchTopSellingProducts(4);
         setProduct(productData);
         setProducts(productsData);
+
+        // Check if product is in favorites on load
+        const storedFavorites =
+          JSON.parse(localStorage.getItem("favorites")) || [];
+        const favoritesSet = new Set(storedFavorites);
+        console.log(1);
+        console.log(favoritesSet.has(decodedId));
+        console.log(favoritesSet);
+        console.log(decodedId);
+
+        if (favoritesSet.has(decodedId)) {
+          setIsFavorite(true);
+        }
+
+        setFavoritesSet(favoritesSet);
       } catch (error) {
         console.error("Failed to fetch product", error);
       }
     }
 
     fetchProduct();
-  }, [id]);
+  }, [id, navigate]);
 
   const handleAddCart = async (variantId, quantity) => {
     setLoadingIndex(false);
@@ -48,6 +73,30 @@ function ProductItem() {
       throw new Error(error);
     }
   };
+
+  const toggleFavorite = (id, name) => {
+    const updatedFavorites = new Set(favoritesSet);
+
+    if (updatedFavorites.has(id)) {
+      // Remove from favorites
+      updatedFavorites.delete(id);
+      removeFromFavorites(id, name); // Google Analytics
+      setIsFavorite(false);
+    } else {
+      // Add to favorites
+      updatedFavorites.add(id);
+      addToFavorites(id, name); // Google Analytics
+      setIsFavorite(true);
+    }
+
+    // Update local storage
+    localStorage.setItem(
+      "favorites",
+      JSON.stringify(Array.from(updatedFavorites))
+    );
+    setFavoritesSet(updatedFavorites); // Update state
+  };
+
   return (
     <div className="bg-white pt-10 sm:pt-4">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 ">
@@ -171,12 +220,21 @@ function ProductItem() {
 
                   <button
                     type="button"
+                    onClick={() => toggleFavorite(product.id, product.title)}
                     className="ml-4 flex items-center justify-center rounded-md px-3 py-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
                   >
-                    <HeartIcon
-                      aria-hidden="true"
-                      className="h-6 w-6 flex-shrink-0"
-                    />
+                    {isFavorite ? (
+                      <SolidHeartIcon
+                        aria-hidden="true"
+                        className="h-6 w-6 flex-shrink-0 text-red-500"
+                      />
+                    ) : (
+                      <HeartIcon
+                        aria-hidden="true"
+                        className="h-6 w-6 flex-shrink-0 "
+                      />
+                    )}
+
                     <span className="sr-only">Add to favorites</span>
                   </button>
                 </div>
