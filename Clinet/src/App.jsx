@@ -11,27 +11,27 @@ import NavBar from "./componentes/NavBar";
 import Footer from "./componentes/Footer";
 import AboutUs from "./componentes/AboutUs";
 import Takanon from "./componentes/Takanon";
-import { CartProvider } from "./contexts/cartContext";
+// import { CartProvider } from "./contexts/cartContext";
 
 function App() {
   return (
     <>
       <Router>
-        <CartProvider>
-          <NavBar />
-          <Routes>
-            <Route path="*" element={<ErroePage />} />
-            <Route path="/" element={<MainPage />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/product/:id" element={<ProductItem />} />
-            <Route path="/cart" element={<ShopingCart />} />
-            <Route path="/success" element={<SuccessPage />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/site-policy" element={<Takanon />} />
-          </Routes>
-          <Footer />
-        </CartProvider>
+        {/* <CartProvider> */}
+        <NavBar />
+        <Routes>
+          <Route path="*" element={<ErroePage />} />
+          <Route path="/" element={<MainPage />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/product/:id" element={<ProductItem />} />
+          <Route path="/cart" element={<ShopingCart />} />
+          <Route path="/success" element={<SuccessPage />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/site-policy" element={<Takanon />} />
+        </Routes>
+        <Footer />
+        {/* </CartProvider> */}
       </Router>
     </>
   );
