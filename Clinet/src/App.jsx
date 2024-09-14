@@ -12,6 +12,7 @@ import Footer from "./componentes/Footer";
 import AboutUs from "./componentes/AboutUs";
 import Takanon from "./componentes/Takanon";
 import { CartProvider } from "./contexts/CartContext";
+import Favorites from "./componentes/Favorites";
 
 function App() {
   return (
@@ -25,10 +26,11 @@ function App() {
             <Route path="/shop" element={<Shop />} />
             <Route path="/product/:id" element={<ProductItem />} />
             <Route path="/cart" element={<ShopingCart />} />
-            <Route path="/success" element={<SuccessPage />} />
+            <Route path="/favorites" element={<Favorites />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/site-policy" element={<Takanon />} />
+            <Route path="/success" element={<SuccessPage />} />
           </Routes>
           <Footer />
         </CartProvider>

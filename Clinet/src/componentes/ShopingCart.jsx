@@ -2,9 +2,11 @@ import React, { useContext } from "react";
 import { CheckIcon, ClockIcon } from "@heroicons/react/20/solid";
 import { cartContext } from "../contexts/CartContext";
 import { redirectToCheckout } from "../services/shopify";
+import RelatedProducts from "./subcompnents/RelatedProducts";
 
 function ShoppingCart() {
-  const { cart, handleRemoveItem, subTotal, loading } = useContext(cartContext);
+  const { cart, handleRemoveItem, subTotal, loading, addToCart } =
+    useContext(cartContext);
 
   return (
     <>
@@ -146,6 +148,8 @@ function ShoppingCart() {
           </div>
         </div>
       </div>
+
+      <RelatedProducts addToCart={addToCart} />
     </>
   );
 }
