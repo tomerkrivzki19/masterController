@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import DeilveryProtocols from "./subcompnents/deilveryProtocols";
+import DeilveryProtocols from "./subcompnents/DeilveryProtocols";
 import { fetchTopSellingProducts } from "../services/shopify";
 import logoItem from "../assets/mobile-logo.png";
 import logoItemTwo from "../assets/wordmark-logo.png";

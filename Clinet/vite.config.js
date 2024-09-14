@@ -18,6 +18,13 @@ export default defineConfig({
   // },
   build: {
     rollupOptions: {
+      onwarn(warning, warn) {
+        // Suppress specific warnings
+        if (warning.code === "UNUSED_EXTERNAL_IMPORT") return;
+        if (warning.code === "THIS_IS_UNDEFINED") return;
+        // Add more conditions if needed
+        warn(warning);
+      },
       output: {
         manualChunks(id) {
           if (id.includes("node_modules")) {
