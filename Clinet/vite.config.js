@@ -26,4 +26,9 @@ export default defineConfig({
       },
     },
   },
+  resolve: {
+    alias: {
+      "@contexts": path.resolve(__dirname, "src/contexts"),
+    },
+  },
 });
