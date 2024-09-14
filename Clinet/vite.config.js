@@ -17,6 +17,10 @@ export default defineConfig({
           }
         },
       },
+      onwarn(warning, warn) {
+        console.warn(warning.message); // Output warnings to the console
+        warn(warning);
+      },
     },
   },
 });
