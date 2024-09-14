@@ -11,7 +11,7 @@ import NavBar from "./componentes/NavBar";
 import Footer from "./componentes/Footer";
 import AboutUs from "./componentes/AboutUs";
 import Takanon from "./componentes/Takanon";
-import { CartProvider } from "./contexts/cartContext";
+import { CartProvider } from "./contexts/CartContext";
 
 function App() {
   return (

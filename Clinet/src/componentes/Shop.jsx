@@ -16,7 +16,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { fetchProducts } from "../services/shopify";
 import { sortDataOptions } from "../utils/SortOptions";
-import { CartContext } from "../contexts/cartContext";
+import { cartContext } from "../contexts/CartContext";
 
 const sortOptions = [
   { id: "1", name: "מחיר: מהגובהה לנמוך", /*href: "#"*/ value: "highToLow" },
@@ -51,7 +51,7 @@ const productType = [
   },
 ];
 function Shop() {
-  const { addToCart } = useContext(CartContext);
+  const { addToCart } = useContext(cartContext);
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [sortOption, setSortOption] = useState("NEW");

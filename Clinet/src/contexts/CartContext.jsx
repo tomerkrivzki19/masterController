@@ -5,7 +5,7 @@ import {
   removeProductFromCart,
 } from "../services/shopify";
 
-export const CartContext = createContext();
+export const cartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
@@ -62,7 +62,7 @@ export const CartProvider = ({ children }) => {
     }
   };
   return (
-    <CartContext.Provider
+    <cartContext.Provider
       value={{
         cart,
         addToCart: addToCartHandler,
@@ -75,6 +75,6 @@ export const CartProvider = ({ children }) => {
       }}
     >
       {children}
-    </CartContext.Provider>
+    </cartContext.Provider>
   );
 };

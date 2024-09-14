@@ -4,10 +4,10 @@ import { StarIcon } from "@heroicons/react/20/solid";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchProductById, fetchTopSellingProducts } from "../services/shopify";
-import { CartContext } from "../contexts/cartContext";
+import { cartContext } from "../contexts/CartContext";
 
 function ProductItem() {
-  const { addToCart } = useContext(CartContext);
+  const { addToCart } = useContext(cartContext);
   const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState(null);

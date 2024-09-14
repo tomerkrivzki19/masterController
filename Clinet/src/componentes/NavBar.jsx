@@ -5,7 +5,7 @@ import {
   XMarkIcon,
   ShoppingBagIcon,
 } from "@heroicons/react/24/outline";
-import { CartContext } from "../contexts/cartContext";
+import { cartContext } from "../contexts/CartContext";
 import { redirectToCheckout } from "../services/shopify";
 import mainLogo from "../assets/horizontal-logo.png";
 
@@ -25,7 +25,7 @@ function NavBar() {
     handleRemoveItem,
     isCartOpen,
     setIsCartOpen,
-  } = useContext(CartContext);
+  } = useContext(cartContext);
 
   const [scrolled, setScrolled] = useState(false);
 

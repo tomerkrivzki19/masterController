@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { CheckIcon, ClockIcon } from "@heroicons/react/20/solid";
-import { CartContext } from "../contexts/cartContext";
+import { cartContext } from "../contexts/CartContext";
 import { redirectToCheckout } from "../services/shopify";
 
 function ShoppingCart() {
-  const { cart, handleRemoveItem, subTotal, loading } = useContext(CartContext);
+  const { cart, handleRemoveItem, subTotal, loading } = useContext(cartContext);
 
   return (
     <>
