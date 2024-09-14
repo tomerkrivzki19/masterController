@@ -15,7 +15,7 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { fetchProducts } from "../services/shopify";
-import { sortDataOptions } from "../utils/SortOptions";
+import { sortDataOptions } from "../utils/sortOptions";
 import { cartContext } from "../contexts/CartContext";
 
 const sortOptions = [

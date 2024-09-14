@@ -1,4 +1,4 @@
-import DeilveryProtocols from "./subcompnents/deilveryProtocols";
+import DeilveryProtocols from "./subcompnents/DeilveryProtocols";
 import NumberCounter from "./subcompnents/NumberCouter";
 
 const stats = [
