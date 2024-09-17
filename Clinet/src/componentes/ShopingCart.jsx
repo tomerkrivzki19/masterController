@@ -1,12 +1,28 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CheckIcon, ClockIcon } from "@heroicons/react/20/solid";
 import { cartContext } from "../contexts/CartContext";
-import { redirectToCheckout } from "../services/shopify";
+import {
+  fetchTopSellingProducts,
+  redirectToCheckout,
+} from "../services/shopify";
 import RelatedProducts from "./subcompnents/RelatedProducts";
 
 function ShoppingCart() {
   const { cart, handleRemoveItem, subTotal, loading, addToCart } =
     useContext(cartContext);
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const fetchedProducts = await fetchTopSellingProducts(4);
+        setProducts(fetchedProducts);
+      } catch (error) {
+        console.error("Error loading products", error);
+      }
+    };
+
+    loadProducts();
+  }, [cart]);
 
   return (
     <>
@@ -149,7 +165,7 @@ function ShoppingCart() {
         </div>
       </div>
 
-      <RelatedProducts addToCart={addToCart} />
+      <RelatedProducts addToCart={addToCart} products={products} />
     </>
   );
 }
