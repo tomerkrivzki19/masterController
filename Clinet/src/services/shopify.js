@@ -104,6 +104,27 @@ export const fetchTopSellingProducts = async (slice) => {
   }
 };
 
+// featch products by id
+export const fetchProductsById = async (productIds) => {
+  try {
+    // Ensure productIds is an array, even if a single ID is passed
+    const idsArray = Array.isArray(productIds) ? productIds : [productIds];
+
+    // Fetch all products
+    const allProducts = await client.product.fetchAll();
+
+    // Filter products to match the provided IDs
+    const filteredProducts = allProducts.filter((product) => {
+      const shopifyProductId = product.id;
+      return idsArray.includes(shopifyProductId);
+    });
+
+    return filteredProducts;
+  } catch (error) {
+    console.error("Error fetching products by ID", error);
+    throw error;
+  }
+};
 // fetch product by ID
 export const fetchProductById = async (id) => {
   try {
