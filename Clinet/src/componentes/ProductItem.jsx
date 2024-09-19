@@ -8,11 +8,14 @@ import { HeartIcon } from "@heroicons/react/24/outline";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchProductById, fetchTopSellingProducts } from "../services/shopify";
 import { cartContext } from "../contexts/CartContext";
-//google analytics
-import { addToFavorites, removeFromFavorites } from "../utils/googleAnalytics";
+import { FavoriteContext } from "../contexts/FavoritesContext";
 
 function ProductItem() {
   const { addToCart } = useContext(cartContext);
+
+  const { productIds, addToFavorites, removeFromFavorites } =
+    useContext(FavoriteContext);
+
   const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -20,14 +23,14 @@ function ProductItem() {
   const [loadingIndex, setLoadingIndex] = useState(true); // Manage which button is loading
 
   // The statement useState(new Set()) initializes the favoritesSet state with an empty Set. A Set is a data structure in JavaScript that allows for fast lookups and ensures that all elements are unique.
-  const [favoritesSet, setFavoritesSet] = useState(new Set());
+  // const [favoritesSet, setFavoritesSet] = useState(new Set());
+
   const [isFavorite, setIsFavorite] = useState(false);
 
   // Utility function for conditional class names
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
-  console.log(product);
 
   useEffect(() => {
     async function fetchProduct() {
@@ -42,27 +45,14 @@ function ProductItem() {
         setProduct(productData);
         setProducts(productsData);
 
-        // Check if product is in favorites on load
-        const storedFavorites =
-          JSON.parse(localStorage.getItem("favorites")) || [];
-        const favoritesSet = new Set(storedFavorites);
-        console.log(1);
-        console.log(favoritesSet.has(decodedId));
-        console.log(favoritesSet);
-        console.log(decodedId);
-
-        if (favoritesSet.has(decodedId)) {
-          setIsFavorite(true);
-        }
-
-        setFavoritesSet(favoritesSet);
+        setIsFavorite(productIds.includes(decodedId)); // Check the Set directly
       } catch (error) {
         console.error("Failed to fetch product", error);
       }
     }
 
     fetchProduct();
-  }, [id, navigate]);
+  }, [id, navigate, productIds]);
 
   const handleAddCart = async (variantId, quantity) => {
     setLoadingIndex(false);
@@ -75,26 +65,12 @@ function ProductItem() {
   };
 
   const toggleFavorite = (id, name) => {
-    const updatedFavorites = new Set(favoritesSet);
-
-    if (updatedFavorites.has(id)) {
-      // Remove from favorites
-      updatedFavorites.delete(id);
-      removeFromFavorites(id, name); // Google Analytics
-      setIsFavorite(false);
+    if (isFavorite) {
+      removeFromFavorites(id, name); // Use the product's name for GA
     } else {
-      // Add to favorites
-      updatedFavorites.add(id);
-      addToFavorites(id, name); // Google Analytics
-      setIsFavorite(true);
+      addToFavorites(id, name); // Use the product's name for GA
     }
-
-    // Update local storage
-    localStorage.setItem(
-      "favorites",
-      JSON.stringify(Array.from(updatedFavorites))
-    );
-    setFavoritesSet(updatedFavorites); // Update state
+    setIsFavorite(!isFavorite); // Toggle favorite state
   };
 
   return (

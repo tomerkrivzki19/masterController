@@ -1,22 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { fetchProductsById } from "../services/shopify";
-import { removeFromFavorites } from "../utils/googleAnalytics";
-
-// TASKS:
-// 1. CONNECT A TRASH CAN WITH THE FUNCTION OF THE REMOVE FAVORITE
-// 2. CONNECT TO ADD TO BAG AND IF SO IT WILL REMOVE FROM FAVORTIES
-// 3. CONNECT THE LINK TO EACH PRODUCT - THAT WILL NAVIGATE TO THE PRODUCT PAGE URL
-
-// fixme: Need to fix the btn when somone delete the favorite then we need to update a state and prevent issues
+import { useContext } from "react";
+import { FavoriteContext } from "../contexts/FavoritesContext";
 
 function Favorites() {
-  const [favorties, setFavorites] = useState([]);
-  const [productIds, setProductIds] = useState(() => {
-    // Initialize state with localStorage value
-    return JSON.parse(localStorage.getItem("favorites")) || [];
-  });
-  // console.log("productIds", productIds);
+  const { productIds, removeFromFavoritesOnAddToCart, removeFromFavorites } =
+    useContext(FavoriteContext);
 
+  const [favorties, setFavorites] = useState([]);
   useEffect(() => {
     const fetchFavorites = async () => {
       if (productIds.length > 0) {
@@ -29,22 +20,6 @@ function Favorites() {
 
     fetchFavorites();
   }, [productIds]);
-
-  const handleRemoveFavorite = (productId, productTitle) => {
-    // Call your Google Analytics function
-    removeFromFavorites(productId, productTitle);
-
-    // console.log(
-    //   "Updated favorites in localStorage:",
-    //   JSON.parse(localStorage.getItem("favorites"))
-    // );
-
-    const updatedProductIds =
-      JSON.parse(localStorage.getItem("favorites")) || [];
-
-    // Update the state
-    setProductIds([...updatedProductIds]);
-  };
 
   return (
     <div className="bg-white">
@@ -73,7 +48,7 @@ function Favorites() {
                     <button
                       type="button"
                       onClick={() =>
-                        handleRemoveFavorite(product.id, product.title)
+                        removeFromFavorites(product.id, product.title)
                       }
                       className="size-6 absolute right-0 top-0 text-black"
                       style={{ zIndex: 10 }}
@@ -115,7 +90,17 @@ function Favorites() {
                 <div className="mt-6">
                   {/* Add to bag<span className="sr-only">, {product.name}</span> */}
                   {/* </a> */}
-                  <button className=" w-full relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200">
+                  {/* TODO: */}
+                  <button
+                    className=" w-full relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200"
+                    onClick={() =>
+                      removeFromFavoritesOnAddToCart(
+                        product.variants[0].id,
+                        product.id,
+                        product.title
+                      )
+                    }
+                  >
                     הוסף לסל
                   </button>
                 </div>
