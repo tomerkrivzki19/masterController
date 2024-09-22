@@ -35,6 +35,17 @@
   unicode-bidi: bidi-override;
 }
 
+.bg-halftone {
+  z-index: 10;
+  background-image: url("assets/design-01j8d0dnk3-1727017425.png");
+  background-size: cover; /* Ensures the image covers the full width */
+  background-position: center; /* Center the image by default */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  /* padding: 10em; */
+}
+
+/*  */
+
 #root {
   /* max-width: 1280px;
   margin: 0 auto;

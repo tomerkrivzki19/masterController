@@ -4,7 +4,7 @@ import DeilveryProtocols from "./subcompnents/DeilveryProtocols";
 import { fetchTopSellingProducts } from "../services/shopify";
 import logoItem from "../assets/output-logo-white-two.png";
 import logoItemTwo from "../assets/output-logo-white.png";
-import desingImage from "../assets/design-01j8cwhmzj-1727009508.png";
+import desingImage from "../assets/design-01j8d1sjmq-1727015057.png";
 import axios from "axios";
 
 function mainPage() {
@@ -121,75 +121,56 @@ function mainPage() {
         </div>
       </div>
 
-      <div className="top-sellers-container relative px-6 py-32 sm:px-12 sm:py-40 lg:px-16 bg-customDark">
-        {/* Background Image with Responsive Padding */}
-        {/* <div className="absolute inset-0 overflow-hidden">
-          <img
-            src={desingImage}
-            alt="Halftone Texture"
-            className="h-full w-full object-contain object-center  lg:px-0"
-            style={{
-              margin: "0 auto",
-            }}
-          />
-        </div> */}
-
-        {/* Dark overlay */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-opacity-50"
-        ></div>
-
-        {/* Content */}
-        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-          <div className="sm:flex sm:items-baseline sm:justify-between">
-            <a
-              href="/shop"
-              className="hidden text-sm font-semibold text-white hover:text-indigo-500 sm:block"
-            >
-              עיין בכל המוצרים
-              <span aria-hidden="true">&rarr;</span>
-            </a>
-            <h2 className="text-2xl font-bold tracking-tight text-white text-right sm:hidden">
-              המועדפים שלנו
-            </h2>
-          </div>
-
-          {/* Products Grid */}
-          <div className="mt-12 grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 lg:gap-x-8">
-            {products.map((product) => (
-              <div key={product.id} className="group relative">
-                <div className="h-96 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2 group-hover:opacity-75 sm:h-auto">
-                  <img
-                    alt={product.images[0]?.altText || "Product image"}
-                    src={product.images[0]?.src || "/placeholder.jpg"}
-                    className="h-full w-full object-cover object-center"
-                  />
+      <div className="top-sellers-container">
+        <div className="bg-white">
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+            <div className="sm:flex sm:items-baseline sm:justify-between">
+              <a
+                href="/shop"
+                className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block  "
+              >
+                עיין בכל המוצרים
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+              <h2 className="text-2xl font-bold tracking-tight text-gray-900 text-right">
+                המועדפים שלנו
+              </h2>
+            </div>
+            {/* todo- add MISGAROT */}
+            <div className="mt-6 grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 lg:gap-x-8">
+              {products.map((product) => (
+                <div key={product.id} className="group relative">
+                  <div className="h-96 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2 group-hover:opacity-75 sm:h-auto">
+                    <img
+                      alt={product.images[0]?.altText || "Product image"}
+                      src={product.images[0]?.src || "/placeholder.jpg"}
+                      className="h-full w-full object-cover object-center "
+                    />
+                  </div>
+                  <h3 className="mt-4 text-base font-semibold text-gray-900">
+                    <a href={`/product/${encodeURIComponent(product.id)}`}>
+                      <span className="absolute inset-0" />
+                      {product.title}
+                    </a>
+                  </h3>
+                  <p className="mt-1 text-sm text-gray-500">
+                    {product.variants[0]?.price
+                      ? `${product.variants[0].price.amount} ₪`
+                      : "Price not available"}
+                  </p>
                 </div>
-                <h3 className="mt-4 text-base font-semibold text-gray-900">
-                  <a href={`/product/${encodeURIComponent(product.id)}`}>
-                    <span className="absolute inset-0" />
-                    {product.title}
-                  </a>
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  {product.variants[0]?.price
-                    ? `${product.variants[0].price.amount} ₪`
-                    : "Price not available"}
-                </p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          {/* Mobile "View all products" link */}
-          <div className="mt-6 sm:hidden text-right">
-            <a
-              href="/shop"
-              className="block text-sm font-semibold text-white hover:text-indigo-500"
-            >
-              עיין בכל המוצרים
-              <span aria-hidden="true">&rarr;</span>
-            </a>
+            <div className="mt-6 sm:hidden text-right">
+              <a
+                href="/shop"
+                className="block text-sm font-semibold text-indigo-600 hover:text-indigo-500"
+              >
+                עיין בכל המוצרים
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
