@@ -8,6 +8,10 @@ export default defineConfig({
     react(),
     // Remove compression plugin
   ],
+  server: {
+    host: true, // This makes the server accessible on your network
+    port: 5173, // Keep the default port (or change it if needed)
+  },
 });
 
 // WITH COMPERSSION

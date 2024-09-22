@@ -2,8 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import DeilveryProtocols from "./subcompnents/DeilveryProtocols";
 import { fetchTopSellingProducts } from "../services/shopify";
-import logoItem from "../assets/mobile-logo.png";
-import logoItemTwo from "../assets/wordmark-logo.png";
+import logoItem from "../assets/output-logo-white-two.png";
+import logoItemTwo from "../assets/output-logo-white.png";
+import desingImage from "../assets/design-01j8cwhmzj-1727009508.png";
 import axios from "axios";
 
 function mainPage() {
@@ -52,7 +53,7 @@ function mainPage() {
   return (
     <>
       <div className="main-header-container ">
-        <div className="relative bg-white">
+        <div className="relative bg-customDark backdrop-blur-md inset-0 ">
           <div className="mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
             <div
               className="px-6 pb-24 pt-10 sm:pb-32 lg:col-span-7 lg:px-8 lg:pb-56 lg:pt-48 xl:col-span-6"
@@ -63,27 +64,29 @@ function mainPage() {
                   <img
                     alt="גן המשחקים לוגו"
                     src={logoItem}
-                    className="h-13 w-1/3"
+                    className="h-13 w-1/3 "
                   />
                   <img
                     alt="גן המשחקים לוגו שני"
                     src={logoItemTwo}
-                    className="h-13 w-1/3"
+                    className="h-13 w-1/3 "
                   />
                 </div>
                 <div className="hidden sm:mt-32 sm:flex lg:mt-16">
-                  <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-500 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+                  <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-500 ring-1 ring-gray-900/10 hover:ring-gray-900/20 space-x-1">
                     עיצוב ייחודי שיגרום לשלך להיות גיימר המוביל.
-                    <a
-                      href="/about"
-                      className="whitespace-nowrap font-semibold text-indigo-600"
-                    >
-                      <span aria-hidden="true" className="absolute inset-0" />
-                      לקרוא עוד <span aria-hidden="true">&rarr;</span>
-                    </a>
+                    <span className="ml-1">
+                      <a
+                        href="/about"
+                        className="whitespace-nowrap font-semibold text-indigo-600 pr-3"
+                      >
+                        לקרוא עוד <span aria-hidden="true">&rarr;</span>
+                      </a>
+                    </span>
                   </div>
                 </div>
-                <h1 className="mt-24 text-4xl font-bold tracking-tight text-gray-900 sm:mt-10 sm:text-6xl">
+                {/* text-gray-900 FIXME:*/}
+                <h1 className="mt-24 text-4xl font-bold tracking-tight text-white sm:mt-10 sm:text-6xl">
                   עיצוב ייחודי שישדרג את בקר ה-Xbox שלך
                 </h1>
                 <p className="mt-6 text-lg leading-8 text-gray-600">
@@ -94,13 +97,13 @@ function mainPage() {
                 <div className="mt-10 flex items-center gap-x-6">
                   <a
                     href="/shop"
-                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="rounded-md bg-[#aa60cb] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
-                    התחל לעצב
+                    התחל בקנייה
                   </a>
                   <a
                     href="/about"
-                    className="text-sm font-semibold leading-6 text-gray-900"
+                    className="text-sm font-semibold leading-6 text-white"
                   >
                     למד עוד <span aria-hidden="true">→</span>
                   </a>
@@ -117,59 +120,80 @@ function mainPage() {
           </div>
         </div>
       </div>
-      <div className="top-sellers-container">
-        <div className="bg-white">
-          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-            <div className="sm:flex sm:items-baseline sm:justify-between">
-              <a
-                href="/shop"
-                className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block  "
-              >
-                עיין בכל המוצרים
-                <span aria-hidden="true">&rarr;</span>
-              </a>
-              <h2 className="text-2xl font-bold tracking-tight text-gray-900 text-right">
-                המועדפים שלנו
-              </h2>
-            </div>
 
-            <div className="mt-6 grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 lg:gap-x-8">
-              {products.map((product, index) => (
-                <div key={product.id} className="group relative">
-                  <div className="h-96 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2 group-hover:opacity-75 sm:h-auto">
-                    <img
-                      alt={product.images[0]?.altText || "Product image"}
-                      src={product.images[0]?.src || "/placeholder.jpg"}
-                      className="h-full w-full object-cover object-center"
-                    />
-                  </div>
-                  <h3 className="mt-4 text-base font-semibold text-gray-900">
-                    <a href={`/product/${encodeURIComponent(product.id)}`}>
-                      <span className="absolute inset-0" />
-                      {product.title}
-                    </a>
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">
-                    {product.variants[0]?.price
-                      ? `${product.variants[0].price.amount} ₪`
-                      : "Price not available"}
-                  </p>
+      <div className="top-sellers-container relative px-6 py-32 sm:px-12 sm:py-40 lg:px-16 bg-customDark">
+        {/* Background Image with Responsive Padding */}
+        {/* <div className="absolute inset-0 overflow-hidden">
+          <img
+            src={desingImage}
+            alt="Halftone Texture"
+            className="h-full w-full object-contain object-center  lg:px-0"
+            style={{
+              margin: "0 auto",
+            }}
+          />
+        </div> */}
+
+        {/* Dark overlay */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-opacity-50"
+        ></div>
+
+        {/* Content */}
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+          <div className="sm:flex sm:items-baseline sm:justify-between">
+            <a
+              href="/shop"
+              className="hidden text-sm font-semibold text-white hover:text-indigo-500 sm:block"
+            >
+              עיין בכל המוצרים
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+            <h2 className="text-2xl font-bold tracking-tight text-white text-right sm:hidden">
+              המועדפים שלנו
+            </h2>
+          </div>
+
+          {/* Products Grid */}
+          <div className="mt-12 grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 lg:gap-x-8">
+            {products.map((product) => (
+              <div key={product.id} className="group relative">
+                <div className="h-96 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2 group-hover:opacity-75 sm:h-auto">
+                  <img
+                    alt={product.images[0]?.altText || "Product image"}
+                    src={product.images[0]?.src || "/placeholder.jpg"}
+                    className="h-full w-full object-cover object-center"
+                  />
                 </div>
-              ))}
-            </div>
+                <h3 className="mt-4 text-base font-semibold text-gray-900">
+                  <a href={`/product/${encodeURIComponent(product.id)}`}>
+                    <span className="absolute inset-0" />
+                    {product.title}
+                  </a>
+                </h3>
+                <p className="mt-1 text-sm text-gray-500">
+                  {product.variants[0]?.price
+                    ? `${product.variants[0].price.amount} ₪`
+                    : "Price not available"}
+                </p>
+              </div>
+            ))}
+          </div>
 
-            <div className="mt-6 sm:hidden text-right">
-              <a
-                href="/shop"
-                className="block text-sm font-semibold text-indigo-600 hover:text-indigo-500"
-              >
-                עיין בכל המוצרים
-                <span aria-hidden="true">&rarr;</span>
-              </a>
-            </div>
+          {/* Mobile "View all products" link */}
+          <div className="mt-6 sm:hidden text-right">
+            <a
+              href="/shop"
+              className="block text-sm font-semibold text-white hover:text-indigo-500"
+            >
+              עיין בכל המוצרים
+              <span aria-hidden="true">&rarr;</span>
+            </a>
           </div>
         </div>
       </div>
+
       {/* section */}
       <div className="relative bg-gray-800 px-6 py-32 sm:px-12 sm:py-40 lg:px-16">
         <div className="absolute inset-0 overflow-hidden">

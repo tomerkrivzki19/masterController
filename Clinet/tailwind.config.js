@@ -8,6 +8,7 @@ export default {
       },
       colors: {
         Cherry: "#CC252C",
+        customDark: "rgba(27,27,27,255)",
       },
     },
   },

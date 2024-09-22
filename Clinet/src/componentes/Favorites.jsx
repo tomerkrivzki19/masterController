@@ -33,17 +33,12 @@ function Favorites() {
               <div key={product.id}>
                 <div className="relative ">
                   <div className="relative h-72 w-full overflow-hidden rounded-lg relative  ">
-                    {/* FIXME: */}
-                    <a
-                      href={`/product/${encodeURIComponent(product.id)}`}
-                      // className="relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200"
-                    >
-                      <img
-                        alt={product.variants[0]?.image.altText}
-                        src={product.variants[0]?.image.src}
-                        className="h-full w-full object-cover object-center"
-                      />
-                    </a>
+                    <img
+                      alt={product.variants[0]?.image.altText}
+                      src={product.variants[0]?.image.src}
+                      className="h-full w-full object-cover object-center"
+                    />
+
                     {/* trash can  */}
                     <button
                       type="button"
@@ -77,16 +72,22 @@ function Favorites() {
                       {product.productType}
                     </p>
                   </div>
-                  <div className="absolute inset-x-0 top-0 flex h-72 items-end justify-end overflow-hidden rounded-lg p-4">
-                    <div
-                      aria-hidden="true"
-                      className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50"
-                    />
-                    <p className="relative text-lg font-semibold text-white">
-                      ₪{product.variants[0]?.price.amount}
-                    </p>
-                  </div>
+                  <a
+                    href={`/product/${encodeURIComponent(product.id)}`}
+                    className="h-full w-full object-cover object-center z-10"
+                  >
+                    <div className="absolute inset-x-0 top-0 flex h-72 items-end justify-end overflow-hidden rounded-lg p-4">
+                      <div
+                        aria-hidden="true"
+                        className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50"
+                      />
+                      <p className="relative text-lg font-semibold text-white">
+                        ₪{product.variants[0]?.price.amount}
+                      </p>
+                    </div>
+                  </a>
                 </div>
+
                 <div className="mt-6">
                   {/* Add to bag<span className="sr-only">, {product.name}</span> */}
                   {/* </a> */}
