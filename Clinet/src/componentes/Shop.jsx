@@ -258,14 +258,14 @@ function Shop() {
                         productIds.includes(product.id)
                           ? "currentColor"
                           : "none"
-                      } // Fill based on favorite status
+                      }
+                      strokeWidth="1.5"
+                      stroke="currentColor"
                       className={`size-4 ${
                         productIds.includes(product.id)
                           ? "text-red-400"
                           : "none"
                       }`}
-                      strokeWidth="1.5"
-                      stroke="currentColor"
                     >
                       <path
                         strokeLinecap="round"
@@ -280,7 +280,9 @@ function Shop() {
                   </button>
 
                   {/* Product Image */}
-                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                  <div className="h-60 w-full overflow-hidden rounded-lg bg-gray-200">
+                    {" "}
+                    {/* Fixed height */}
                     <img
                       alt={product.images[0]?.altText || "Product image"}
                       src={product.images[0]?.src || "/placeholder.jpg"}
@@ -288,32 +290,32 @@ function Shop() {
                     />
                   </div>
 
-                  {/* Product Info TODO: add some quey if new or not*/}
-                  <div className="relative border border-gray-100 bg-white p-6">
-                    <span className="whitespace-nowrap bg-yellow-400 px-3 py-1.5 text-xs font-medium">
+                  {/* Product Info */}
+                  <div className="relative border border-gray-100 bg-white p-6 flex flex-col justify-between h-64">
+                    {" "}
+                    {/* Fixed height and flexbox */}
+                    <span className="whitespace-nowrap bg-yellow-400 sm:px-3 px-1 py-1.5 text-xs font-medium1 w-1/3">
                       New
                     </span>
-
-                    <h3 className="mt-4 text-lg font-medium text-gray-900 md:text-base sm:text-sm">
+                    <h3 className="mt-4 text-lg font-medium text-gray-900 md:text-base sm:text-sm max-h-12 overflow-hidden text-ellipsis whitespace-nowrap">
                       {product.title}
                     </h3>
-
-                    <div className="flex justify-between">
+                    <div className="flex justify-around mt-auto">
+                      {" "}
+                      {/* Flex for consistent spacing */}
                       {/* Product Price */}
-                      <p className="mt-1 text-lg font-medium text-gray-600 md:text-base sm:text-xs">
+                      <p className="mt-1 text-lg font-medium text-gray-600 md:text-base sm:text-xs ">
                         {product.variants[0]?.price.amount
-                          ? `${product.variants[0].price.amount} ₪`
+                          ? `${product.variants[0].price.amount}₪`
                           : "Price not available"}
                       </p>
-
                       {/* Compare at Price (for sale items) */}
                       {product.variants[0]?.compareAtPrice && (
-                        <p className="mt-1 text-lg font-medium text-gray-600 line-through md:text-base sm:text-xs">
-                          {`${product.variants[0].compareAtPrice.amount} ₪`}
+                        <p className="mt-1 text-lg font-medium text-gray-600 line-through md:text-base sm:text-xs pl-2">
+                          {`${product.variants[0].compareAtPrice.amount}₪`}
                         </p>
                       )}
                     </div>
-
                     {/* Add to Cart Button */}
                     <form className="mt-4" onSubmit={(e) => e.preventDefault()}>
                       <button

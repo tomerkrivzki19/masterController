@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Dialog, DialogPanel } from "@headlessui/react";
+import { Dialog, DialogPanel, DialogBackdrop } from "@headlessui/react";
 import {
   Bars3Icon,
   XMarkIcon,
@@ -9,6 +9,7 @@ import { cartContext } from "../contexts/CartContext";
 import { redirectToCheckout } from "../services/shopify";
 import mainLogo from "../assets/horizontal-logo.png";
 import { FavoriteContext } from "../contexts/FavoritesContext";
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 
 const navigation = [
   { name: "תקנון האתר", href: "/site-policy" },
@@ -32,6 +33,7 @@ function NavBar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  console.log("mobileMenuOpen state:", mobileMenuOpen);
   // Scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -76,7 +78,7 @@ function NavBar() {
           ))}
         </div>
 
-        <div className="flex flex-1 items-center justify-end gap-x-6">
+        <div className="flex flex-1 items-center justify-end ">
           <a href="/favorites">
             {productIds.length > 0 ? (
               <svg
@@ -106,7 +108,7 @@ function NavBar() {
           </a>
 
           {/* Regular button to open/close the cart */}
-          <button
+          {/* <button
             className="group -m-2 flex items-center p-2"
             onClick={() => setIsCartOpen((prev) => !prev)}
           >
@@ -121,13 +123,30 @@ function NavBar() {
                 {totalQuantity}
               </span>
             )}
-          </button>
+          </button> */}
 
           {/* Conditional rendering for the cart */}
-          {isCartOpen && (
-            <div className="ml-4 flow-root text-sm lg:relative lg:ml-8">
-              <div className="absolute inset-x-0 top-16 mt-px bg-white pb-6 shadow-lg transition-opacity duration-200 ease-out sm:px-2 lg:left-auto lg:right-0 lg:top-full lg:-mr-1.5 lg:mt-3 lg:w-80 lg:rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5">
+          {/* Cart  FIXME: need to add the open when adding to cart Again */}
+          <Popover className="ml-4 flow-root text-sm lg:relative lg:ml-8">
+            <PopoverButton className="group -m-2 flex items-center p-2">
+              <ShoppingBagIcon
+                aria-hidden="true"
+                className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+              />
+              <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                {cart.length}
+              </span>
+              <span className="sr-only">items in cart, view bag</span>
+            </PopoverButton>
+
+            <PopoverPanel
+              transition
+              className="absolute inset-x-0 top-16 mt-px bg-white pb-6 shadow-lg transition-opacity duration-200 ease-out sm:px-2 lg:left-auto lg:right-0 lg:top-full lg:-mr-1.5 lg:mt-3 lg:w-80 lg:rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5"
+            >
+              <div>
                 <h2 className="sr-only">Shopping Cart</h2>
+
+                {/* Cart Content */}
                 <ul role="list" className="divide-y divide-gray-200">
                   {cart.length === 0 ? (
                     <>
@@ -180,7 +199,7 @@ function NavBar() {
                                 <path
                                   strokeLinecap="round"
                                   strokeLinejoin="round"
-                                  d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                                  d="M14.74 9L14.4 18M9.26 18L9 9M19.73 5.79L18.16 19.67a2.25 2.25 0 01-2.24 2.08H8.08a2.25 2.25 0 01-2.24-2.08L4.77 5.79M19.73 5.79A48.11 48.11 0 0016.25 5.4M4.77 5.79a48.11 48.11 0 013.48-.4m12 .4c.34-.06.68-.11 1.02-.16"
                                 />
                               </svg>
                             </button>
@@ -190,6 +209,7 @@ function NavBar() {
                     </div>
                   )}
                 </ul>
+
                 <p className="mt-6 text-center font-mono">
                   סכום ביניים : ₪{subTotal.toLocaleString()}
                 </p>
@@ -209,8 +229,8 @@ function NavBar() {
                   </a>
                 </p>
               </div>
-            </div>
-          )}
+            </PopoverPanel>
+          </Popover>
         </div>
         <div className=" lg:hidden flex items-center justify-center  ">
           <button
@@ -225,32 +245,43 @@ function NavBar() {
       <Dialog
         open={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
-        className="lg:hidden"
+        className="relative z-40 lg:hidden"
       >
-        <div
-          className="fixed inset-0 z-10 bg-black/30 rtl"
-          aria-hidden="true"
+        <DialogBackdrop
+          transition
+          className="fixed inset-0 bg-black bg-opacity-25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
         />
-        <DialogPanel className="fixed inset-y-0 right-0 z-40 w-full max-w-sm bg-white px-6 py-6  text-right ">
-          <button
-            type="button"
-            className="p-2 mt-20 text-gray-700 "
-            onClick={() => setMobileMenuOpen(false)}
+
+        <div className="fixed inset-0 z-40 flex justify-end pt-20 pl-10 text-right">
+          <DialogPanel
+            transition
+            className="relative flex flex-col  w-full max-w-xs bg-white pb-12 shadow-xl transition duration-300 ease-in-out inset-y-0 right-0"
           >
-            <XMarkIcon className="h-6 w-6" />
-          </button>
-          <div className="mt- space-y-2">
-            {navigation.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-50"
+            <div className="flex px-4 pb-2 pt-5">
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                className="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
               >
-                {item.name}
-              </a>
-            ))}
-          </div>
-        </DialogPanel>
+                <span className="sr-only">Close menu</span>
+                <XMarkIcon aria-hidden="true" className="h-6 w-6" />
+              </button>
+            </div>
+
+            {/* Links */}
+            <div className="mt-2 space-y-2 flex flex-col-reverse">
+              {navigation.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="-mx-3 block rounded-lg px-3 py-2 pr-8 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-50"
+                >
+                  {item.name}
+                </a>
+              ))}
+            </div>
+          </DialogPanel>
+        </div>
       </Dialog>
     </header>
   );

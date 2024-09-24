@@ -76,7 +76,7 @@ const navigation = {
 function Footer() {
   return (
     <footer className="bg-white">
-      <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
+      <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8 text-center">
         <nav
           aria-label="Footer"
           className="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"

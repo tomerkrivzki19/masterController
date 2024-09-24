@@ -41,10 +41,10 @@ export const CartProvider = ({ children }) => {
     try {
       await addToCart(variantId, quantity);
       await fetchCart(); // Refresh cart data
+      setIsCartOpen(true); //open the cart when adding item
     } catch (error) {
       console.error("Error adding to cart", error);
     } finally {
-      setIsCartOpen(true); //open the cart when adding item
       setAddProductCartLoading(false); // End loading
     }
   };

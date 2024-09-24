@@ -4,7 +4,7 @@ import DeilveryProtocols from "./subcompnents/DeilveryProtocols";
 import { fetchTopSellingProducts } from "../services/shopify";
 import logoItem from "../assets/output-logo-white-two.png";
 import logoItemTwo from "../assets/output-logo-white.png";
-import desingImage from "../assets/design-01j8d1sjmq-1727015057.png";
+// import desingImage from "../assets/design-01j8d1sjmq-1727015057.png";
 import axios from "axios";
 
 function mainPage() {
