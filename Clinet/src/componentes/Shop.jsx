@@ -121,13 +121,13 @@ function Shop() {
                       <h3 className="-mx-2 -my-3 flow-root">
                         <DisclosureButton
                           onClick={() => setSortOption(section.id)}
-                          className={`group flex w-full items-center justify-between bg-white px-2 py-3 text-sm text-gray-400 ${
+                          className={`group flex w-full items-center justify-between bg-white px-2 py-3 text-sm  text-gray-400 ${
                             sortOption === section.id ? "bg-red-100" : ""
                           }`}
                         >
                           <span
                             onClick={() => setOpen(false)}
-                            className="font-medium text-gray-900"
+                            className="font-medium text-gray-900 pt-5 w-full text-right "
                           >
                             {section.name}
                           </span>
