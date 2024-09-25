@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import DeilveryProtocols from "./subcompnents/DeilveryProtocols";
 import { fetchTopSellingProducts } from "../services/shopify";
 import logoItem from "../assets/output-logo-white-two.png";
-import logoItemTwo from "../assets/output-logo-white.png";
+import logoItemTwo from "../assets/Pi7_wordmark-logo.png";
 // import desingImage from "../assets/design-01j8d1sjmq-1727015057.png";
 import axios from "axios";
 
@@ -66,6 +66,7 @@ function mainPage() {
                     src={logoItem}
                     className="h-13 w-1/3 "
                   />
+                  {/* TODO: get a better quality of logo */}
                   <img
                     alt="גן המשחקים לוגו שני"
                     src={logoItemTwo}
@@ -75,14 +76,14 @@ function mainPage() {
                 <div className="hidden sm:mt-32 sm:flex lg:mt-16">
                   <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-500 ring-1 ring-gray-900/10 hover:ring-gray-900/20 space-x-1">
                     עיצוב ייחודי שיגרום לשלך להיות גיימר המוביל.
-                    <span className="ml-1">
+                    {/* <span className="ml-1">
                       <a
                         href="/about"
                         className="whitespace-nowrap font-semibold text-indigo-600 pr-3"
                       >
                         לקרוא עוד <span aria-hidden="true">&rarr;</span>
                       </a>
-                    </span>
+                    </span> */}
                   </div>
                 </div>
                 {/* text-gray-900 FIXME:*/}
@@ -112,7 +113,7 @@ function mainPage() {
             </div>
             <div className="relative lg:col-span-5 lg:-mr-8 xl:absolute xl:inset-0 xl:left-1/2 xl:mr-0">
               <img
-                src="https://images.unsplash.com/photo-1618193139062-2c5bf4f935b7?fm=jpg&amp;q=60&amp;w=3000&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src="https://cdn.shopify.com/s/files/1/0603/2067/7990/files/photo-1618193139062-2c5bf4f935b7.jpg?v=1727263869 "
                 alt="בחור מסתכל טלוויזיה "
                 className="aspect-[3/2] w-full bg-gray-50 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
               ></img>
@@ -181,7 +182,7 @@ function mainPage() {
           <img
             src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?fm=jpg&amp;q=60&amp;w=3000&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="a computer screen with a video game on it"
-            className="h-full w-full object-cover object-center"
+            className="h-full w-full object-cover object-center blur-sm "
           ></img>
         </div>
         <div

@@ -33,7 +33,6 @@ function NavBar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  console.log("mobileMenuOpen state:", mobileMenuOpen);
   // Scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -134,7 +133,8 @@ function NavBar() {
                 className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
               />
               <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                {cart.length}
+                {/* {cart.length} */}
+                {totalQuantity}
               </span>
               <span className="sr-only">items in cart, view bag</span>
             </PopoverButton>
@@ -274,7 +274,7 @@ function NavBar() {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="-mx-3 block rounded-lg px-3 py-2 pr-8 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-50"
+                  className=" block rounded-lg px-3 py-2 pr-8 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-50"
                 >
                   {item.name}
                 </a>
