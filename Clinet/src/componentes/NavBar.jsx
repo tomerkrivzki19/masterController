@@ -178,7 +178,11 @@ function NavBar() {
                             />
                             <div className="ml-4 flex-auto">
                               <h3 className="font-medium text-gray-900">
-                                <a href={item.variant.image.href || "#"}>
+                                <a
+                                  href={`/product/${encodeURIComponent(
+                                    item.variant.product.id
+                                  )}`}
+                                >
                                   ₪ {item.variant.price.amount}
                                 </a>
                               </h3>

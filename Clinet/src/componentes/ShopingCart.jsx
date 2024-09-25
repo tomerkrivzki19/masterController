@@ -24,6 +24,8 @@ function ShoppingCart() {
     loadProducts();
   }, [cart]);
 
+  console.log(cart.map((el) => el));
+
   return (
     <>
       <div className="cart-body rtl">
@@ -86,7 +88,7 @@ function ShoppingCart() {
                           </p>
                           <div className="mt-4 flex items-end justify-between">
                             <p className="flex items-center space-x-2 text-sm text-gray-700">
-                              {item.inStock ? (
+                              {item.availableForSale ? (
                                 <CheckIcon
                                   aria-hidden="true"
                                   className="h-5 w-5 flex-shrink-0 text-green-500"
@@ -97,10 +99,10 @@ function ShoppingCart() {
                                   className="h-5 w-5 flex-shrink-0 text-gray-300"
                                 />
                               )}
-                              <span className="bg-yellow-300">
-                                {item.inStock
-                                  ? "In stock"
-                                  : `Will ship in ${item.leadTime}`}
+                              <span className="">
+                                {item.variant?.sku
+                                  ? `  נשארו רק  ${item.variant.sku} אחרונים`
+                                  : `יש במלאי  `}
                               </span>
                             </p>
                             <div className="ml-4">

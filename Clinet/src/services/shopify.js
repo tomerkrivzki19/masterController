@@ -154,12 +154,8 @@ export const addToCart = async (variantId, quantity) => {
       throw new Error("Invalid checkout ID");
     }
 
-    const updatedCheckout = await client.checkout.addLineItems(
-      checkoutId,
-      lineItems
-    );
-
-    return updatedCheckout;
+    await client.checkout.addLineItems(checkoutId, lineItems);
+    console.log("finished add to checkout ");
   } catch (error) {
     console.error("Error adding item to cart", error);
     throw error;
@@ -171,6 +167,8 @@ export const getCartData = async () => {
   try {
     const checkoutId = await getCheckout();
     const checkout = await client.checkout.fetch(checkoutId);
+    console.log("finished get checkout ");
+
     return checkout.lineItems || [];
   } catch (error) {
     console.error("Error fetching cart data", error);
