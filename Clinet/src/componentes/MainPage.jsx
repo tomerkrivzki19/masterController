@@ -33,12 +33,11 @@ function mainPage() {
   };
   const sendInfo = async () => {
     try {
-      const res = await axios.post(
-        `${import.meta.env.BACKEND_URL}/api/v1/create-customer`,
-        {
-          email,
-        }
-      );
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+      const res = await axios.post(`${backendUrl}/api/v1/create-customer`, {
+        email,
+      });
 
       if (res.status === 201) {
         //need to add showAlert some kind of calls ot libaryTODO:
