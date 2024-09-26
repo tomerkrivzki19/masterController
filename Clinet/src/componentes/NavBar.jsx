@@ -6,7 +6,7 @@ import {
   ShoppingBagIcon,
 } from "@heroicons/react/24/outline";
 import { cartContext } from "../contexts/CartContext";
-import { redirectToCheckout } from "../services/shopify";
+import { redirectToCheckout } from "../services/shopify"; //TODO: create a function that will check if the cart is empty and fromt there will send to check out
 import mainLogo from "../assets/horizontal-logo.png";
 import { FavoriteContext } from "../contexts/FavoritesContext";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
@@ -19,14 +19,7 @@ const navigation = [
 ];
 
 function NavBar() {
-  const {
-    cart,
-    loading,
-    subTotal,
-    handleRemoveItem,
-    isCartOpen,
-    setIsCartOpen,
-  } = useContext(cartContext);
+  const { cart, subTotal, handleRemoveItem } = useContext(cartContext);
 
   const { productIds } = useContext(FavoriteContext);
 
@@ -105,25 +98,6 @@ function NavBar() {
               </svg>
             )}
           </a>
-
-          {/* Regular button to open/close the cart */}
-          {/* <button
-            className="group -m-2 flex items-center p-2"
-            onClick={() => setIsCartOpen((prev) => !prev)}
-          >
-            <ShoppingBagIcon
-              aria-hidden="true"
-              className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-            />
-            {loading ? (
-              <div className="w-5 h-5 rounded-full animate-spin border border-solid border-sky-500 border-t-transparent"></div>
-            ) : (
-              <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                {totalQuantity}
-              </span>
-            )}
-          </button> */}
-
           {/* Conditional rendering for the cart */}
           {/* Cart  FIXME: need to add the open when adding to cart Again */}
           <Popover className="ml-4 flow-root text-sm lg:relative lg:ml-8">

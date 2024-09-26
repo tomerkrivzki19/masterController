@@ -5,10 +5,11 @@ import {
   HeartIcon as SolidHeartIcon,
 } from "@heroicons/react/20/solid";
 import { HeartIcon } from "@heroicons/react/24/outline";
-import { useNavigate, useParams } from "react-router-dom";
+import { redirect, useNavigate, useParams } from "react-router-dom";
 import { fetchProductById, fetchTopSellingProducts } from "../services/shopify";
 import { cartContext } from "../contexts/CartContext";
 import { FavoriteContext } from "../contexts/FavoritesContext";
+import Toast from "../utils/tostify";
 
 function ProductItem() {
   const { addToCart } = useContext(cartContext);
@@ -26,7 +27,7 @@ function ProductItem() {
   // const [favoritesSet, setFavoritesSet] = useState(new Set());
 
   const [isFavorite, setIsFavorite] = useState(false);
-
+  const tostify = new Toast();
   // Utility function for conditional class names
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -47,7 +48,7 @@ function ProductItem() {
 
         setIsFavorite(productIds.includes(decodedId)); // Check the Set directly
       } catch (error) {
-        console.error("Failed to fetch product", error);
+        location.assign("*");
       }
     }
 
@@ -60,7 +61,11 @@ function ProductItem() {
       await addToCart(variantId, quantity);
       setLoadingIndex(true);
     } catch (error) {
-      throw new Error(error);
+      tostify.createToast(
+        "error",
+        "הוספת הפריט לעגלת הקניות נכשלה. אנא נסה שוב"
+      );
+      return;
     }
   };
 

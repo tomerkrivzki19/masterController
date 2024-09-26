@@ -11,20 +11,22 @@ function ShoppingCart() {
   const { cart, handleRemoveItem, subTotal, loading, addToCart } =
     useContext(cartContext);
   const [products, setProducts] = useState([]);
+
   useEffect(() => {
     const loadProducts = async () => {
       try {
         const fetchedProducts = await fetchTopSellingProducts(4);
         setProducts(fetchedProducts);
       } catch (error) {
-        console.error("Error loading products", error);
+        // console.error("Error loading products", error);
+        setProducts([
+          { title: "Failed to load products. Please try again later." },
+        ]);
       }
     };
 
     loadProducts();
   }, [cart]);
-
-  // console.log(cart.map((el) => el));
 
   return (
     <>

@@ -6,10 +6,12 @@ import logoItem from "../assets/output-logo-white-two.png";
 import logoItemTwo from "../assets/Pi7_wordmark-logo.png";
 // import desingImage from "../assets/design-01j8d1sjmq-1727015057.png";
 import axios from "axios";
+import Toast from "../utils/tostify";
 
 function mainPage() {
   const [products, setProducts] = useState([]);
   const [email, setEmail] = useState("");
+  const toastManger = new Toast();
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -17,7 +19,9 @@ function mainPage() {
         const fetchedProducts = await fetchTopSellingProducts(3);
         setProducts(fetchedProducts);
       } catch (error) {
-        console.error("Error loading products", error);
+        setProducts([
+          { title: "Failed to load products. Please try again later." },
+        ]);
       }
     };
 
@@ -33,20 +37,32 @@ function mainPage() {
   };
   const sendInfo = async () => {
     try {
-      const backendUrl = import.meta.env.VITE_BACKEND_URL;
+      if (!email.trim()) {
+        toastManger.createToast("error", "נא למלא את הפרטים");
+        return;
+      }
 
+      // Validate email format -NOTE: i did it inside the fronted becouse of the technical priority of the beckend servers
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        toastManger.createToast("error", "נא להזין כתובת אימייל חוקית");
+        return;
+      }
+
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
       const res = await axios.post(`${backendUrl}/api/v1/create-customer`, {
         email,
       });
 
       if (res.status === 201) {
-        //need to add showAlert some kind of calls ot libaryTODO:
         setEmail("");
-        alert("sucess, the emails was send prefectly");
+        toastManger.createToast("success", " המייל נשלח בהצלחה");
       }
     } catch (error) {
+      console.log(error);
+
       setEmail("");
-      alert("הפרטים שלך מעודכנים במערכת 🙂 ");
+      toastManger.createToast("warning", "הפרטים שלך מעודכנים במערכת ");
     }
   };
   return (
@@ -136,10 +152,10 @@ function mainPage() {
                 המועדפים שלנו
               </h2>
             </div>
-            {/* todo- add MISGAROT */}
+
             <div className="mt-6 grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 lg:gap-x-8">
               {products.map((product) => (
-                <div key={product.id} className="group relative">
+                <div key={product?.id} className="group relative">
                   <div className="h-96 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2 group-hover:opacity-75 sm:h-auto">
                     <img
                       alt={product.images[0]?.altText || "Product image"}
@@ -148,14 +164,14 @@ function mainPage() {
                     />
                   </div>
                   <h3 className="mt-4 text-base font-semibold text-gray-900">
-                    <a href={`/product/${encodeURIComponent(product.id)}`}>
+                    <a href={`/product/${encodeURIComponent(product?.id)}`}>
                       <span className="absolute inset-0" />
-                      {product.title}
+                      {product?.title}
                     </a>
                   </h3>
                   <p className="mt-1 text-sm text-gray-500">
                     {product.variants[0]?.price
-                      ? `${product.variants[0].price.amount} ₪`
+                      ? `${product.variants[0]?.price.amount} ₪`
                       : "Price not available"}
                   </p>
                 </div>

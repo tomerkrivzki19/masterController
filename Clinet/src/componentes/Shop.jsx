@@ -65,12 +65,14 @@ function Shop() {
     const loadProducts = async () => {
       try {
         const fetchedProducts = await fetchProducts(productsType);
-        // console.log(sortOption);
         const sortedProducts = sortDataOptions(sortOption, fetchedProducts);
 
         setProducts(sortedProducts);
       } catch (error) {
-        console.error("Error loading products", error);
+        // console.error("Error loading products", error);
+        setProducts([
+          { title: "Failed to load products. Please try again later." },
+        ]);
       }
     };
 
@@ -239,9 +241,6 @@ function Shop() {
                       </button>
                     );
                   })}
-                  {/* <button>הצג הכל</button>
-                  <button>פופולארי</button>
-                  <button>חדש</button> */}
                 </PopoverGroup>
               </div>
             </section>
@@ -256,7 +255,6 @@ function Shop() {
               {products.map((product) => (
                 <div className="relative">
                   {/* Wishlist Button */}
-                  {/* TODO: need to add click on the btn it self */}
                   <button
                     className="absolute end-4 top-4 z-40 rounded-full bg-white p-2.5 text-gray-900 transition hover:text-gray-900/75"
                     onClick={() => toggleFavorites(product.id, product.title)}
