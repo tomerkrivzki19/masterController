@@ -19,6 +19,7 @@ app.use(
   cors({
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    origin: "https://master-controller.vercel.app/",
   })
 );
 app.options("*", cors()); //define all the routes
@@ -66,6 +67,7 @@ app.use((req, res, next) => {
 });
 
 //ROUTES
+
 app.use("/api/v1", clientRouter);
 
 app.all("*", (req, res, next) => {

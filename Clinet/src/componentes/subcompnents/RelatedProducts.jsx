@@ -49,7 +49,7 @@ import React from "react";
 // ];
 
 function RelatedProducts({ addToCart, products }) {
-  console.log(products);
+  // console.log(products);
 
   return (
     <div className="bg-white">

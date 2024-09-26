@@ -155,7 +155,7 @@ export const addToCart = async (variantId, quantity) => {
     }
 
     await client.checkout.addLineItems(checkoutId, lineItems);
-    console.log("finished add to checkout ");
+    // console.log("finished add to checkout ");
   } catch (error) {
     console.error("Error adding item to cart", error);
     throw error;
@@ -167,7 +167,7 @@ export const getCartData = async () => {
   try {
     const checkoutId = await getCheckout();
     const checkout = await client.checkout.fetch(checkoutId);
-    console.log("finished get checkout ");
+    // console.log("finished get checkout ");
 
     return checkout.lineItems || [];
   } catch (error) {

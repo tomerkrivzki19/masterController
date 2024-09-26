@@ -34,7 +34,7 @@ function mainPage() {
   const sendInfo = async () => {
     try {
       const res = await axios.post(
-        "http://127.0.0.1:8000/api/v1/create-customer",
+        `${import.meta.env.BACKEND_URL}/api/v1/create-customer`,
         {
           email,
         }

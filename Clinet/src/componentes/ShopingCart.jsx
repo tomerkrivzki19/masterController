@@ -24,7 +24,7 @@ function ShoppingCart() {
     loadProducts();
   }, [cart]);
 
-  console.log(cart.map((el) => el));
+  // console.log(cart.map((el) => el));
 
   return (
     <>
