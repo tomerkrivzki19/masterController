@@ -7,6 +7,7 @@ import logoItemTwo from "../assets/Pi7_wordmark-logo.png";
 // import desingImage from "../assets/design-01j8d1sjmq-1727015057.png";
 import axios from "axios";
 import Toast from "../utils/tostify";
+import WelcomePopout from "./subcompnents/WelcomePopout";
 
 function mainPage() {
   const [products, setProducts] = useState([]);
@@ -67,6 +68,7 @@ function mainPage() {
   };
   return (
     <>
+      <WelcomePopout />
       <div className="main-header-container ">
         <div className="relative bg-customDark backdrop-blur-md inset-0 ">
           <div className="mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
@@ -226,7 +228,7 @@ function mainPage() {
       </div>
       <DeilveryProtocols />
 
-      <div className="promo-section-continaer">
+      <div className="promo-section-continaer" id="contactInfo">
         <div className="bg-purple-500	 py-16 sm:py-24">
           <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div
