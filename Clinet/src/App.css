@@ -96,6 +96,11 @@
 .toast-close:hover {
   color: #333; /* Darker color on hover */
 }
+
+/* TODO:  */
+.gradient-border {
+  border-image: linear-gradient(to right, #6ee7b7, #3b82f6) 1;
+}
 #root {
   /* max-width: 1280px;
   margin: 0 auto;
