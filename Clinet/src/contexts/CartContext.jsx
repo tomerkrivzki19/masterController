@@ -56,9 +56,10 @@ export const CartProvider = ({ children }) => {
     try {
       await removeProductFromCart(lineItemId);
       const updatedCart = await getCartData(); // Fetch updated cart data
-      setCart(updatedCart); // Update state to re-render component
+      setCart(updatedCart); // Update state with confirmed data
     } catch (error) {
       console.error("Failed to remove item:", error);
+      setCart(cart); // Reset cart to original state if removal failed
     }
   };
   return (

@@ -134,7 +134,7 @@ function ShoppingCart() {
                           סכום משנה
                         </dt>
                         <dd className="ml-4 text-base font-medium text-gray-900">
-                          ₪{subTotal}
+                          ₪{subTotal.toLocaleString()}
                         </dd>
                       </div>
                     </dl>
