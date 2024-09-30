@@ -1,6 +1,8 @@
 import DeilveryProtocols from "./subcompnents/DeilveryProtocols";
 import NumberCounter from "./subcompnents/NumberCouter";
-
+import Image1 from "../assets/design-01j91fm5r1-1727700567.png";
+import Image2 from "../assets/design-01j91fmgzm-1727700568.png";
+import Image3 from "../assets/design-01j91fmqpq-1727700569.png";
 const stats = [
   { label: "מוצרים זמינים", value: 150 },
   { label: "משתמשים רשומים", value: 220 },
@@ -202,7 +204,7 @@ export default function Example() {
         </section>
 
         {/* Stats section */}
-        <section id="stats" className="relative py-20 sm:py-32 rtl">
+        <section id="stats" className="relative py-12 rtl">
           <div className="relative px-6 lg:px-8 rtl">
             <div className="mx-auto max-w-3xl text-center rtl">
               <p className="text-lg font-semibold leading-6 text-gray-900">
@@ -219,6 +221,21 @@ export default function Example() {
               </div>
             </div>
           </div>
+        </section>
+
+        <section className="section-pictures">
+          <div className="picture-box__img">
+            <img src={Image1} alt="" className="picture-box__img--1" />
+          </div>
+          <div className="picture-box__img">
+            <img src={Image2} alt="" className="picture-box__img--2" />
+          </div>
+          <div className="picture-box__img">
+            <img src={Image3} alt="" className="picture-box__img--3" />
+          </div>
+          {/* 
+          <img src={Image2} alt="" className="picture-box__img--2" />
+          <img src={Image3} alt="" className="picture-box__img--3" /> */}
         </section>
       </main>
     </div>

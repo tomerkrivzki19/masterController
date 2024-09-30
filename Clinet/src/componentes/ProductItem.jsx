@@ -232,7 +232,7 @@ function ProductItem() {
                     {isFavorite ? (
                       <SolidHeartIcon
                         aria-hidden="true"
-                        className="h-6 w-6 flex-shrink-0 text-red-500"
+                        className="h-6 w-6 flex-shrink-0 text-red-500  animate-jump-in animate-once  animate-delay-500"
                       />
                     ) : (
                       <HeartIcon

@@ -256,7 +256,7 @@ function Shop() {
                 <div className="relative">
                   {/* Wishlist Button */}
                   <button
-                    className="absolute end-4 top-4 z-40 rounded-full bg-white p-2.5 text-gray-900 transition hover:text-gray-900/75"
+                    className="absolute end-4 top-4 z-40 rounded-full bg-white p-2.5 text-gray-900 transition hover:text-gray-900/75 "
                     onClick={() => toggleFavorites(product.id, product.title)}
                   >
                     <span className="sr-only">Wishlist</span>
@@ -272,7 +272,7 @@ function Shop() {
                       stroke="currentColor"
                       className={`size-4 ${
                         productIds.includes(product.id)
-                          ? "text-red-400"
+                          ? " animate-jump-in animate-twice animate-delay-300 text-red-400"
                           : "none"
                       }`}
                     >
