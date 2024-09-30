@@ -5,19 +5,12 @@ function WelcomePopout() {
   const [cookieOptions, setCookieOptions] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
 
-  //   const handleOpen = () => {
-  //     setTimeout(() => {
-  //       setIsOpen(true);
-  //     }, 7000);
-  //   };
-
   useEffect(() => {
     if (!document.cookie.includes("popupShown")) {
       setTimeout(() => {
         setIsOpen(true);
-      }, 4000);
+      }, 6000);
     }
-
     // Check for cookie options
     if (!document.cookie.includes("cookieConsent")) {
       setCookieOptions(true);

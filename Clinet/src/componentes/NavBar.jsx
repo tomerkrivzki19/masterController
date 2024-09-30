@@ -89,10 +89,10 @@ function NavBar() {
         aria-label="Global"
         className={`mx-auto flex items-center justify-between h-24 p-5 gap-x-6 lg:px-8 fixed w-full z-50 duration-300 ease-in-out ${
           scrolled ? "bg-[#aa60cb]" : "bg-white shadow-md"
-        }`}
+        } `}
       >
-        <div className="flex lg:flex-1">
-          <a href="/" className="-m-1.5 p-1.5">
+        <div className="flex lg:flex-1 overflow-hidden h-24 items-center">
+          <a href="/" className="-m-1.5 p-1.5 pb-4">
             <img src={mainLogo} alt="לוגו" className="h-40 w-full" />
           </a>
         </div>

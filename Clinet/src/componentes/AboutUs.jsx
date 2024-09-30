@@ -161,10 +161,7 @@ export default function Example() {
         </section>
 
         {/* Delivery Protocols section */}
-        <section
-          id="delivery-protocols"
-          className="relative py-20 sm:py-32 rtl"
-        >
+        <section className="relative py-20 sm:py-32 rtl">
           <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
             <svg
               className="relative -z-10 -translate-y-1/2 -translate-x-1/2 rotate-[30deg] max-w-[40rem] -translate-x-1/2 -translate-y-1/2 overflow-hidden"
@@ -200,8 +197,8 @@ export default function Example() {
                 הכל מהשורה הראשונה ועד דלתך
               </p>
             </div>
-            <DeilveryProtocols />
           </div>
+          <DeilveryProtocols />
         </section>
 
         {/* Stats section */}
