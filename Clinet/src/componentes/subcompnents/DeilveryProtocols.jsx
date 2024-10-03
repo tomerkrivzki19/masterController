@@ -1,25 +1,28 @@
 import React from "react";
+import {
+  TruckIcon,
+  ChatBubbleOvalLeftEllipsisIcon,
+  ShoppingCartIcon,
+} from "@heroicons/react/24/outline";
 
 const incentives = [
   {
     name: "משלוח חינם",
     description:
       "אנו מציעים משלוח חינם לכל הרכישות באתר, כדי להבטיח חוויית קנייה נוחה ומשתלמת.",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce/icons/icon-delivery-light.svg",
+    icon: TruckIcon,
   },
   {
     name: "תמיכה 24/7",
     description:
       "צוות שירות הלקוחות שלנו זמין תמיד כדי לעזור לכם בכל שאלה או בעיה.",
-    imageSrc: "https://tailwindui.com/img/ecommerce/icons/icon-chat-light.svg",
+    icon: ChatBubbleOvalLeftEllipsisIcon,
   },
   {
     name: "עגלת קניות מהירה",
     description:
       "הקנייה באתר מתבצעת בצורה מהירה ופשוטה, עם חוויית משתמש נוחה ויעילה.",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce/icons/icon-fast-checkout-light.svg",
+    icon: ShoppingCartIcon,
   },
 ];
 
@@ -36,9 +39,9 @@ function DeilveryProtocols() {
               >
                 <div className="sm:flex-shrink-0">
                   <div className="flow-root">
-                    <img
-                      alt={incentive.name}
-                      src={incentive.imageSrc}
+                    <incentive.icon
+                      // className="h-6 w-6 text-gray-500"
+                      aria-hidden="true"
                       className="mx-auto h-24 w-28"
                     />
                   </div>

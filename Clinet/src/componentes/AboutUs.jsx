@@ -62,11 +62,11 @@ export default function Example() {
           <div className="overflow-hidden">
             <div className="mx-auto max-w-7xl px-6 pb-32 pt-36 sm:pt-60 lg:px-8 lg:pt-32">
               <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center lg:text-right">
-                <div className="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
+                <div className="w-full max-w-xl lg:shrink-0 xl:max-w-2xl  ">
                   <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:text-right">
                     אנחנו משנים את הדרך בה אנשים מתחברים
                   </h1>
-                  <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none lg:text-right rtl ">
+                  <p className="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none lg:text-right rtl  z-10">
                     אנחנו מציעים עיצובים מותאמים לבקרי xobX , המאפשרים לך הוסף
                     נגיעה אישית לחוויית המשחק שלך. בין אם אתה מחפש עיצוב ייחודי
                     או פשוט רוצה לשדרג את הבקר שלך, יש לנו את הפתרון המתאים לך.
@@ -104,10 +104,10 @@ export default function Example() {
                     </div>
                   </div>
                   <div className="w-44 flex-none space-y-8 pt-32 sm:pt-0">
-                    <div className="relative">
+                    <div className="relative ">
                       <img
                         alt="בלון של הדמות צעצוע של סיפור"
-                        className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
+                        className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg  md:mr-11 md:mt-3.5"
                         src="https://images.unsplash.com/photo-1623939012322-f19aa1539760?w=400&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzF8fGdhbWVzfGVufDB8fDB8fHww"
                       ></img>
                       <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
@@ -233,9 +233,6 @@ export default function Example() {
           <div className="picture-box__img">
             <img src={Image3} alt="" className="picture-box__img--3" />
           </div>
-          {/* 
-          <img src={Image2} alt="" className="picture-box__img--2" />
-          <img src={Image3} alt="" className="picture-box__img--3" /> */}
         </section>
       </main>
     </div>
