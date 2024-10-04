@@ -1,4 +1,5 @@
 import React from "react";
+import MetaWrapper from "../utils/MetaWrapper";
 
 // TODO: AFTER payment setup
 
@@ -20,6 +21,11 @@ const products = [
 function SuccessPage() {
   return (
     <>
+      <MetaWrapper
+        title="Success"
+        description="Your operation was successful!"
+      />
+
       <div className="success-body-container">
         <div className="bg-white">
           <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">

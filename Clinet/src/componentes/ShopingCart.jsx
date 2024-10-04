@@ -6,6 +6,7 @@ import {
   redirectToCheckout,
 } from "../services/shopify";
 import RelatedProducts from "./subcompnents/RelatedProducts";
+import MetaWrapper from "../utils/MetaWrapper";
 
 function ShoppingCart() {
   const { cart, handleRemoveItem, subTotal, loading, addToCart } =
@@ -30,6 +31,10 @@ function ShoppingCart() {
 
   return (
     <>
+      <MetaWrapper
+        title="Shopping Cart"
+        description="Your selected products are here."
+      />
       <div className="cart-body rtl">
         <div className="bg-white pt-10 sm:pt-0">
           <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:px-0">

@@ -18,9 +18,10 @@ import { fetchProducts } from "../services/shopify";
 import { sortDataOptions } from "../utils/sortOptions";
 import { cartContext } from "../contexts/CartContext";
 import { FavoriteContext } from "../contexts/FavoritesContext";
+import MetaWrapper from "../utils/MetaWrapper";
 
 const sortOptions = [
-  { id: "1", name: "מחיר: מהגובהה לנמוך", /*href: "#"*/ value: "highToLow" },
+  { id: "1", name: "מחיר: מהגבוהה לנמוך", /*href: "#"*/ value: "highToLow" },
   { id: "2", name: "מחיר: מהנמוך לגובהה" /*href: "#"*/, value: "lowToHigh" },
 ];
 const filters = [
@@ -33,7 +34,6 @@ const filters = [
     name: "חדש",
   },
 ];
-
 const productType = [
   {
     id: "1",
@@ -51,6 +51,7 @@ const productType = [
     value: " ",
   },
 ];
+
 function Shop() {
   const { addToCart } = useContext(cartContext);
   const { productIds, addToFavorites, removeFromFavorites } =
@@ -91,7 +92,12 @@ function Shop() {
     }
   };
   return (
-    <div>
+    <>
+      <MetaWrapper
+        title="Store"
+        description="Browse through our collection of amazing products."
+      />
+
       <div className="body-container">
         {/* sorting */}
         <div className="bg-gray-50">
@@ -386,7 +392,7 @@ function Shop() {
           <div></div>
         )}
       </div>
-    </div>
+    </>
   );
 }
 

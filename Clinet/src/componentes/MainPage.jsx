@@ -8,6 +8,7 @@ import logoItemTwo from "../assets/Pi7_wordmark-logo.png";
 import axios from "axios";
 import Toast from "../utils/tostify";
 import WelcomePopout from "./subcompnents/WelcomePopout";
+import MetaWrapper from "../utils/MetaWrapper";
 
 function mainPage() {
   const [products, setProducts] = useState([]);
@@ -68,6 +69,7 @@ function mainPage() {
   };
   return (
     <>
+      <MetaWrapper title="Home" description="Welcome to GanHishakim!" />
       <WelcomePopout />
       <div className="main-header-container ">
         <div className="relative bg-customDark backdrop-blur-md inset-0 ">

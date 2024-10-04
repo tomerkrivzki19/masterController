@@ -1,8 +1,10 @@
 import React from "react";
+import MetaWrapper from "../utils/MetaWrapper";
 
 function ErrorPage() {
   return (
     <>
+      <MetaWrapper title="404" description="Page not found!" />
       <main className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <img
           alt="Background"
