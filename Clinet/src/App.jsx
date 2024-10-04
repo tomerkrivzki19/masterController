@@ -16,6 +16,7 @@ import Takanon from "./componentes/Takanon";
 import { CartProvider } from "./contexts/CartContext";
 import FavoritesContext from "./contexts/FavoritesContext";
 import Favorites from "./componentes/Favorites";
+import ServerErrorPage from "./componentes/ServerErrorPage";
 
 function App() {
   return (
@@ -29,11 +30,14 @@ function App() {
           <NavBar />
           <Routes>
             <Route path="*" element={<ErroePage />} />
+            <Route path="/500" element={<ServerErrorPage />} />
+
             <Route path="/" element={<MainPage />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/product/:id" element={<ProductItem />} />
             <Route path="/cart" element={<ShopingCart />} />
             <Route path="/favorites" element={<Favorites />} />
+
             <Route path="/faq" element={<FAQ />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/site-policy" element={<Takanon />} />

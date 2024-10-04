@@ -19,6 +19,8 @@ import { sortDataOptions } from "../utils/sortOptions";
 import { cartContext } from "../contexts/CartContext";
 import { FavoriteContext } from "../contexts/FavoritesContext";
 import MetaWrapper from "../utils/MetaWrapper";
+import ServerErrorPage from "./ServerErrorPage";
+import useProducts from "../hooks/useProducts";
 
 const sortOptions = [
   { id: "1", name: "מחיר: מהגבוהה לנמוך", /*href: "#"*/ value: "highToLow" },
@@ -58,27 +60,29 @@ function Shop() {
     useContext(FavoriteContext);
 
   const [open, setOpen] = useState(false);
-  const [products, setProducts] = useState([]);
   const [sortOption, setSortOption] = useState("NEW");
   const [productsType, setProductsType] = useState("all");
 
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const fetchedProducts = await fetchProducts(productsType);
-        const sortedProducts = sortDataOptions(sortOption, fetchedProducts);
+  // const [products, setProducts] = useState([]);
+  // useEffect(() => {
+  //   const loadProducts = async () => {
+  //     try {
+  //       const fetchedProducts = await fetchProducts(productsType);
+  //       const sortedProducts = sortDataOptions(sortOption, fetchedProducts);
 
-        setProducts(sortedProducts);
-      } catch (error) {
-        // console.error("Error loading products", error);
-        setProducts([
-          { title: "Failed to load products. Please try again later." },
-        ]);
-      }
-    };
+  //       setProducts(sortedProducts);
+  //     } catch (error) {
+  //       // console.error("Error loading products", error);
+  //       setProducts([
+  //         // { title: "Failed to load products. Please try again later." },
+  //       ]);
+  //     }
+  //   };
 
-    loadProducts();
-  }, [sortOption, productsType]);
+  //   loadProducts();
+  // }, [sortOption, productsType]);
+
+  const { products, error, loading } = useProducts(sortOption, productsType);
 
   const toggleFavorites = (productId, productName) => {
     const checkIfInFavorites = productIds.includes(productId);
@@ -91,6 +95,7 @@ function Shop() {
       addToFavorites(productId, productName);
     }
   };
+
   return (
     <>
       <MetaWrapper
@@ -257,103 +262,111 @@ function Shop() {
           <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
             <h2 className="sr-only">Products</h2>
 
-            <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
-              {products.map((product) => (
-                <div className="relative">
-                  {/* Wishlist Button */}
-                  <button
-                    className="absolute end-4 top-4 z-40 rounded-full bg-white p-2.5 text-gray-900 transition hover:text-gray-900/75 "
-                    onClick={() => toggleFavorites(product.id, product.title)}
-                  >
-                    <span className="sr-only">Wishlist</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill={
-                        productIds.includes(product.id)
-                          ? "currentColor"
-                          : "none"
-                      }
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className={`size-4 ${
-                        productIds.includes(product.id)
-                          ? " animate-jump-in animate-twice animate-delay-300 text-red-400"
-                          : "none"
-                      }`}
+            {loading ? (
+              // TODO: add some loading effect
+              <h1>Loading...</h1>
+            ) : error ? (
+              <ServerErrorPage />
+            ) : (
+              <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
+                {products.map((product) => (
+                  <div className="relative">
+                    {/* Wishlist Button */}
+                    <button
+                      className="absolute end-4 top-4 z-40 rounded-full bg-white p-2.5 text-gray-900 transition hover:text-gray-900/75 "
+                      onClick={() => toggleFavorites(product.id, product.title)}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d={
+                      <span className="sr-only">Wishlist</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill={
                           productIds.includes(product.id)
-                            ? "M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                            : "m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"
+                            ? "currentColor"
+                            : "none"
                         }
-                      />
-                    </svg>
-                  </button>
-                  <a
-                    key={product.id}
-                    href={`/product/${encodeURIComponent(product.id)}`}
-                    className="group relative block overflow-hidden"
-                  >
-                    {/* Product Image */}
-                    <div className="h-60 w-full overflow-hidden rounded-lg bg-gray-200">
-                      {" "}
-                      {/* Fixed height */}
-                      <img
-                        alt={product.images[0]?.altText || "Product image"}
-                        src={product.images[0]?.src || "/placeholder.jpg"}
-                        className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-105"
-                      />
-                    </div>
-
-                    {/* Product Info */}
-                    <div className="relative border border-gray-100 bg-white p-6 flex flex-col justify-between h-64">
-                      {" "}
-                      {/* Fixed height and flexbox */}
-                      <span className="whitespace-nowrap bg-yellow-400 sm:px-3 px-1 py-1.5 text-xs font-medium1 w-1/3">
-                        New
-                      </span>
-                      <h3 className="mt-4 text-lg font-medium text-gray-900 md:text-base sm:text-sm max-h-12 overflow-hidden text-ellipsis whitespace-nowrap">
-                        {product.title}
-                      </h3>
-                      <div className="flex justify-around mt-auto">
-                        {" "}
-                        {/* Flex for consistent spacing */}
-                        {/* Product Price */}
-                        <p className="mt-1 text-lg font-medium text-gray-600 md:text-base sm:text-xs ">
-                          {product.variants[0]?.price.amount
-                            ? `${product.variants[0].price.amount}₪`
-                            : "Price not available"}
-                        </p>
-                        {/* Compare at Price (for sale items) */}
-                        {product.variants[0]?.compareAtPrice && (
-                          <p className="mt-1 text-lg font-medium text-gray-600 line-through md:text-base sm:text-xs pl-2">
-                            {`${product.variants[0].compareAtPrice.amount}₪`}
-                          </p>
-                        )}
-                      </div>
-                      {/* Add to Cart Button */}
-                      <form
-                        className="mt-4"
-                        onSubmit={(e) => e.preventDefault()}
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className={`size-4 ${
+                          productIds.includes(product.id)
+                            ? " animate-jump-in animate-twice animate-delay-300 text-red-400"
+                            : "none"
+                        }`}
                       >
-                        <button
-                          className="block w-full rounded bg-yellow-400 p-4 text-sm font-medium transition hover:scale-105"
-                          onClick={() => addToCart(product.variants[0].id, 1)}
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d={
+                            productIds.includes(product.id)
+                              ? "M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                              : "m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"
+                          }
+                        />
+                      </svg>
+                    </button>
+                    <a
+                      key={product.id}
+                      href={`/product/${encodeURIComponent(product.id)}`}
+                      className="group relative block overflow-hidden"
+                    >
+                      {/* Product Image */}
+                      <div className="h-60 w-full overflow-hidden rounded-lg bg-gray-200">
+                        {" "}
+                        {/* Fixed height */}
+                        <img
+                          alt={product.images[0]?.altText || "Product image"}
+                          src={product.images[0]?.src || "/placeholder.jpg"}
+                          className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-105"
+                        />
+                      </div>
+
+                      {/* Product Info */}
+                      <div className="relative border border-gray-100 bg-white p-6 flex flex-col justify-between h-64">
+                        {" "}
+                        {/* Fixed height and flexbox */}
+                        <span className="whitespace-nowrap bg-yellow-400 sm:px-3 px-1 py-1.5 text-xs font-medium1 w-1/3">
+                          New
+                        </span>
+                        <h3 className="mt-4 text-lg font-medium text-gray-900 md:text-base sm:text-sm max-h-12 overflow-hidden text-ellipsis whitespace-nowrap">
+                          {product.title}
+                        </h3>
+                        <div className="flex justify-around mt-auto">
+                          {" "}
+                          {/* Flex for consistent spacing */}
+                          {/* Product Price */}
+                          <p className="mt-1 text-lg font-medium text-gray-600 md:text-base sm:text-xs ">
+                            {product.variants[0]?.price.amount
+                              ? `${product.variants[0].price.amount}₪`
+                              : "Price not available"}
+                          </p>
+                          {/* Compare at Price (for sale items) */}
+                          {product.variants[0]?.compareAtPrice && (
+                            <p className="mt-1 text-lg font-medium text-gray-600 line-through md:text-base sm:text-xs pl-2">
+                              {`${product.variants[0].compareAtPrice.amount}₪`}
+                            </p>
+                          )}
+                        </div>
+                        {/* Add to Cart Button */}
+                        <form
+                          className="mt-4"
+                          onSubmit={(e) => e.preventDefault()}
                         >
-                          הוסף לעגלה
-                        </button>
-                      </form>
-                    </div>
-                  </a>
-                </div>
-              ))}
-            </div>
+                          <button
+                            className="block w-full rounded bg-yellow-400 p-4 text-sm font-medium transition hover:scale-105"
+                            onClick={() => addToCart(product.variants[0].id, 1)}
+                          >
+                            הוסף לעגלה
+                          </button>
+                        </form>
+                      </div>
+                    </a>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
+
         {/* FIXME: FOR NOW WE WILL ADD WHEN THERE WILL BE AN PLATSTATION CONTROLELR */}
         {productsType === "playstation" ? (
           // PlayStation SECTION

@@ -3,24 +3,45 @@ import { fetchProductsById } from "../services/shopify";
 import { useContext } from "react";
 import { FavoriteContext } from "../contexts/FavoritesContext";
 import MetaWrapper from "../utils/MetaWrapper";
+import ServerErrorPage from "./ServerErrorPage";
+import Toast from "../utils/tostify";
 
 function Favorites() {
   const { productIds, removeFromFavoritesOnAddToCart, removeFromFavorites } =
     useContext(FavoriteContext);
 
   const [favorties, setFavorites] = useState([]);
+  const [error, setError] = useState(null);
+  const toastManger = new Toast();
+
   useEffect(() => {
     const fetchFavorites = async () => {
-      if (productIds.length > 0) {
-        const fetchedProducts = await fetchProductsById(productIds);
-        setFavorites(fetchedProducts);
-      } else {
-        setFavorites([]);
+      try {
+        if (productIds.length > 0) {
+          const fetchedProducts = await fetchProductsById(productIds);
+          setFavorites(fetchedProducts);
+        } else {
+          setFavorites([]);
+        }
+      } catch (error) {
+        setError(".אנא נסה שוב מאוחר יותר");
       }
     };
 
     fetchFavorites();
   }, [productIds]);
+
+  const handleAddToCart = async (variantId, productId, productName) => {
+    try {
+      await removeFromFavoritesOnAddToCart(variantId, productId, productName);
+    } catch (err) {
+      // console.error("Error during add to cart:", err);
+      toastManger.createToast(
+        "error",
+        "ההוספה לעגלת הקניות נכשלה. אנא נסו שוב בשלב יותר מאוחר"
+      );
+    }
+  };
 
   return (
     <>
@@ -33,6 +54,7 @@ function Favorites() {
           <h2 className="text-xl font-bold text-gray-900 text-center pt-10 sm:pt-0">
             רשימת משאלות
           </h2>
+
           {favorties.length > 0 ? (
             <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
               {favorties.map((product) => (
@@ -101,7 +123,7 @@ function Favorites() {
                     <button
                       className=" w-full relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200"
                       onClick={() =>
-                        removeFromFavoritesOnAddToCart(
+                        handleAddToCart(
                           product.variants[0].id,
                           product.id,
                           product.title
@@ -114,6 +136,11 @@ function Favorites() {
                 </div>
               ))}
             </div>
+          ) : error ? (
+            <>
+              <div className="mt-4 text-red-500 text-center">{error}</div>
+              <ServerErrorPage />
+            </>
           ) : (
             <div className="pt-32 text-center">רשימת המשאלות שלך ריקה</div>
           )}

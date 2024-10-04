@@ -7,27 +7,28 @@ import {
 } from "../services/shopify";
 import RelatedProducts from "./subcompnents/RelatedProducts";
 import MetaWrapper from "../utils/MetaWrapper";
+import loadProducts from "../hooks/loadProducts";
 
 function ShoppingCart() {
   const { cart, handleRemoveItem, subTotal, loading, addToCart } =
     useContext(cartContext);
-  const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const fetchedProducts = await fetchTopSellingProducts(4);
-        setProducts(fetchedProducts);
-      } catch (error) {
-        // console.error("Error loading products", error);
-        setProducts([
-          { title: "Failed to load products. Please try again later." },
-        ]);
-      }
-    };
+  // const [products, setProducts] = useState([]);
+  // useEffect(() => {
+  //   const loadProducts = async () => {
+  //     try {
+  //       const fetchedProducts = await fetchTopSellingProducts(4);
+  //       setProducts(fetchedProducts);
+  //     } catch (error) {
+  //       // console.error("Error loading products", error);
+  //       setProducts([]);
+  //     }
+  //   };
 
-    loadProducts();
-  }, [cart]);
+  //   loadProducts();
+  // }, [cart]);
+
+  const { products, error, loadingProducts } = loadProducts(4);
 
   return (
     <>
@@ -173,8 +174,12 @@ function ShoppingCart() {
           </div>
         </div>
       </div>
-
-      <RelatedProducts addToCart={addToCart} products={products} />
+      <RelatedProducts
+        addToCart={addToCart}
+        products={products}
+        error={error}
+        loadingProducts={loadingProducts}
+      />
     </>
   );
 }

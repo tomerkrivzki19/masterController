@@ -9,26 +9,32 @@ import axios from "axios";
 import Toast from "../utils/tostify";
 import WelcomePopout from "./subcompnents/WelcomePopout";
 import MetaWrapper from "../utils/MetaWrapper";
+import ServerErrorPage from "./ServerErrorPage";
+import useProducts from "../hooks/useProducts";
+import loadProducts from "../hooks/loadProducts";
 
 function mainPage() {
-  const [products, setProducts] = useState([]);
   const [email, setEmail] = useState("");
   const toastManger = new Toast();
 
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const fetchedProducts = await fetchTopSellingProducts(3);
-        setProducts(fetchedProducts);
-      } catch (error) {
-        setProducts([
-          { title: "Failed to load products. Please try again later." },
-        ]);
-      }
-    };
+  // const [products, setProducts] = useState([]);
+  // useEffect(() => {
+  //   const loadProducts = async () => {
+  //     try {
+  //       const fetchedProducts = await fetchTopSellingProducts(3);
+  //       setProducts(fetchedProducts);
+  //     } catch (error) {
+  //       setProducts([]);
+  //     }
+  //   };
 
-    loadProducts();
-  }, []);
+  //   loadProducts();
+  // }, []);
+  const { products, error, loadingProducts } = loadProducts(3);
+
+  // console.log("products", products);
+  // console.log("error", error);
+  // console.log("loadingProducts", loadingProducts);
 
   const getOnChange = (setFunc) => {
     const handleOnChange = (e) => {
@@ -67,6 +73,7 @@ function mainPage() {
       toastManger.createToast("warning", "הפרטים שלך מעודכנים במערכת ");
     }
   };
+
   return (
     <>
       <MetaWrapper title="Home" description="Welcome to GanHishakim!" />
@@ -85,7 +92,6 @@ function mainPage() {
                     src={logoItem}
                     className="h-13 w-1/3 "
                   />
-                  {/* TODO: get a better quality of logo */}
                   <img
                     alt="גן המשחקים לוגו שני"
                     src={logoItemTwo}
@@ -157,8 +163,50 @@ function mainPage() {
               </h2>
             </div>
 
-            <div className="mt-6 grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 lg:gap-x-8">
-              {products.map((product) => (
+            {loadingProducts ? (
+              // TODO: add some loading effect
+              <h1>LOADING.....</h1>
+            ) : error ? (
+              <ServerErrorPage />
+            ) : (
+              <div className="mt-6 grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 lg:gap-x-8">
+                {products.map((product) => (
+                  <div key={product?.id} className="group relative">
+                    <div className="h-96 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2 group-hover:opacity-75 sm:h-auto">
+                      {product.images && product.images.length > 0 ? (
+                        <img
+                          alt={product.images[0]?.altText || "Product image"}
+                          src={product.images[0]?.src || "/placeholder.jpg"}
+                          className="h-full w-full object-cover object-center"
+                        />
+                      ) : (
+                        <img
+                          alt="Placeholder image"
+                          src="/placeholder.jpg"
+                          className="h-full w-full object-cover object-center"
+                        />
+                      )}
+                    </div>
+                    <h3 className="mt-4 text-base font-semibold text-gray-900">
+                      <a href={`/product/${encodeURIComponent(product?.id)}`}>
+                        <span className="absolute inset-0" />
+                        {product?.title || "Unnamed Product"}
+                      </a>
+                    </h3>
+                    <p className="mt-1 text-sm text-gray-500">
+                      {product.variants &&
+                      product.variants.length > 0 &&
+                      product.variants[0]?.price
+                        ? `${product.variants[0]?.price.amount} ₪`
+                        : "Price not available"}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* {
+              products.map((product) => (
                 <div key={product?.id} className="group relative">
                   <div className="h-96 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2 group-hover:opacity-75 sm:h-auto">
                     <img
@@ -179,8 +227,9 @@ function mainPage() {
                       : "Price not available"}
                   </p>
                 </div>
-              ))}
-            </div>
+              ))
+              
+              } */}
 
             <div className="mt-6 sm:hidden text-right">
               <a

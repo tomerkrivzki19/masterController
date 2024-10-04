@@ -11,52 +11,65 @@ import { cartContext } from "../contexts/CartContext";
 import { FavoriteContext } from "../contexts/FavoritesContext";
 import Toast from "../utils/tostify";
 import MetaWrapper from "../utils/MetaWrapper";
+import useProduct from "../hooks/useProduct";
 
 function ProductItem() {
+  const { id } = useParams();
   const { addToCart } = useContext(cartContext);
-
   const { productIds, addToFavorites, removeFromFavorites } =
     useContext(FavoriteContext);
 
-  const navigate = useNavigate();
-  const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const [products, setProducts] = useState([]);
+  const { product, products, isFavorite, setIsFavorite, loading } = useProduct(
+    id,
+    productIds
+  ); // Use custom hook
+
   const [loadingIndex, setLoadingIndex] = useState(true); // Manage which button is loading
 
-  // The statement useState(new Set()) initializes the favoritesSet state with an empty Set. A Set is a data structure in JavaScript that allows for fast lookups and ensures that all elements are unique.
-  // const [favoritesSet, setFavoritesSet] = useState(new Set());
-
-  const [isFavorite, setIsFavorite] = useState(false);
   const tostify = new Toast();
+
+  // const navigate = useNavigate();
+  // const [product, setProduct] = useState(null);
+  // const [products, setProducts] = useState([]);
+
+  // // The statement useState(new Set()) initializes the favoritesSet state with an empty Set. A Set is a data structure in JavaScript that allows for fast lookups and ensures that all elements are unique.
+  // // const [favoritesSet, setFavoritesSet] = useState(new Set());
+  // const [isFavorite, setIsFavorite] = useState(false);
+
   // Utility function for conditional class names
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
 
-  useEffect(() => {
-    async function fetchProduct() {
-      try {
-        const decodedId = decodeURIComponent(id);
-        const productData = await fetchProductById(decodedId);
+  // useEffect(() => {
+  //   async function fetchProduct() {
+  //     try {
+  //       const decodedId = decodeURIComponent(id);
+  //       const productData = await fetchProductById(decodedId);
 
-        if (productData === null) {
-          navigate("*");
-        }
-        const productsData = await fetchTopSellingProducts(4);
-        setProduct(productData);
-        setProducts(productsData);
+  //       if (productData === null) {
+  //         navigate("*");
+  //       }
+  //       const productsData = await fetchTopSellingProducts(4);
+  //       setProduct(productData);
+  //       setProducts(productsData);
 
-        setIsFavorite(productIds.includes(decodedId)); // Check the Set directly
-      } catch (error) {
-        navigate("*");
-      }
-    }
+  //       setIsFavorite(productIds.includes(decodedId)); // Check the Set directly
+  //     } catch (error) {
+  //       navigate("/500");
+  //     }
+  //   }
 
-    fetchProduct();
-  }, [id, navigate, productIds]);
+  //   fetchProduct();
+  // }, [id, navigate, productIds]);
 
   // console.log(loadingIndex);
+
+  const toggleFavorite = (id, name) => {
+    if (isFavorite) {
+      removeFromFavorites(id, name); // Use the product's name for GA
+    } else {
+      addToFavorites(id, name); // Use the product's name for GA
+    }
+    setIsFavorite(!isFavorite); // Toggle favorite state
+  };
 
   const handleAddCart = async (variantId, quantity) => {
     setLoadingIndex(false);
@@ -78,14 +91,9 @@ function ProductItem() {
     }
   };
 
-  const toggleFavorite = (id, name) => {
-    if (isFavorite) {
-      removeFromFavorites(id, name); // Use the product's name for GA
-    } else {
-      addToFavorites(id, name); // Use the product's name for GA
-    }
-    setIsFavorite(!isFavorite); // Toggle favorite state
-  };
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   // if (!product) {
   //   return (
@@ -93,6 +101,9 @@ function ProductItem() {
   //       <div className="w-10 h-10 rounded-full animate-spin border border-solid border-sky-500 border-t-transparent "></div>
   //     </div>
   //   );
+  // }
+  // if (loading) {
+  //   return <div>Loading...</div>; // Show loading indicator if products are being fetched
   // }
 
   return (

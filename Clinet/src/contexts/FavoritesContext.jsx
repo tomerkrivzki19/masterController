@@ -72,8 +72,7 @@ function FavoritesContext({ children }) {
         value: productId,
       });
     } catch (error) {
-      console.log(error);
-      return error;
+      throw error;
     }
   };
 

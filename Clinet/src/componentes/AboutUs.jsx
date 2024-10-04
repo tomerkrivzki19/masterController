@@ -231,7 +231,8 @@ export default function Example() {
             </div>
           </section>
 
-          <section className="section-pictures">
+          {/* images section TODO: figure it out if yes or no*/}
+          {/* <section className="section-pictures ">
             <div className="picture-box__img">
               <img src={Image1} alt="" className="picture-box__img--1" />
             </div>
@@ -241,7 +242,7 @@ export default function Example() {
             <div className="picture-box__img">
               <img src={Image3} alt="" className="picture-box__img--3" />
             </div>
-          </section>
+          </section> */}
         </main>
       </div>
     </>
