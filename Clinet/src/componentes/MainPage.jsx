@@ -164,15 +164,17 @@ function mainPage() {
             </div>
 
             {loadingProducts ? (
-              // TODO: add some loading effect
-              <h1>LOADING.....</h1>
+              <div className="animate-pulse flex flex-col items-center justify-center space-y-4">
+                <div className="h-12 w-12 bg-gray-300 rounded-full"></div>
+                <h1 className="text-gray-500">LOADING.....</h1>
+              </div>
             ) : error ? (
               <ServerErrorPage />
             ) : (
               <div className="mt-6 grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 lg:gap-x-8">
                 {products.map((product) => (
                   <div key={product?.id} className="group relative">
-                    <div className="h-full sm:h-64 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2 group-hover:opacity-75 sm:h-auto">
+                    <div className=" sm:h-64 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2 group-hover:opacity-75 sm:h-auto">
                       {product.images && product.images.length > 0 ? (
                         <img
                           alt={product.images[0]?.altText || "Product image"}
@@ -204,32 +206,6 @@ function mainPage() {
                 ))}
               </div>
             )}
-
-            {/* {
-              products.map((product) => (
-                <div key={product?.id} className="group relative">
-                  <div className="h-96 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2 group-hover:opacity-75 sm:h-auto">
-                    <img
-                      alt={product.images[0]?.altText || "Product image"}
-                      src={product.images[0]?.src || "/placeholder.jpg"}
-                      className="h-full w-full object-cover object-center "
-                    />
-                  </div>
-                  <h3 className="mt-4 text-base font-semibold text-gray-900">
-                    <a href={`/product/${encodeURIComponent(product?.id)}`}>
-                      <span className="absolute inset-0" />
-                      {product?.title}
-                    </a>
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">
-                    {product.variants[0]?.price
-                      ? `${product.variants[0]?.price.amount} ₪`
-                      : "Price not available"}
-                  </p>
-                </div>
-              ))
-              
-              } */}
 
             <div className="mt-6 sm:hidden text-right">
               <a

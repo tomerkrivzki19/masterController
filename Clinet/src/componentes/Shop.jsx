@@ -263,8 +263,10 @@ function Shop() {
             <h2 className="sr-only">Products</h2>
 
             {loading ? (
-              // TODO: add some loading effect
-              <h1>Loading...</h1>
+              <div className="animate-pulse flex flex-col items-center justify-center space-y-4">
+                <div className="h-12 w-12 bg-gray-300 rounded-full"></div>
+                <h1 className="text-gray-500">LOADING.....</h1>
+              </div>
             ) : error ? (
               <ServerErrorPage />
             ) : (
@@ -330,7 +332,7 @@ function Shop() {
                         <h3 className="mt-4 text-lg font-medium text-gray-900 md:text-base sm:text-sm max-h-12 overflow-hidden text-ellipsis whitespace-nowrap">
                           {product.title}
                         </h3>
-                        <div className="flex justify-around sm:justify-between  mt-auto">
+                        <div className="flex justify-between  mt-0">
                           {" "}
                           {/* Flex for consistent spacing */}
                           {/* Product Price */}

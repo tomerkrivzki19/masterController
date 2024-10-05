@@ -58,8 +58,10 @@ function RelatedProducts({ addToCart, products, error, loadingProducts }) {
         </h2>
 
         {loadingProducts ? (
-          // TODO: add some loading effect
-          <h1>LOADING.....</h1>
+          <div className="animate-pulse flex flex-col items-center justify-center space-y-4">
+            <div className="h-12 w-12 bg-gray-300 rounded-full"></div>
+            <h1 className="text-gray-500">LOADING.....</h1>
+          </div>
         ) : error ? (
           <ServerErrorPage />
         ) : (

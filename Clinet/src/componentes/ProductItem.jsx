@@ -112,7 +112,7 @@ function ProductItem() {
         title={product?.title || "Loading..."}
         description={product?.description || "Product details"}
       />
-      <div className="bg-white pt-10 sm:pt-4">
+      <div className="bg-white pt-10 sm:pt-4 rtl">
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 ">
           {!product ? (
             <div className=" h-96 flex justify-center items-center	">
