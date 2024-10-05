@@ -330,7 +330,7 @@ function Shop() {
                         <h3 className="mt-4 text-lg font-medium text-gray-900 md:text-base sm:text-sm max-h-12 overflow-hidden text-ellipsis whitespace-nowrap">
                           {product.title}
                         </h3>
-                        <div className="flex justify-around mt-auto">
+                        <div className="flex justify-around sm:justify-between  mt-auto">
                           {" "}
                           {/* Flex for consistent spacing */}
                           {/* Product Price */}

@@ -4,6 +4,7 @@ import Image1 from "../assets/design-01j91fm5r1-1727700567.png";
 import Image2 from "../assets/design-01j91fmgzm-1727700568.png";
 import Image3 from "../assets/design-01j91fmqpq-1727700569.png";
 import MetaWrapper from "../utils/MetaWrapper";
+import ScroolToTop from "./subcompnents/ScroolToTop";
 
 const stats = [
   { label: "מוצרים זמינים", value: 150 },
@@ -22,6 +23,7 @@ export default function Example() {
         title="About Us"
         description="Learn more about GanHishakim."
       />
+      <ScroolToTop />
       <div className="bg-white">
         <main className="isolate rtl">
           {/* Hero section */}
