@@ -7,6 +7,8 @@ import {
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { redirect, useNavigate, useParams } from "react-router-dom";
 import { fetchProductById, fetchTopSellingProducts } from "../services/shopify";
+import { Radio, RadioGroup } from "@headlessui/react";
+
 import { cartContext } from "../contexts/CartContext";
 import { FavoriteContext } from "../contexts/FavoritesContext";
 import Toast from "../utils/tostify";
@@ -22,7 +24,7 @@ function ProductItem() {
   const { product, products, isFavorite, setIsFavorite, loading } = useProduct(
     id,
     productIds
-  ); // Use custom hook
+  );
 
   const [loadingIndex, setLoadingIndex] = useState(true); // Manage which button is loading
 
@@ -106,14 +108,16 @@ function ProductItem() {
   //   return <div>Loading...</div>; // Show loading indicator if products are being fetched
   // }
 
+  // console.log(product.variants[0]?.selectedOptions[0]);
+
   return (
     <>
       <MetaWrapper
         title={product?.title || "Loading..."}
         description={product?.description || "Product details"}
       />
-      <div className="bg-white pt-10 sm:pt-4 rtl">
-        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 ">
+      <div className="bg-white pt-10 sm:pt-4 ">
+        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 rtl">
           {!product ? (
             <div className=" h-96 flex justify-center items-center	">
               <div className="w-10 h-10 rounded-full animate-spin border border-solid border-sky-500 border-t-transparent "></div>
@@ -167,42 +171,44 @@ function ProductItem() {
                 <h1 className="text-3xl font-bold tracking-tight text-gray-900">
                   {product.title}
                 </h1>
-
-                <div className="mt-3">
-                  <h2 className="sr-only">Product information</h2>
-                  <p className="text-3xl tracking-tight text-gray-900">
-                    {product.variants[0].price.amount}{" "}
-                    {product.variants[0].price.currencyCode}
-                  </p>
-                </div>
-
-                {/* Reviews */}
-                <div className="mt-3">
-                  <h3 className="sr-only">Reviews</h3>
-                  <div className="flex items-center">
-                    <div className="flex items-center">
-                      {[0, 1, 2, 3, 4].map((rating) => (
-                        <StarIcon
-                          key={rating}
-                          aria-hidden="true"
-                          className={classNames(
-                            product.variants[0].compareAtPrice.amount > rating
-                              ? "text-indigo-500"
-                              : "text-gray-300",
-                            "h-5 w-5 flex-shrink-0"
-                          )}
-                        />
-                      ))}
-                    </div>
-                    <p className="sr-only">
-                      {product.variants[0].compareAtPrice.amount} out of 5 stars
+                <div className="flex justify-between items-center ">
+                  <div className="mt-3 flex sm:gap-x-16 gap-x-8">
+                    <h2 className="sr-only">Product information</h2>
+                    <p className="text-3xl tracking-tight text-gray-900">
+                      {product.variants[0].price.amount} ₪
+                    </p>
+                    <p className="text-3xl tracking-tight text-gray-600 line-through">
+                      {product.variants[0].compareAtPrice.amount} ₪
                     </p>
                   </div>
+
+                  {/* special logo */}
+
+                  {product.variants[0]?.selectedOptions[1]?.name ===
+                    "special" &&
+                  product.variants[0]?.selectedOptions[1]?.value === "true" ? (
+                    <div className="flex flex-col  justify-center items-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="size-6 text-Cherry"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M12.963 2.286a.75.75 0 0 0-1.071-.136 9.742 9.742 0 0 0-3.539 6.176 7.547 7.547 0 0 1-1.705-1.715.75.75 0 0 0-1.152-.082A9 9 0 1 0 15.68 4.534a7.46 7.46 0 0 1-2.717-2.248ZM15.75 14.25a3.75 3.75 0 1 1-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 0 1 1.925-3.546 3.75 3.75 0 0 1 3.255 3.718Z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <p className="text-Cherry">מיוחד</p>
+                    </div>
+                  ) : (
+                    <div className="sr-only"></div>
+                  )}
                 </div>
 
                 <div className="mt-6">
                   <h3 className="sr-only">Description</h3>
-
                   <div
                     dangerouslySetInnerHTML={{
                       __html: product.descriptionHtml,
@@ -212,16 +218,18 @@ function ProductItem() {
                 </div>
 
                 <form className="mt-6">
-                  {/* Colors TODO:*/}
                   <div>
-                    <h3 className="text-sm font-medium text-gray-600">Color</h3>
-                    {/* Placeholder for color options */}
+                    <h3 className="text-sm font-medium text-gray-600">
+                      צבעים:
+                    </h3>
                     <fieldset aria-label="Choose a color" className="mt-2">
-                      {/* Add color options if available */}
+                      <div>
+                        {product.variants[0]?.selectedOptions[0]?.value}
+                      </div>
                     </fieldset>
                   </div>
 
-                  <div className="mt-10 flex">
+                  <div className="mt-10 flex  gap-x-8">
                     <button
                       onClick={() => handleAddCart(product.variants[0].id, 1)}
                       type="button"
@@ -230,6 +238,7 @@ function ProductItem() {
                       {!loadingIndex ? (
                         // <div className="w-5 h-5 border-4 border-white border-t-transparent border-solid rounded-full animate-spin"></div>
                         <div className="flex gap-2 animate-fade-left animate-delay-300">
+                          נוסף לסל
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -244,7 +253,6 @@ function ProductItem() {
                               d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
                             />
                           </svg>
-                          נוסף לסל
                         </div>
                       ) : (
                         "הוסף לסל"
@@ -295,7 +303,7 @@ function ProductItem() {
             <h2 className="text-2xl font-bold tracking-tight text-gray-900 text-right">
               :לקוחות גם רכשו{" "}
             </h2>
-            {products.length === 0 ? (
+            {loading ? (
               <div className=" h-96 flex justify-center items-center	">
                 <div className="w-10 h-10 rounded-full animate-spin border border-solid border-sky-500 border-t-transparent "></div>
               </div>

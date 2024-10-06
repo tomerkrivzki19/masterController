@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -14,8 +14,6 @@ import {
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { fetchProducts } from "../services/shopify";
-import { sortDataOptions } from "../utils/sortOptions";
 import { cartContext } from "../contexts/CartContext";
 import { FavoriteContext } from "../contexts/FavoritesContext";
 import MetaWrapper from "../utils/MetaWrapper";
@@ -324,11 +322,46 @@ function Shop() {
 
                       {/* Product Info */}
                       <div className="relative border border-gray-100 bg-white p-6 flex flex-col justify-between h-64">
-                        {" "}
-                        {/* Fixed height and flexbox */}
-                        <span className="whitespace-nowrap bg-yellow-400 sm:px-3 px-1 py-1.5 text-xs font-medium1 w-1/3">
-                          New
-                        </span>
+                        {/* note: for now its only for the specials products  */}
+                        <div className="new-special-container flex justify-between h-7">
+                          {product.variants[0]?.selectedOptions[1]?.name ===
+                            "special" &&
+                          product.variants[0]?.selectedOptions[1]?.value ===
+                            "true" ? (
+                            <span className="whitespace-nowrap bg-yellow-400 sm:px-3 px-1 py-1.5 text-xs font-medium1 w-1/3">
+                              New
+                            </span>
+                          ) : (
+                            <div className="sr-only"></div>
+                          )}
+
+                          {/* special contianer*/}
+                          <div className=" flex justify-center items-center">
+                            {product.variants[0]?.selectedOptions[1]?.name ===
+                              "special" &&
+                            product.variants[0]?.selectedOptions[1]?.value ===
+                              "true" ? (
+                              <div className=" flex flex-col items-center">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  fill="currentColor"
+                                  className="size-6 text-Cherry"
+                                >
+                                  <path
+                                    fill-rule="evenodd"
+                                    d="M12.963 2.286a.75.75 0 0 0-1.071-.136 9.742 9.742 0 0 0-3.539 6.176 7.547 7.547 0 0 1-1.705-1.715.75.75 0 0 0-1.152-.082A9 9 0 1 0 15.68 4.534a7.46 7.46 0 0 1-2.717-2.248ZM15.75 14.25a3.75 3.75 0 1 1-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 0 1 1.925-3.546 3.75 3.75 0 0 1 3.255 3.718Z"
+                                    clip-rule="evenodd"
+                                  />
+                                </svg>
+                                <p className="text-Cherry">מיוחד</p>
+                              </div>
+                            ) : (
+                              <div className=""></div>
+                            )}
+                          </div>
+                        </div>
+
                         <h3 className="mt-4 text-lg font-medium text-gray-900 md:text-base sm:text-sm max-h-12 overflow-hidden text-ellipsis whitespace-nowrap">
                           {product.title}
                         </h3>
