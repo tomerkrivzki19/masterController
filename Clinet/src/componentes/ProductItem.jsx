@@ -117,13 +117,14 @@ function ProductItem() {
         description={product?.description || "Product details"}
       />
       <div className="bg-white pt-10 sm:pt-4 ">
-        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 rtl">
+        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 ">
           {!product ? (
-            <div className=" h-96 flex justify-center items-center	">
-              <div className="w-10 h-10 rounded-full animate-spin border border-solid border-sky-500 border-t-transparent "></div>
+            <div className="animate-pulse flex flex-col items-center justify-center space-y-4 pt-20">
+              <div className="h-12 w-12 bg-gray-300 rounded-full"></div>
+              <h1 className="text-gray-500">LOADING.....</h1>
             </div>
           ) : (
-            <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8 ">
+            <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8 rtl">
               {/* Image gallery */}
               <TabGroup className="flex flex-col-reverse">
                 {/* Image selector */}
@@ -304,8 +305,9 @@ function ProductItem() {
               :לקוחות גם רכשו{" "}
             </h2>
             {loading ? (
-              <div className=" h-96 flex justify-center items-center	">
-                <div className="w-10 h-10 rounded-full animate-spin border border-solid border-sky-500 border-t-transparent "></div>
+              <div className="animate-pulse flex flex-col items-center justify-center space-y-4 sr-only ">
+                <div className="h-12 w-12 bg-gray-300 rounded-full"></div>
+                <h1 className="text-gray-500">LOADING.....</h1>
               </div>
             ) : (
               <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">

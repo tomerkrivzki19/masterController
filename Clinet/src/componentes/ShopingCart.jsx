@@ -43,8 +43,9 @@ function ShoppingCart() {
               סל קניות
             </h1>
             {loading === true ? (
-              <div className="w-full h-96 flex justify-center items-center">
-                <div className="w-5 h-5 rounded-full animate-spin border border-solid border-sky-500 border-t-transparent"></div>
+              <div className="animate-pulse flex flex-col items-center justify-center space-y-4 pt-20">
+                <div className="h-12 w-12 bg-gray-300 rounded-full "></div>
+                <h1 className="text-gray-500">LOADING.....</h1>
               </div>
             ) : cart.length === 0 ? (
               <div className="mt-12 w-full h-96 flex justify-center items-center">

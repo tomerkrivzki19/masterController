@@ -111,14 +111,16 @@ function NavBar() {
         <div className="flex flex-1 items-center justify-end ">
           <a href="/favorites">
             {productIds.length > 0 ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="size-6 text-red-400"
-              >
-                <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
-              </svg>
+              <div className="flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="size-6 text-black"
+                >
+                  <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                </svg>
+              </div>
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -144,17 +146,27 @@ function NavBar() {
             {({ open }) => (
               <div className="flex flex-col" ref={panelRef}>
                 <PopoverButton
-                  className="group -m-2 flex items-center p-2"
+                  className="group -m-2 flex items-center p-2 "
                   // onClick={() => setIsCartOpen(!isCartOpen)} // Toggles the cart visibility
                   onClick={toggleCart}
                 >
-                  <ShoppingBagIcon
-                    aria-hidden="true"
-                    className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                  />
-                  <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                    {totalQuantity}
-                  </span>
+                  <div className="relative">
+                    <ShoppingBagIcon
+                      aria-hidden="true"
+                      className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500 "
+                    />
+                    {/*TODO:   scrolled ? "bg-[#aa60cb]" : "bg-white shadow-md" */}
+                    {totalQuantity > 0 && ( // Only show the badge if totalQuantity > 0
+                      <span
+                        className={`absolute top-[-5px] text-gray-400 right-[-11px] inline-flex items-center justify-center w-5 h-5  rounded-full  text-xs font-medium ${
+                          scrolled ? "bg-white shadow-md " : "bg-black "
+                        } `}
+                      >
+                        {totalQuantity}
+                      </span>
+                    )}
+                  </div>
+
                   <span className="sr-only">items in cart, view bag</span>
                 </PopoverButton>
 
@@ -275,6 +287,7 @@ function NavBar() {
             )}
           </Popover>
         </div>
+
         <div className=" lg:hidden flex items-center justify-center  ">
           <button
             type="button"
