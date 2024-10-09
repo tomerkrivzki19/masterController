@@ -93,22 +93,31 @@ function ProductItem() {
     }
   };
 
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  // Function to handle tab selection
+  const handleImageSelect = (index) => {
+    setCurrentImageIndex(index);
+  };
 
-  // if (!product) {
-  //   return (
-  //     <div className=" h-96 flex justify-center items-center	">
-  //       <div className="w-10 h-10 rounded-full animate-spin border border-solid border-sky-500 border-t-transparent "></div>
-  //     </div>
-  //   );
-  // }
-  // if (loading) {
-  //   return <div>Loading...</div>; // Show loading indicator if products are being fetched
-  // }
+  console.log(currentImageIndex);
+  // console.log(product.images[currentImageIndex].src);
+  // console.log("Product Images:", product.images);
 
-  // console.log(product.variants[0]?.selectedOptions[0]);
+  const handlePrev = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? product.images.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNext = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === product.images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const handleThumbnailClick = (index) => {
+    setCurrentImageIndex(index);
+  };
 
   return (
     <>
@@ -126,21 +135,19 @@ function ProductItem() {
           ) : (
             <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8 rtl">
               {/* Image gallery */}
-              <TabGroup className="flex flex-col-reverse">
+              <TabGroup className="flex flex-col-reverse ">
                 {/* Image selector */}
-                <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
-                  <TabList className="grid grid-cols-4 gap-6">
+                <div className="mx-auto mt-6 w-full max-w-2xl sm:block lg:max-w-none">
+                  <TabList className="grid sm:grid-cols-4 gap-x-7 gap-y-4 grid-cols-3  sm:gap-6">
                     {product.images.map((image) => (
                       <Tab
                         key={image.id}
                         className="group relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
                       >
-                        <span className="sr-only">
-                          {image.altText || "Image"}
-                        </span>
+                        <span className="sr-only">{image.name}</span>
                         <span className="absolute inset-0 overflow-hidden rounded-md">
                           <img
-                            alt={image.altText || "Image"}
+                            alt=""
                             src={image.src}
                             className="h-full w-full object-cover object-center"
                           />
@@ -158,7 +165,7 @@ function ProductItem() {
                   {product.images.map((image) => (
                     <TabPanel key={image.id}>
                       <img
-                        alt={image.altText || "Image"}
+                        alt={image.alt}
                         src={image.src}
                         className="h-full w-full object-cover object-center sm:rounded-lg"
                       />
@@ -166,7 +173,6 @@ function ProductItem() {
                   ))}
                 </TabPanels>
               </TabGroup>
-
               {/* Product info */}
               <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
                 <h1 className="text-3xl font-bold tracking-tight text-gray-900">
