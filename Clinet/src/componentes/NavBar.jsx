@@ -207,7 +207,7 @@ function NavBar() {
                               {cart.map((item) => (
                                 <li
                                   key={item.id}
-                                  className="flex items-center py-6 pl-5"
+                                  className="flex items-center py-6 pl-5 "
                                 >
                                   <img
                                     alt={
@@ -217,7 +217,7 @@ function NavBar() {
                                       item.variant.image.src ||
                                       "https://via.placeholder.com/150"
                                     }
-                                    className="h-16 w-24 flex-none rounded-md border border-gray-200"
+                                    className=" sm:h-fit w-24 flex-none rounded-md border border-gray-200"
                                   />
                                   <div className="ml-4 flex-auto">
                                     <h3 className="font-medium text-gray-900">
