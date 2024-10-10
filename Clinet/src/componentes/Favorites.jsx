@@ -107,31 +107,43 @@ function Favorites() {
                       <div className="absolute inset-x-0 top-0 flex h-72 items-end justify-end overflow-hidden rounded-lg p-4">
                         <div
                           aria-hidden="true"
-                          className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50"
+                          className="absolute  inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50"
                         />
-                        <p className="relative text-lg font-semibold text-white">
-                          ₪{product.variants[0]?.price.amount}
-                        </p>
+
+                        <div className="gap-x-3 flex flex-evently">
+                          <p className="relative text-lg font-semibold text-white">
+                            ₪{product.variants[0]?.price.amount}
+                          </p>
+                          <p className="relative text-lg font-semibold text-white line-through">
+                            ₪{product.variants[0]?.compareAtPrice.amount}
+                          </p>
+                        </div>
                       </div>
                     </a>
                   </div>
 
                   <div className="mt-6">
-                    {/* Add to bag<span className="sr-only">, {product.name}</span> */}
-                    {/* </a> */}
-                    {/* TODO: */}
-                    <button
-                      className=" w-full relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200"
-                      onClick={() =>
-                        handleAddToCart(
-                          product.variants[0].id,
-                          product.id,
-                          product.title
-                        )
-                      }
-                    >
-                      הוסף לסל
-                    </button>
+                    {!product.availableForSale ? (
+                      <button
+                        className=" cursor-not-allowed w-full relative flex items-center justify-center rounded-md border border-gray-200 px-8 py-2 text-sm font-medium text-gray-900 "
+                        disabled
+                      >
+                        נגמר המלאי
+                      </button>
+                    ) : (
+                      <button
+                        className=" w-full relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200"
+                        onClick={() =>
+                          handleAddToCart(
+                            product.variants[0].id,
+                            product.id,
+                            product.title
+                          )
+                        }
+                      >
+                        הוסף לסל
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}

@@ -100,14 +100,23 @@ function RelatedProducts({ addToCart, products, error, loadingProducts }) {
                   </div>
                 </a>
                 <div className="mt-6 ">
-                  <button
-                    type="button"
-                    className="relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200"
-                    onClick={() => addToCart(product.variants[0].id, 1)}
-                  >
-                    הוספה לסל
-                    <span className="sr-only">, {product.name}</span>
-                  </button>
+                  {!product.availableForSale ? (
+                    <button
+                      className="cursor-not-allowed w-full relative flex items-center justify-center rounded-md border border-gray-200 px-8 py-2 text-sm font-medium text-gray-900 "
+                      disabled
+                    >
+                      נגמר המלאי
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200"
+                      onClick={() => addToCart(product.variants[0].id, 1)}
+                    >
+                      הוספה לסל
+                      <span className="sr-only">, {product.name}</span>
+                    </button>
+                  )}
                 </div>
               </div>
             ))}

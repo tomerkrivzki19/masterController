@@ -386,12 +386,24 @@ function Shop() {
                           className="mt-4"
                           onSubmit={(e) => e.preventDefault()}
                         >
-                          <button
-                            className="block w-full rounded bg-yellow-400 p-4 text-sm font-medium transition hover:scale-105"
-                            onClick={() => addToCart(product.variants[0].id, 1)}
-                          >
-                            הוסף לעגלה
-                          </button>
+                          {/* TODO:*/}
+                          {!product.availableForSale ? (
+                            <button
+                              className=" cursor-not-allowed block w-full rounded border border-yellow-400 p-4 text-sm font-medium  text-black  "
+                              disabled
+                            >
+                              נגמר המלאי
+                            </button>
+                          ) : (
+                            <button
+                              className="block w-full rounded bg-yellow-400 p-4 text-sm font-medium transition hover:scale-105"
+                              onClick={() =>
+                                addToCart(product.variants[0].id, 1)
+                              }
+                            >
+                              הוסף לעגלה
+                            </button>
+                          )}
                         </form>
                       </div>
                     </a>
