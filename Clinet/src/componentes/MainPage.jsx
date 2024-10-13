@@ -12,29 +12,12 @@ import MetaWrapper from "../utils/MetaWrapper";
 import ServerErrorPage from "./ServerErrorPage";
 import useProducts from "../hooks/useProducts";
 import loadProducts from "../hooks/loadProducts";
+import Banner from "./subcompnents/Banner";
 
 function mainPage() {
   const [email, setEmail] = useState("");
   const toastManger = new Toast();
-
-  // const [products, setProducts] = useState([]);
-  // useEffect(() => {
-  //   const loadProducts = async () => {
-  //     try {
-  //       const fetchedProducts = await fetchTopSellingProducts(3);
-  //       setProducts(fetchedProducts);
-  //     } catch (error) {
-  //       setProducts([]);
-  //     }
-  //   };
-
-  //   loadProducts();
-  // }, []);
   const { products, error, loadingProducts } = loadProducts(3);
-
-  // console.log("products", products);
-  // console.log("error", error);
-  // console.log("loadingProducts", loadingProducts);
 
   const getOnChange = (setFunc) => {
     const handleOnChange = (e) => {
@@ -77,6 +60,7 @@ function mainPage() {
   return (
     <>
       <MetaWrapper title="Home" description="Welcome to GanHishakim!" />
+      <Banner />
       <WelcomePopout />
       <div className="main-header-container ">
         <div className="relative bg-customDark backdrop-blur-md inset-0 ">

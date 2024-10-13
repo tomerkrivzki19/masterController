@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 
 function WelcomePopout() {
   const [isOpen, setIsOpen] = useState(false);
   const [cookieOptions, setCookieOptions] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!document.cookie.includes("popupShown")) {
       setTimeout(() => {
         setIsOpen(true);
