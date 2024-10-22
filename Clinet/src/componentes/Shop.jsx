@@ -256,7 +256,11 @@ function Shop() {
           </div>
         </div>
         {/* product section */}
-        <div className="bg-white">
+        <div
+          className={`bg-white ${
+            productsType === "playstation" ? "hidden" : ""
+          }`}
+        >
           <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
             <h2 className="sr-only">Products</h2>
 
@@ -414,33 +418,31 @@ function Shop() {
           </div>
         </div>
 
-        {/* FIXME: FOR NOW WE WILL ADD WHEN THERE WILL BE AN PLATSTATION CONTROLELR */}
         {productsType === "playstation" ? (
           // PlayStation SECTION
           <section className=" relative">
             <div className="w-full max-w-7xl px-4 md:px-5 lg:px-5 mx-auto">
-              <div className="w-full md:px-16 px-10 md:pt-16 pt-10 pb-10 bg-gray-900 rounded-2xl flex-col justify-end items-center lg:gap-28 md:gap-16 gap-10 inline-flex">
+              <div className="w-full md:px-16 px-10 md:pt-16 pt-10 pb-10 bg-gray-900 rounded-2xl flex-col justify-end items-center lg:gap-28 md:gap-16 gap-10 inline-flex ">
                 <div className="flex-col justify-end items-center lg:gap-16 gap-10 flex">
                   <div className="flex-col justify-center items-center gap-10 flex">
                     <div className="flex-col justify-start items-center gap-2.5 flex">
-                      <h1 className="text-center text-emerald-400 md:text-6xl text-5xl font-bold font-manrope leading-normal">
-                        PlayStation design controllers
+                      <h1 className="text-center text-emerald-400 md:text-6xl text-5xl font-bold font-manrope leading-normal ">
+                        PlayStation בקרי עיצוב
                       </h1>
                       <h2 className="text-center text-emerald-400 md:text-6xl text-5xl font-bold font-manrope leading-normal">
-                        Coming Soon
+                        מגיעים בקרוב
                       </h2>
-                      <p className="text-center text-gray-500 text-base font-normal leading-relaxed">
-                        Just 20 days remaining until the big reveal of our new
-                        product!
+                      <p className="text-center text-gray-500 text-base font-normal leading-relaxed rtl">
+                        שווה לחכות – הישארו מעודכנים לפרטים נוספים בקרוב.
                       </p>
                     </div>
                   </div>
                 </div>
-                <p className="text-center text-gray-500 text-sm font-normal leading-snug">
-                  Get in touch with us:{" "}
+                <p className="text-center text-gray-500 text-sm font-normal leading-snug rtl ">
+                  צור איתנו קשר:{" "}
                   <a
-                    href=""
-                    className="hover:text-gray-100 transition-all duration-700 ease-in-out"
+                    href="mailto:    mail@pagedone.com "
+                    className="hover:text-gray-100 transition-all duration-700 ease-in-out pr-2"
                   >
                     mail@pagedone.com
                   </a>

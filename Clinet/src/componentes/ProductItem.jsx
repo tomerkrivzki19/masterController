@@ -147,7 +147,7 @@ function ProductItem() {
                         <span className="sr-only">{image.name}</span>
                         <span className="absolute inset-0 overflow-hidden rounded-md">
                           <img
-                            alt=""
+                            alt={image.alt}
                             src={image.src}
                             className="h-full w-full object-cover object-center"
                           />
@@ -167,14 +167,14 @@ function ProductItem() {
                       <img
                         alt={image.alt}
                         src={image.src}
-                        className="h-full w-full object-cover object-center sm:rounded-lg"
+                        className=" w-full object-cover object-center sm:rounded-lg sm:-mt-20"
                       />
                     </TabPanel>
                   ))}
                 </TabPanels>
               </TabGroup>
               {/* Product info */}
-              <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
+              <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0 sticky top-40">
                 <h1 className="text-3xl font-bold tracking-tight text-gray-900">
                   {product.title}
                 </h1>
@@ -316,7 +316,7 @@ function ProductItem() {
 
         {/* products container */}
         <div className="bg-white">
-          <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+          <div className="mx-auto max-w-2xl px-4 pt-8 pb-16 sm:px-6 sm:pt-2 sm:pb-24 lg:max-w-7xl lg:px-8">
             <h2 className="text-2xl font-bold tracking-tight text-gray-900 text-right">
               :לקוחות גם רכשו{" "}
             </h2>
@@ -329,13 +329,26 @@ function ProductItem() {
               <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                 {products.map((product) => (
                   <div key={product.id} className="group relative">
-                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                    <div className="relative aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group lg:h-80">
+                      {/* First (default) image */}
                       <img
                         alt={product.images[0]?.altText || "Product image"}
                         src={product.images[0]?.src || "/placeholder.jpg"}
-                        className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                        className="h-full w-full object-cover object-center lg:h-full lg:w-full lg:group-hover:opacity-0 transition-opacity duration-300"
                       />
+
+                      {/* Second (hover) image, applied only on large screens */}
+                      {product.images[1] && (
+                        <img
+                          alt={
+                            product.images[1]?.altText || "Hover product image"
+                          }
+                          src={product.images[1]?.src || "/placeholder.jpg"}
+                          className="absolute inset-0 h-full w-full object-cover object-center lg:h-full lg:w-full opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300"
+                        />
+                      )}
                     </div>
+
                     <div className="mt-4 flex justify-between">
                       <div>
                         <h3 className="text-sm text-gray-700">

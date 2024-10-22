@@ -5,7 +5,7 @@ const axios = require("axios");
 exports.createCustomer = async (req, res, next) => {
   try {
     const { email } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
 
     if (!email) {
       return next(new AppError("Email is required", 400));
