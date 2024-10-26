@@ -182,9 +182,9 @@ function NavBar() {
                 >
                   <PopoverPanel
                     transition
-                    className="absolute inset-x-0 top-16 mt-px bg-white pb-6 shadow-lg transition-opacity duration-200 ease-out sm:px-2 lg:left-auto lg:right-0 lg:top-full lg:-mr-1.5 lg:mt-3 lg:w-80 lg:rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5"
+                    className="absolute inset-x-0 top-16 mt-px bg-white pb-6 shadow-lg transition-opacity duration-200 ease-out sm:px-2 lg:left-auto lg:right-0 lg:top-full lg:-mr-1.5 lg:mt-3 lg:w-80 lg:rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5 overflow-y-auto max-h-[80vh] rtl "
                   >
-                    <div>
+                    <div dir="ltr">
                       <h2 className="sr-only">Shopping Cart</h2>
 
                       {/* Cart Content */}
