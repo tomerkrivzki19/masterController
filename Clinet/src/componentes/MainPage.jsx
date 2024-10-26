@@ -13,6 +13,7 @@ import ServerErrorPage from "./ServerErrorPage";
 import useProducts from "../hooks/useProducts";
 import loadProducts from "../hooks/loadProducts";
 import Banner from "./subcompnents/Banner";
+import contorllerImage from "../assets/7CBE0476-3B39-494F-A4A6-BF1FB003D3CC.png";
 
 function mainPage() {
   const [email, setEmail] = useState("");
@@ -131,9 +132,9 @@ function mainPage() {
         </div>
       </div>
 
-      <div className="top-sellers-container">
+      <div className="top-sellers-container ">
         <div className="bg-white">
-          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 ">
             <div className="sm:flex sm:items-baseline sm:justify-between">
               <a
                 href="/shop"
@@ -142,7 +143,7 @@ function mainPage() {
                 עיין בכל המוצרים
                 <span aria-hidden="true">&rarr;</span>
               </a>
-              <h2 className="text-2xl font-bold tracking-tight text-gray-900 text-right">
+              <h2 className="text-2xl font-bold tracking-tight sm:text-fuchsia-900 sm:p-2 sm:bg-fuchsia-300 text-gray-900 text-right">
                 המועדפים שלנו
               </h2>
             </div>
@@ -155,7 +156,7 @@ function mainPage() {
             ) : error ? (
               <ServerErrorPage />
             ) : (
-              <div className="mt-6 grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 lg:gap-x-8">
+              <div className="mt-6 grid grid-cols-1 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 lg:gap-x-8 ">
                 {products.map((product) => (
                   <div key={product?.id} className="group relative ">
                     <div className=" sm:h-fit w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2 group-hover:opacity-75 ">
@@ -163,7 +164,7 @@ function mainPage() {
                         <img
                           alt={product.images[0]?.altText || "Product image"}
                           src={product.images[0]?.src || "/placeholder.jpg"}
-                          className="h-full w-full object-cover object-center"
+                          className="h-full w-full object-cover object-center  sm:group-hover:animate-wiggle sm:group-hover:animate-delay-300 "
                         />
                       ) : (
                         <img
@@ -307,6 +308,61 @@ function mainPage() {
           </div>
         </div>
       </div>
+      {/* TODO: TESTER */}
+
+      {/* TODO: add on hover and hidden for small screens bg-[#aa60cb]*/}
+      {/* <div className="h-screen bg-[#aa60cb] flex justify-center relative sticky top-28">
+        <a href="/shop" className="w-1/2">
+          <img
+            src="https://xmrn27t1krj915hx-60320677990.shopifypreview.com/cdn/shop/files/FullSizeRender_68cc88ec-5bbf-47ae-980d-84b37270086d.heic?v=1729785189"
+            alt=""
+            className="w-100 h-auto  "
+          />
+        </a>
+      </div> */}
+
+      {/* <div className=" relative bg-white py-16 sm:py-24 lg:py-32 rtl">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 lg:grid-cols-12 lg:gap-8 lg:px-8">
+          <h2 className="max-w-xl text-balance text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl lg:col-span-7">
+            רוצה חדשות ועדכונים לגבי מוצרים? הירשם לניוזלטר שלנו.
+          </h2>
+          <form className="w-full max-w-md lg:col-span-5 lg:pt-2">
+            <div className="flex gap-x-4">
+              <label htmlFor="email-address" className="sr-only">
+                Email address
+              </label>
+              <input
+                onChange={getOnChange(setEmail)}
+                value={email}
+                id="email-address"
+                name="email"
+                type="email"
+                required
+                placeholder="הזן את המייל שלך"
+                autoComplete="email"
+                className="min-w-0 flex-auto rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+              <button
+                onClick={sendInfo}
+                type="button"
+                className="flex-none rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                הירשם
+              </button>
+            </div>
+            <p className="mt-4 text-sm leading-6 text-gray-900">
+              אכפת לנו מהנתונים שלך. קרא את{" "}
+              <a
+                href="/site-policy"
+                className="font-semibold text-indigo-600 hover:text-indigo-500"
+              >
+                מדיניות פרטיות&nbsp;{" "}
+              </a>
+              .
+            </p>
+          </form>
+        </div>
+      </div> */}
     </>
   );
 }
