@@ -1,6 +1,6 @@
 // import { createStorefrontApiClient } from "@shopify/storefront-api-client";
 
-// // FIXME: NOTE: can do right now becouse lack of products
+// // FIXME: NOTE: can do right now becouse lack of products -supposed to make the load more functionality with API
 // const client = createStorefrontApiClient({
 //   storeDomain: import.meta.env.VITE_SHOPIFY_STORE_DOMAIN,
 //   apiVersion: "2023-10",

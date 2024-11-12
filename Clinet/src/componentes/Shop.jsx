@@ -48,7 +48,7 @@ const productType = [
   {
     id: "3",
     name: "הצג הכל",
-    value: " ",
+    value: "all",
   },
 ];
 
@@ -60,6 +60,8 @@ function Shop() {
   const [open, setOpen] = useState(false);
   const [sortOption, setSortOption] = useState("NEW");
   const [productsType, setProductsType] = useState("all");
+
+  console.log("productsType", productsType);
 
   const { products, error, loading } = useProducts(sortOption, productsType);
 
@@ -142,7 +144,9 @@ function Shop() {
                         >
                           <span
                             onClick={() => setOpen(false)}
-                            className="font-medium text-gray-900 pt-5 w-full text-right "
+                            className={`font-medium text-gray-900 pt-5 w-full text-right ${
+                              sortOption === section.id ? "bg-red-100 p-2 " : ""
+                            }`}
                           >
                             {section.name}
                           </span>
@@ -161,7 +165,7 @@ function Shop() {
                 העיצובים שלנו
               </h1>
               <p className="mx-auto mt-4 max-w-3xl text-base text-gray-500">
-                תבחרו בקר עצובי ,שיתן לכם את חווית נשמחק המקסמילת ביותר
+                תבחרו בקר עצובי ,שיתן לכם את חווית המשחק המקסמילת ביותר
               </p>
             </div>
             <div className="flex justify-end justify-around">
@@ -221,7 +225,7 @@ function Shop() {
 
                 <button
                   type="button"
-                  onClick={() => setOpen(true)} //FIXME:
+                  onClick={() => setOpen(true)}
                   className="inline-block text-sm font-medium text-gray-700 hover:text-gray-900 sm:hidden"
                 >
                   פילטרים

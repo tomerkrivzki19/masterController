@@ -13,23 +13,6 @@
   animation: count-up 1s ease-out;
 }
 
-/* accesability  NAGISH-le style*/
-#NagishLiBarStrip {
-  border-radius: 15px;
-  background-color: white !important;
-  position: absolute;
-  bottom: 0em;
-  right: 0;
-}
-#NagishLiMenus {
-}
-#NagishLiMove {
-  display: none;
-}
-#NagishLiTitle {
-  display: none;
-}
-
 .rtl {
   direction: rtl;
   unicode-bidi: bidi-override;
