@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import {
   Dialog,
@@ -61,25 +61,6 @@ function Shop() {
   const [sortOption, setSortOption] = useState("NEW");
   const [productsType, setProductsType] = useState("all");
 
-  // const [products, setProducts] = useState([]);
-  // useEffect(() => {
-  //   const loadProducts = async () => {
-  //     try {
-  //       const fetchedProducts = await fetchProducts(productsType);
-  //       const sortedProducts = sortDataOptions(sortOption, fetchedProducts);
-
-  //       setProducts(sortedProducts);
-  //     } catch (error) {
-  //       // console.error("Error loading products", error);
-  //       setProducts([
-  //         // { title: "Failed to load products. Please try again later." },
-  //       ]);
-  //     }
-  //   };
-
-  //   loadProducts();
-  // }, [sortOption, productsType]);
-
   const { products, error, loading } = useProducts(sortOption, productsType);
 
   const toggleFavorites = (productId, productName) => {
@@ -92,6 +73,18 @@ function Shop() {
       // If product is not in favorites, add it
       addToFavorites(productId, productName);
     }
+  };
+
+  // load more btn
+  const [visible, setVisible] = useState(12);
+  const [hasMore, setHasMore] = useState(true);
+
+  useEffect(() => {
+    setHasMore(visible < products.length);
+  }, [visible, products.length]);
+
+  const ShowMoreItems = () => {
+    setVisible((prevValue) => prevValue + 12);
   };
 
   return (
@@ -272,148 +265,191 @@ function Shop() {
             ) : error ? (
               <ServerErrorPage />
             ) : (
-              <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
-                {products.map((product) => (
-                  <div className="relative">
-                    {/* Wishlist Button */}
-                    <button
-                      className="absolute end-4 top-4 z-40 rounded-full bg-white p-2.5 text-gray-900 transition hover:text-gray-900/75 "
-                      onClick={() => toggleFavorites(product.id, product.title)}
-                    >
-                      <span className="sr-only">Wishlist</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill={
-                          productIds.includes(product.id)
-                            ? "currentColor"
-                            : "none"
+              <>
+                <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
+                  {products.slice(0, visible).map((product) => (
+                    <div className="relative">
+                      {/* Wishlist Button */}
+                      <button
+                        className="absolute end-4 top-4 z-40 rounded-full bg-white p-2.5 text-gray-900 transition hover:text-gray-900/75 "
+                        onClick={() =>
+                          toggleFavorites(product.id, product.title)
                         }
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className={`size-4 ${
-                          productIds.includes(product.id)
-                            ? " animate-jump-in animate-twice animate-delay-300 text-red-400"
-                            : "none"
-                        }`}
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d={
+                        <span className="sr-only">Wishlist</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill={
                             productIds.includes(product.id)
-                              ? "M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                              : "m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"
+                              ? "currentColor"
+                              : "none"
                           }
-                        />
-                      </svg>
-                    </button>
-                    <a
-                      key={product.id}
-                      href={`/product/${encodeURIComponent(product.id)}`}
-                      className="group relative block overflow-hidden"
-                    >
-                      {/* Product Image */}
-                      <div className="h-60 w-full overflow-hidden rounded-lg bg-gray-200">
-                        {" "}
-                        {/* Fixed height */}
-                        <img
-                          alt={product.images[0]?.altText || "Product image"}
-                          src={product.images[0]?.src || "/placeholder.jpg"}
-                          className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-105"
-                        />
-                      </div>
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className={`size-4 ${
+                            productIds.includes(product.id)
+                              ? " animate-jump-in animate-twice animate-delay-300 text-red-400"
+                              : "none"
+                          }`}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d={
+                              productIds.includes(product.id)
+                                ? "M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                                : "m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"
+                            }
+                          />
+                        </svg>
+                      </button>
+                      <a
+                        key={product.id}
+                        href={`/product/${encodeURIComponent(product.id)}`}
+                        className="group relative block overflow-hidden"
+                      >
+                        {/* Product Image */}
+                        <div className="h-60 w-full overflow-hidden rounded-lg bg-gray-200">
+                          {" "}
+                          {/* Fixed height */}
+                          <img
+                            alt={product.images[0]?.altText || "Product image"}
+                            src={product.images[0]?.src || "/placeholder.jpg"}
+                            className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-105"
+                          />
+                        </div>
 
-                      {/* Product Info */}
-                      <div className="relative border border-gray-100 bg-white p-6 flex flex-col justify-between h-64">
-                        {/* note: for now its only for the specials products  */}
-                        <div className="new-special-container flex justify-between h-7">
-                          {product.variants[0]?.selectedOptions[1]?.name ===
-                            "special" &&
-                          product.variants[0]?.selectedOptions[1]?.value ===
-                            "true" ? (
-                            <span className="whitespace-nowrap bg-yellow-400 sm:px-3 px-1 py-1.5 text-xs font-medium1 w-1/3">
-                              New
-                            </span>
-                          ) : (
-                            <div className="sr-only"></div>
-                          )}
-
-                          {/* special contianer*/}
-                          <div className=" flex justify-center items-center">
+                        {/* Product Info */}
+                        <div className="relative border border-gray-100 bg-white p-6 flex flex-col justify-between h-64">
+                          {/* note: for now its only for the specials products  */}
+                          <div className="new-special-container flex justify-between h-7">
                             {product.variants[0]?.selectedOptions[1]?.name ===
                               "special" &&
                             product.variants[0]?.selectedOptions[1]?.value ===
                               "true" ? (
-                              <div className=" flex flex-col items-center">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 24 24"
-                                  fill="currentColor"
-                                  className="size-6 text-Cherry"
-                                >
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M12.963 2.286a.75.75 0 0 0-1.071-.136 9.742 9.742 0 0 0-3.539 6.176 7.547 7.547 0 0 1-1.705-1.715.75.75 0 0 0-1.152-.082A9 9 0 1 0 15.68 4.534a7.46 7.46 0 0 1-2.717-2.248ZM15.75 14.25a3.75 3.75 0 1 1-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 0 1 1.925-3.546 3.75 3.75 0 0 1 3.255 3.718Z"
-                                    clip-rule="evenodd"
-                                  />
-                                </svg>
-                                <p className="text-Cherry">מיוחד</p>
-                              </div>
+                              <span className="whitespace-nowrap bg-yellow-400 sm:px-3 px-1 py-1.5 text-xs font-medium1 w-1/3">
+                                New
+                              </span>
                             ) : (
-                              <div className=""></div>
+                              <div className="sr-only"></div>
+                            )}
+
+                            {/* special contianer*/}
+                            <div className=" flex justify-center items-center">
+                              {product.variants[0]?.selectedOptions[1]?.name ===
+                                "special" &&
+                              product.variants[0]?.selectedOptions[1]?.value ===
+                                "true" ? (
+                                <div className=" flex flex-col items-center">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    className="size-6 text-Cherry"
+                                  >
+                                    <path
+                                      fill-rule="evenodd"
+                                      d="M12.963 2.286a.75.75 0 0 0-1.071-.136 9.742 9.742 0 0 0-3.539 6.176 7.547 7.547 0 0 1-1.705-1.715.75.75 0 0 0-1.152-.082A9 9 0 1 0 15.68 4.534a7.46 7.46 0 0 1-2.717-2.248ZM15.75 14.25a3.75 3.75 0 1 1-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 0 1 1.925-3.546 3.75 3.75 0 0 1 3.255 3.718Z"
+                                      clip-rule="evenodd"
+                                    />
+                                  </svg>
+                                  <p className="text-Cherry">מיוחד</p>
+                                </div>
+                              ) : (
+                                <div className=""></div>
+                              )}
+                            </div>
+                          </div>
+
+                          <h3 className="mt-4 text-lg font-medium text-gray-900 md:text-base sm:text-sm max-h-12 overflow-hidden text-ellipsis whitespace-nowrap">
+                            {product.title}
+                          </h3>
+                          <div className="flex justify-between  mt-0">
+                            {" "}
+                            {/* Flex for consistent spacing */}
+                            {/* Product Price */}
+                            <p className="mt-1 text-lg font-medium text-gray-600 md:text-base sm:text-xs ">
+                              {product.variants[0]?.price.amount
+                                ? `${product.variants[0].price.amount}₪`
+                                : "Price not available"}
+                            </p>
+                            {/* Compare at Price (for sale items) */}
+                            {product.variants[0]?.compareAtPrice && (
+                              <p className="mt-1 text-lg font-medium text-gray-600 line-through md:text-base sm:text-xs pl-2">
+                                {`${product.variants[0].compareAtPrice.amount}₪`}
+                              </p>
                             )}
                           </div>
+                          {/* Add to Cart Button */}
+                          <form
+                            className="mt-4"
+                            onSubmit={(e) => e.preventDefault()}
+                          >
+                            {/* TODO:*/}
+                            {!product.availableForSale ? (
+                              <button
+                                className=" cursor-not-allowed block w-full rounded border border-yellow-400 p-4 text-sm font-medium  text-black  "
+                                disabled
+                              >
+                                נגמר המלאי
+                              </button>
+                            ) : (
+                              <button
+                                className="block w-full rounded bg-yellow-400 p-4 text-sm font-medium transition hover:scale-105"
+                                onClick={() =>
+                                  addToCart(product.variants[0].id, 1)
+                                }
+                              >
+                                הוסף לעגלה
+                              </button>
+                            )}
+                          </form>
                         </div>
+                      </a>
+                    </div>
+                  ))}
+                </div>
 
-                        <h3 className="mt-4 text-lg font-medium text-gray-900 md:text-base sm:text-sm max-h-12 overflow-hidden text-ellipsis whitespace-nowrap">
-                          {product.title}
-                        </h3>
-                        <div className="flex justify-between  mt-0">
-                          {" "}
-                          {/* Flex for consistent spacing */}
-                          {/* Product Price */}
-                          <p className="mt-1 text-lg font-medium text-gray-600 md:text-base sm:text-xs ">
-                            {product.variants[0]?.price.amount
-                              ? `${product.variants[0].price.amount}₪`
-                              : "Price not available"}
-                          </p>
-                          {/* Compare at Price (for sale items) */}
-                          {product.variants[0]?.compareAtPrice && (
-                            <p className="mt-1 text-lg font-medium text-gray-600 line-through md:text-base sm:text-xs pl-2">
-                              {`${product.variants[0].compareAtPrice.amount}₪`}
-                            </p>
-                          )}
-                        </div>
-                        {/* Add to Cart Button */}
-                        <form
-                          className="mt-4"
-                          onSubmit={(e) => e.preventDefault()}
-                        >
-                          {/* TODO:*/}
-                          {!product.availableForSale ? (
-                            <button
-                              className=" cursor-not-allowed block w-full rounded border border-yellow-400 p-4 text-sm font-medium  text-black  "
-                              disabled
-                            >
-                              נגמר המלאי
-                            </button>
-                          ) : (
-                            <button
-                              className="block w-full rounded bg-yellow-400 p-4 text-sm font-medium transition hover:scale-105"
-                              onClick={() =>
-                                addToCart(product.variants[0].id, 1)
-                              }
-                            >
-                              הוסף לעגלה
-                            </button>
-                          )}
-                        </form>
-                      </div>
-                    </a>
+                {/* load more btn */}
+                {hasMore ? (
+                  <div class="fter:h-px my-24 flex items-center before:h-px before:flex-1  before:bg-gray-300 before:content-[''] after:h-px after:flex-1 after:bg-gray-300  after:content-['']">
+                    <button
+                      type="button"
+                      className="flex items-center rounded-full border border-gray-300 bg-secondary-50 px-3 py-2 text-center text-sm font-medium text-gray-900 hover:bg-gray-100"
+                      onClick={ShowMoreItems}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        className="mr-1 h-4 w-4"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      הצג עוד{" "}
+                    </button>
                   </div>
-                ))}
-              </div>
+                ) : (
+                  <div className="relative my-24">
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 flex items-center"
+                    >
+                      <div className="w-full border-t border-gray-300" />
+                    </div>
+                    <div className="relative flex justify-center">
+                      <span className="bg-white px-2 text-sm text-gray-500">
+                        אין יותר מוצרים{" "}
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
