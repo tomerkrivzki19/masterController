@@ -61,8 +61,6 @@ function Shop() {
   const [sortOption, setSortOption] = useState("NEW");
   const [productsType, setProductsType] = useState("all");
 
-  console.log("productsType", productsType);
-
   const { products, error, loading } = useProducts(sortOption, productsType);
 
   const toggleFavorites = (productId, productName) => {
@@ -203,7 +201,7 @@ function Shop() {
 
                   <MenuItems
                     transition
-                    className="absolute left-0 z-10 mt-2 w-40 origin-top-left rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                    className="absolute left-0 z-50 mt-2 w-40 origin-top-left rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                   >
                     <div className="py-1">
                       {sortOptions.map((option) => (
@@ -326,12 +324,17 @@ function Shop() {
 
                         {/* Product Info */}
                         <div className="relative border border-gray-100 bg-white p-6 flex flex-col justify-between h-64">
-                          {/* note: for now its only for the specials products  */}
+                          {/* New products notes   */}
                           <div className="new-special-container flex justify-between h-7">
-                            {product.variants[0]?.selectedOptions[1]?.name ===
-                              "special" &&
-                            product.variants[0]?.selectedOptions[1]?.value ===
-                              "true" ? (
+                            {product.createdAt &&
+                            new Date(product.createdAt) >
+                              (() => {
+                                const threeMonthsAgo = new Date();
+                                threeMonthsAgo.setMonth(
+                                  threeMonthsAgo.getMonth() - 1 //the X months ago -
+                                );
+                                return threeMonthsAgo;
+                              })() ? (
                               <span className="whitespace-nowrap bg-yellow-400 sm:px-3 px-1 py-1.5 text-xs font-medium1 w-1/3">
                                 New
                               </span>
