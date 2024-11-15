@@ -24,13 +24,13 @@ function Banner() {
   return (
     !close && (
       <div
-        className={`fixed w-full max-w-full  isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1 pt-28 z-40 
-                ${
-                  closing
-                    ? " pt-16 animate-fade-up animate-delay-400 animate-ease-out "
-                    : "animate-fade-down animate-once animate-delay-400   "
-                }
-`}
+        className={`fixed w-full max-w-full  isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1 pt-28 z-40
+                    ${
+                      closing
+                        ? " pt-16 animate-fade-up animate-delay-400 animate-ease-out "
+                        : "animate-fade-down animate-once animate-delay-400   "
+                    }
+    `}
       >
         <div
           aria-hidden="true"

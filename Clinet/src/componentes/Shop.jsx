@@ -61,24 +61,7 @@ function Shop() {
   const [sortOption, setSortOption] = useState("NEW");
   const [productsType, setProductsType] = useState("all");
 
-  // const [products, setProducts] = useState([]);
-  // useEffect(() => {
-  //   const loadProducts = async () => {
-  //     try {
-  //       const fetchedProducts = await fetchProducts(productsType);
-  //       const sortedProducts = sortDataOptions(sortOption, fetchedProducts);
-
-  //       setProducts(sortedProducts);
-  //     } catch (error) {
-  //       // console.error("Error loading products", error);
-  //       setProducts([
-  //         // { title: "Failed to load products. Please try again later." },
-  //       ]);
-  //     }
-  //   };
-
-  //   loadProducts();
-  // }, [sortOption, productsType]);
+  console.log("productsType", productsType);
 
   const { products, error, loading } = useProducts(sortOption, productsType);
 
@@ -206,7 +189,7 @@ function Shop() {
 
                   <MenuItems
                     transition
-                    className="absolute left-0 z-10 mt-2 w-40 origin-top-left rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                    className="absolute left-0 z-50 mt-2 w-40 origin-top-left rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                   >
                     <div className="py-1">
                       {sortOptions.map((option) => (
