@@ -20,6 +20,7 @@ import MetaWrapper from "../utils/MetaWrapper";
 import ServerErrorPage from "./ServerErrorPage";
 import useProducts from "../hooks/useProducts";
 
+// the last commit 15/11
 const sortOptions = [
   { id: "1", name: "מחיר: מהגבוהה לנמוך", /*href: "#"*/ value: "highToLow" },
   { id: "2", name: "מחיר: מהנמוך לגובהה" /*href: "#"*/, value: "lowToHigh" },
