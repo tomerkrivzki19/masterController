@@ -182,10 +182,10 @@ function ProductItem() {
                   <div className="mt-3 flex sm:gap-x-16 gap-x-8">
                     <h2 className="sr-only">Product information</h2>
                     <p className="text-3xl tracking-tight text-gray-900">
-                      {product.variants[0].price.amount} ₪
+                      ₪{parseFloat(product.variants[0].price.amount)}
                     </p>
                     <p className="text-3xl tracking-tight text-gray-600 line-through">
-                      {product.variants[0].compareAtPrice.amount} ₪
+                      ₪{parseFloat(product.variants[0].compareAtPrice.amount)}
                     </p>
                   </div>
 

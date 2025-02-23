@@ -184,7 +184,7 @@ function mainPage() {
                       {product.variants &&
                       product.variants.length > 0 &&
                       product.variants[0]?.price
-                        ? `${product.variants[0]?.price.amount} ₪`
+                        ? ` ₪${parseFloat(product.variants[0]?.price.amount)}`
                         : "Price not available"}
                     </p>
                   </div>

@@ -86,7 +86,7 @@ function ShoppingCart() {
                               </a>
                             </h4>
                             <p className="ml-4 text-sm font-medium text-gray-900">
-                              ₪{item.variant?.price.amount}
+                              ₪{parseFloat(item.variant?.price.amount)}
                             </p>
                           </div>
                           <p className="mt-1 text-sm text-gray-500">

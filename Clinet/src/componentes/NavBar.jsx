@@ -226,7 +226,7 @@ function NavBar() {
                                           item.variant.product.id
                                         )}`}
                                       >
-                                        ₪ {item.variant.price.amount}
+                                        ₪{parseFloat(item.variant.price.amount)}
                                       </a>
                                     </h3>
                                     <p className="text-gray-500">

@@ -91,10 +91,11 @@ function RelatedProducts({ addToCart, products, error, loadingProducts }) {
                         className="absolute inset-x-0 bottom-0 h-36  bg-gradient-to-t from-black opacity-50 "
                       />
                       <p className="relative text-lg font-semibold text-white ">
-                        ₪ {product.variants[0].price.amount}
+                        ₪ {parseFloat(product.variants[0].price.amount)}
                       </p>
                       <p className="relative text-lg font-semibold text-white line-through">
-                        ₪ {product.variants[0].compareAtPrice.amount}
+                        ₪{" "}
+                        {parseFloat(product.variants[0].compareAtPrice.amount)}
                       </p>
                     </div>
                   </div>

@@ -52,14 +52,17 @@ const filters = [
   {
     id: "NEW1",
     name: "צבעים אחידים ",
+    value: "solid",
   },
   {
     id: "NEW2",
     name: "צבעים מעורבבים",
+    value: "mixed",
   },
   {
     id: "NEW3",
     name: "מהדורה מיוחדת",
+    value: "special",
   },
   // {
   //   id: "NEW4",
@@ -413,13 +416,17 @@ function Shop() {
                             {/* Product Price */}
                             <p className="mt-1 text-lg font-medium text-gray-600 md:text-base sm:text-xs ">
                               {product.variants[0]?.price.amount
-                                ? `${product.variants[0].price.amount}₪`
+                                ? `₪${parseFloat(
+                                    product.variants[0].price.amount
+                                  )}`
                                 : "Price not available"}
                             </p>
                             {/* Compare at Price (for sale items) */}
                             {product.variants[0]?.compareAtPrice && (
                               <p className="mt-1 text-lg font-medium text-gray-600 line-through md:text-base sm:text-xs pl-2">
-                                {`${product.variants[0].compareAtPrice.amount}₪`}
+                                {`₪${parseFloat(
+                                  product.variants[0].compareAtPrice.amount
+                                )}`}
                               </p>
                             )}
                           </div>
