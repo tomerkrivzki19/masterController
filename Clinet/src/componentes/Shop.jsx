@@ -23,16 +23,48 @@ import useProducts from "../hooks/useProducts";
 const sortOptions = [
   { id: "1", name: "מחיר: מהגבוהה לנמוך", /*href: "#"*/ value: "highToLow" },
   { id: "2", name: "מחיר: מהנמוך לגובהה" /*href: "#"*/, value: "lowToHigh" },
-];
-const filters = [
   {
-    id: "brand",
+    id: "3",
     name: "פופולארי",
+    value: "brand",
   },
   {
-    id: "NEW",
+    id: "4",
     name: "חדש",
+    value: "NEW",
   },
+  // {
+  //   id: "5",
+  //   name: "הצג הכל",
+  //   value: "all",
+  // },
+];
+// TODO: FIXME: , recreate a new funciton that is support the new veribles
+const filters = [
+  // {
+  //   id: "brand",
+  //   name: "פופולארי",
+  // },
+  // {
+  //   id: "NEW",
+  //   name: "חדש",
+  // },
+  {
+    id: "NEW1",
+    name: "צבעים אחידים ",
+  },
+  {
+    id: "NEW2",
+    name: "צבעים מעורבבים",
+  },
+  {
+    id: "NEW3",
+    name: "מהדורה מיוחדת",
+  },
+  // {
+  //   id: "NEW4",
+  //   name: "הצג הכל",
+  // },
 ];
 const productType = [
   {
@@ -58,14 +90,13 @@ function Shop() {
     useContext(FavoriteContext);
 
   const [open, setOpen] = useState(false);
-  const [sortOption, setSortOption] = useState("NEW");
-  const [productsType, setProductsType] = useState("all");
+  const [sortOption, setSortOption] = useState("NEW"); //sorting
+  const [productsType, setProductsType] = useState("all"); //filltering
 
   const { products, error, loading } = useProducts(sortOption, productsType);
 
   const toggleFavorites = (productId, productName) => {
     const checkIfInFavorites = productIds.includes(productId);
-
     if (checkIfInFavorites) {
       // If product is already in favorites, remove it
       removeFromFavorites(productId, productName);
@@ -131,9 +162,9 @@ function Shop() {
                     <Disclosure
                       key={section.name}
                       as="div"
-                      className="border-t border-gray-200 px-4 py-6"
+                      className="border-t border-gray-200 px-4 py-6 "
                     >
-                      <h3 className="-mx-2 -my-3 flow-root">
+                      <h3 className="-mx-2 -my-3 flow-root ">
                         <DisclosureButton
                           onClick={() => setSortOption(section.id)}
                           className={`group flex w-full items-center justify-between bg-white px-2 py-3 text-sm  text-gray-400 ${
@@ -203,13 +234,14 @@ function Shop() {
                     transition
                     className="absolute left-0 z-50 mt-2 w-40 origin-top-left rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                   >
-                    <div className="py-1">
+                    <div className="py-1 flex flex-col-reverse">
                       {sortOptions.map((option) => (
                         <MenuItem key={option.id}>
                           <button
                             // href={option.href}
                             onClick={() => setSortOption(option.value)}
-                            className={`block px-4 py-2 text-sm font-medium text-gray-900 data-[focus]:bg-gray-100 ${
+                            // TODO: display the content in reverse
+                            className={`block w-full px-4 py-2 text-sm font-medium text-gray-900 data-[focus]:bg-gray-100 ${
                               sortOption === option.value ? "bg-red-100" : ""
                             }`}
                           >
@@ -229,20 +261,22 @@ function Shop() {
                   פילטרים
                 </button>
 
-                <PopoverGroup className="hidden sm:flex sm:items-baseline sm:space-x-8">
+                <PopoverGroup className="hidden sm:flex sm:items-baseline sm:space-x-8 ">
                   {filters.map((item) => {
                     return (
-                      <button
-                        onClick={() => {
-                          setSortOption(item.id);
-                        }}
-                        key={item.id}
-                        className={`p-2 ${
-                          sortOption === item.id ? "bg-red-100" : ""
-                        }`}
-                      >
-                        {item.name}
-                      </button>
+                      <>
+                        <button
+                          onClick={() => {
+                            setSortOption(item.id);
+                          }}
+                          key={item.id}
+                          className={`p-2  border-2 border-gray-200 hover:bg-red-100  ${
+                            sortOption === item.id ? "bg-red-100" : ""
+                          }`}
+                        >
+                          {item.name}
+                        </button>
+                      </>
                     );
                   })}
                 </PopoverGroup>
@@ -306,6 +340,7 @@ function Shop() {
                           />
                         </svg>
                       </button>
+
                       <a
                         key={product.id}
                         href={`/product/${encodeURIComponent(product.id)}`}

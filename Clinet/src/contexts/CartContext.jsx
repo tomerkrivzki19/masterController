@@ -19,7 +19,8 @@ export const CartProvider = ({ children }) => {
       const fetchedCart = await getCartData();
       setCart(fetchedCart || []);
     } catch (error) {
-      console.error("Error loading cart data", error);
+      return error;
+      // console.error("Error loading cart data", error);
     } finally {
       setLoading(false);
     }
@@ -43,6 +44,7 @@ export const CartProvider = ({ children }) => {
       await fetchCart(); // Refresh cart data
       setIsCartOpen(true); //open the cart when adding item
     } catch (error) {
+      throw new Error("not getting the cart data , Please try again later");
       console.error("Error adding to cart", error);
     } finally {
       setAddProductCartLoading(false); // End loading

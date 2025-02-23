@@ -5,7 +5,7 @@ export const sortDataOptions = (name, data) => {
   // No sorting, return original data
   switch (name) {
     case "all":
-      return sortedData.sort(a, (b) => a.title - b.title);
+      return sortedData;
 
     // Sort by 'createdAt' date in descending order (newest first)
     case "NEW":
