@@ -21,16 +21,16 @@ import ServerErrorPage from "./ServerErrorPage";
 import useProducts from "../hooks/useProducts";
 
 const sortOptions = [
-  { id: "1", name: "מחיר: מהגבוהה לנמוך", /*href: "#"*/ value: "highToLow" },
-  { id: "2", name: "מחיר: מהנמוך לגובהה" /*href: "#"*/, value: "lowToHigh" },
+  { id: "1", name: "מחיר: מהנמוך לגובהה" /*href: "#"*/, value: "lowToHigh" },
+  { id: "2", name: "מחיר: מהגבוהה לנמוך", /*href: "#"*/ value: "highToLow" },
   {
     id: "3",
-    name: "פופולארי",
+    name: "פופולריים ביותר",
     value: "brand",
   },
   {
     id: "4",
-    name: "חדש",
+    name: "חדשים באתר",
     value: "NEW",
   },
   // {
@@ -132,7 +132,7 @@ function Shop() {
         {/* sorting */}
         <div className="bg-gray-50">
           {/* Mobile filter dialog */}
-          <Dialog
+          {/* <Dialog
             open={open}
             onClose={setOpen}
             className="relative z-40 sm:hidden"
@@ -160,7 +160,7 @@ function Shop() {
                 </div>
 
                 {/* Filters */}
-                <form className="mt-4">
+          {/* <form className="mt-4">
                   {filters.map((section) => (
                     <Disclosure
                       key={section.name}
@@ -189,7 +189,7 @@ function Shop() {
                 </form>
               </DialogPanel>
             </div>
-          </Dialog>
+          </Dialog>  */}
 
           <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:max-w-7xl lg:px-8">
             <div className="py-24">
@@ -256,15 +256,22 @@ function Shop() {
                   </MenuItems>
                 </Menu>
 
-                <button
+                {/* <button
                   type="button"
                   onClick={() => setOpen(true)}
                   className="inline-block text-sm font-medium text-gray-700 hover:text-gray-900 sm:hidden"
                 >
                   פילטרים
-                </button>
+                </button> */}
+                <h1
+                  type="button"
+                  onClick={() => setOpen(true)}
+                  className="inline-block text-sm font-normal text-gray-400 "
+                >
+                  מוצרים: {products.length}
+                </h1>
 
-                <PopoverGroup className="hidden sm:flex sm:items-baseline sm:space-x-8 ">
+                {/* <PopoverGroup className="hidden sm:flex sm:items-baseline sm:space-x-8 ">
                   {filters.map((item) => {
                     return (
                       <>
@@ -282,7 +289,7 @@ function Shop() {
                       </>
                     );
                   })}
-                </PopoverGroup>
+                </PopoverGroup> */}
               </div>
             </section>
           </div>
