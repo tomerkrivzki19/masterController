@@ -17,6 +17,8 @@ import { CartProvider } from "./contexts/CartContext";
 import FavoritesContext from "./contexts/FavoritesContext";
 import Favorites from "./componentes/Favorites";
 import ServerErrorPage from "./componentes/ServerErrorPage";
+import Collaborate from "./componentes/Collaborate";
+import Support from "./componentes/Support";
 
 function App() {
   return (
@@ -37,6 +39,8 @@ function App() {
             <Route path="/product/:id" element={<ProductItem />} />
             <Route path="/cart" element={<ShopingCart />} />
             <Route path="/favorites" element={<Favorites />} />
+            <Route path="/collaborate" element={<Collaborate />} />
+            <Route path="/support" element={<Support />} />
 
             <Route path="/faq" element={<FAQ />} />
             <Route path="/about" element={<AboutUs />} />

@@ -76,16 +76,16 @@ const navigationn = {
 // new footer
 const navigation = {
   solutions: [
-    { name: "Marketing", href: "#" },
-    { name: "Analytics", href: "#" },
-    { name: "Automation", href: "#" },
-    { name: "Commerce", href: "#" },
-    { name: "Insights", href: "#" },
+    { name: "שיתוף פעולה עם חנויות", href: "/collaborate" },
+    { name: "מתחמי גיימינג ו-Play TV", href: "/collaborate" },
+    { name: "הזמנות בכמות", href: "/collaborate" },
+    { name: "הצעות מיוחדות לשותפים", href: "/collaborate" },
+    { name: "תוכניות שיווק משותפות", href: "/collaborate" },
   ],
   support: [
-    { name: "Submit ticket", href: "#" },
-    { name: "Documentation", href: "#" },
-    { name: "Guides", href: "#" },
+    { name: "תמיכה טכנית ", href: "#" },
+    // { name: "Documentation", href: "#" },
+    // { name: "Guides", href: "#" },
   ],
   company: [
     // { name: "תקנון האתר", href: "/site-policy" },
@@ -94,7 +94,7 @@ const navigation = {
     { name: `חנות`, href: "/shop" },
 
     // { name: "About", href: "#" },
-    { name: "Blog", href: "#" },
+    // { name: "Blog", href: "#" },
     // { name: "Jobs", href: "#" },
     // { name: "Press", href: "#" },
   ],

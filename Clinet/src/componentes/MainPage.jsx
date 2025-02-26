@@ -61,7 +61,8 @@ function mainPage() {
   return (
     <>
       <MetaWrapper title="Home" description="Welcome to GanHishakim!" />
-      <Banner />
+      {/* <Banner /> */}
+      {/* FIXME: */}
       <WelcomePopout />
       <div className="main-header-container ">
         <div className="relative bg-customDark backdrop-blur-md inset-0 ">
