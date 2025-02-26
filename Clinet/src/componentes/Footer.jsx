@@ -83,7 +83,7 @@ const navigation = {
     { name: "תוכניות שיווק משותפות", href: "/collaborate" },
   ],
   support: [
-    { name: "תמיכה טכנית ", href: "#" },
+    { name: "תמיכה טכנית ", href: "/support" },
     // { name: "Documentation", href: "#" },
     // { name: "Guides", href: "#" },
   ],

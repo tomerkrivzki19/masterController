@@ -26,6 +26,7 @@ import Toast from "../utils/tostify";
 const navigation = [
   { name: "תקנון האתר", href: "/site-policy" },
   { name: "שאלות תשובות", href: "/faq" },
+  { name: "תמיכה טכנית", href: "/support" },
   { name: "הסיפור שלנו", href: "/about" },
   { name: `חנות`, href: "/shop" },
 ];
